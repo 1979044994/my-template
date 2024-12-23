@@ -5,12 +5,11 @@
     <canvas ref="canvas" class="canvas"></canvas>
   </div>
 </template>
-
 <script lang="ts" setup>
 import { getAssetsImages } from '@/utils/image';
-import { defineEmits, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue';
+import { defineEmits, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
-// 定义props，包含控制动画速度的animationSpeed属性
+// 定义props
 const props = defineProps({
   imgUrl: {
     type: String,
@@ -26,11 +25,6 @@ const props = defineProps({
   }
 })
 
-// 期望的帧率，可根据实际情况调整，一般浏览器屏幕刷新率为60Hz左右
-const targetFrameRate = 60;
-// 根据animationSpeed计算每一帧的间隔时间（单位：毫秒），用于控制动画帧切换节奏
-const frameInterval = 1000 / targetFrameRate / props.animationSpeed;
-
 // 存储当前帧图片的路径，响应式数据
 const currentFrameSrc = ref<string>('');
 // 存储序列帧图片路径的数组
@@ -38,46 +32,41 @@ const frameImagePaths = ref<string[]>([]);
 let frameIndex = 0;
 const totalFrames = 43;
 
-// 图片缓存相关，使用shallowRef减少不必要的渲染开销，因为其变化通常不直接影响视图渲染
-const imageCache = shallowRef<CachedImage[]>([]);
-const MAX_CACHE_SIZE = 50;
+// 图片缓存相关
 interface CachedImage {
   image: HTMLImageElement;
   timestamp: number;
 }
-
-// 提升imageLoadStatus到组件顶层作用域，用于记录每张图片的加载状态
-const imageLoadStatus = ref({} as Record<string, { retryTimes: number; loaded: boolean }>);
+const imageCache: CachedImage[] = [];
+const MAX_CACHE_SIZE = 50;
 
 // 添加图片到缓存
 const addToCache = (img: HTMLImageElement) => {
   const currentTime = Date.now();
   const cachedImage: CachedImage = { image: img, timestamp: currentTime };
-  imageCache.value.push(cachedImage);
-  if (imageCache.value.length > MAX_CACHE_SIZE) {
+  imageCache.push(cachedImage);
+  if (imageCache.length > MAX_CACHE_SIZE) {
     // 移除最早加入缓存的图片（简单模拟LRU）
-    imageCache.value.shift();
+    imageCache.shift();
   }
 }
 
 // 从缓存中获取图片
 const getFromCache = (imgPath: string): HTMLImageElement | undefined => {
-  const index = imageCache.value.findIndex((cached) => cached.image.src === imgPath);
+  const index = imageCache.findIndex((cached) => cached.image.src === imgPath);
   if (index !== -1) {
-    const cachedImage = imageCache.value.splice(index, 1)[0];
+    const cachedImage = imageCache.splice(index, 1)[0];
     const currentTime = Date.now();
     cachedImage.timestamp = currentTime;
-    imageCache.value.push(cachedImage);
+    imageCache.push(cachedImage);
     return cachedImage.image;
   }
   return undefined;
 }
 
-// 预加载图片，使用Promise.all确保全部加载完成，并优化图片加载错误处理和加载完成后的逻辑
+// 预加载图片，使用Promise.all确保全部加载完成，并优化缓存
 const loadImagePaths = (): Promise<void> => {
   const imagePromises: Promise<void>[] = [];
-  const maxRetryTimes = 3; // 设置最大重试次数
-
   for (let i = 0; i < totalFrames; i++) {
     let imgPath;
     if (props.start) {
@@ -89,7 +78,6 @@ const loadImagePaths = (): Promise<void> => {
     const cachedImage = getFromCache(imgPath);
     if (cachedImage) {
       frameImagePaths.value.push(cachedImage);
-      imageLoadStatus.value[imgPath] = { retryTimes: 0, loaded: true };
       continue;
     }
 
@@ -98,27 +86,17 @@ const loadImagePaths = (): Promise<void> => {
     const imageLoadPromise = (): Promise<void> => {
       return new Promise<void>((resolve, reject) => {
         img.onload = () => {
-          addToCache(img);
-          imageLoadStatus.value[imgPath] = { retryTimes: 0, loaded: true };
+          addToCache(imgPath);
           resolve();
         };
         img.onerror = (error) => {
           console.error(`图片加载失败: ${imgPath}`, error);
-          if (!imageLoadStatus.value[imgPath]) {
-            imageLoadStatus.value[imgPath] = { retryTimes: 1, loaded: false };
-          } else if (imageLoadStatus.value[imgPath].retryTimes < maxRetryTimes) {
-            // 如果重试次数小于最大重试次数，重新加载
-            imageLoadStatus.value[imgPath].retryTimes++;
-            img.src = imgPath; // 重新设置图片src触发加载
-          } else {
-            reject(error);
-          }
+          reject(error);
         };
       });
     };
     imagePromises.push(imageLoadPromise);
   }
-
   return Promise.all(imagePromises).then(() => {
     frameImagePaths.value = frameImagePaths.value.concat(imagePromises.map((_, i) => {
       if (props.start) {
@@ -127,39 +105,38 @@ const loadImagePaths = (): Promise<void> => {
         return getAssetsImages(`${props.imgUrl}/${props.imgUrl}${i}.webp`);
       }
     }));
-    // 使用nextTick确保视图正确渲染，并触发自定义事件告知图片序列帧全部加载完成
-    nextTick(() => {
-    });
-    emit('all-images-loaded');
   });
 }
 
-// 切换动画帧，优化为等待图片准备就绪后再切换，避免因图片未加载好导致闪烁
+// 切换动画帧，更新当前帧图片路径
+let startY = 0;
 const switchFrame = (): void => {
-  const nextFrameIndex = (frameIndex + props.animationSpeed) % totalFrames;
-  const nextFramePath = frameImagePaths.value[nextFrameIndex];
-  const checkImageReady = () => {
-    const imageReady = imageLoadStatus.value[nextFramePath]?.loaded;
-    if (imageReady) {
-      currentFrameSrc.value = nextFramePath;
-      frameIndex = nextFrameIndex;
-    } else {
-      setTimeout(checkImageReady, 100);
-    }
-  };
-  checkImageReady();
-}
+  currentFrameSrc.value = frameImagePaths.value[frameIndex];
+  frameIndex = (frameIndex + 1) % totalFrames; // 每次切换一帧
+};
 
-// 使用调整后的逻辑基于帧间隔时间来播放动画，使其与浏览器渲染帧率更好同步
-let lastFrameTime = 0; // 记录上一帧的时间戳
+// const switchFrame = (): void => {
+//   currentFrameSrc.value = frameImagePaths.value[frameIndex];
+//   frameIndex = (frameIndex + props.animationSpeed * props.slowDownFactor) % totalFrames;
+//   if (frameIndex < 0) {
+//     frameIndex += totalFrames;
+//   }
+// }
+// 使用 requestAnimationFrame 播放动画
 let animationFrameId = 0;
+let lastFrameTime = 0;
+const maxFPS = 60; // 设置最大帧率
+let lastTime = 0;
 const playAnimation = () => {
-  const currentTime = performance.now();
-  if (currentTime - lastFrameTime >= frameInterval) {
-    switchFrame();
-    lastFrameTime = currentTime;
+  const now = performance.now();
+  const frameInterval = 1000 / (60 * props.animationSpeed); // 控制每秒钟的帧数
+
+  if (now - lastTime >= frameInterval) {
+    switchFrame(); // 切换当前帧
+    lastTime = now; // 更新最后一次切换的时间
   }
-  animationFrameId = requestAnimationFrame(playAnimation);
+
+  animationFrameId = requestAnimationFrame(playAnimation); // 继续下次动画帧
 }
 
 // 根据props变化决定是否重新加载图片
@@ -200,8 +177,8 @@ const startCanvasVideo = () => {
   video = document.createElement('video');
   video.src = 'https://yjcmndzb.sanguosha.com/transition.mp4'; // 替换为实际的视频地址
   video.crossOrigin = "anonymous"; // 如果有跨域情况需正确配置
-  video.autoplay = true;
   video.muted = true;
+  // video.autoplay = true;
   // video.loop = true;
 
   video.addEventListener('loadedmetadata', () => {
@@ -266,7 +243,7 @@ const preloadAll = async () => {
 
   // 发射自定义事件告知父组件本组件加载完成
   emit('component-loaded');
-}
+};
 
 const loadVideo = () => {
   return new Promise<void>((resolve, reject) => {
@@ -286,8 +263,9 @@ const loadVideo = () => {
       canvas.value.height = videoHeight * dpr;
       // canvas.value.style.width = `${videoWidth}px`;
       // canvas.value.style.height = `${videoHeight}px`;
-      if (!canvas.value) return reject(new Error('Could not get 2D context for canvas'));
+      if (!canvas.value) return reject(new Error('Canvas element not found'));
       const ctx = canvas.value.getContext('2d');
+      if (!ctx) return reject(new Error('Could not get 2D context for canvas'));
       if (!ctx) return reject(new Error('Could not get 2D context for canvas'));
       if (!!video) {
         // 绘制视频第一帧到canvas上，模拟预加载绘制
@@ -305,10 +283,12 @@ const loadVideo = () => {
   });
 }
 
-const emit = defineEmits(['video-ended', 'component-loaded', 'all-images-loaded']);
+const emit = defineEmits(['video-ended', 'component-loaded']);
 
 onMounted(() => {
-  const imgElement = document.querySelector('.animation-img');
+  const imgElement = document.querySelector('.animation-container');
+  console.log('imgElement', imgElement);
+
   if (imgElement) {
     imgElement.addEventListener('touchstart', handleTouchStart as EventListener);
     imgElement.addEventListener('touchend', handleTouchEnd as EventListener);
@@ -342,7 +322,6 @@ onMounted(() => {
   });
 })
 </script>
-
 <style scoped lang="scss">
 .animation-container {
   position: relative;
@@ -353,7 +332,7 @@ onMounted(() => {
 .animation-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;

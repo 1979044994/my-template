@@ -1,7 +1,14 @@
 <template>
   <LoadingPage :openTrigger="openTrigger" v-if="isLoading" @componentDestroy="handleComponentDestroy" />
   <div v-if="firstPage" class="firstpage">
-    <SequenceFrameAnimationVideo :animation-speed="1" v-preload @component-loaded="handleComponentLoaded"
+    <!-- <SequenceFrameAnimationImg :animation-speed="1" v-preload @component-loaded="handleComponentLoaded"
+      @video-ended="handleVideoEnded" class="back" imgUrl="back" :start="false">
+      <template v-slot:audio>
+        <AudioPlayer ref="audioPlayer" @click="handleAudioStart" :src="audioSrc" />
+      </template>
+    </SequenceFrameAnimationImg> -->
+
+    <SequenceFrameAnimationVideo :animation-speed="0.5" v-preload @component-loaded="handleComponentLoaded"
       @video-ended="handleVideoEnded" class="back" imgUrl="back" :start="false">
       <template v-slot:audio>
         <AudioPlayer ref="audioPlayer" @click="handleAudioStart" />
