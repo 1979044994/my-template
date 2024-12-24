@@ -1,84 +1,198 @@
 <template>
   <div class="animation-container">
-    <canvas ref="canvas" id="canvas"></canvas>
+    <slot v-if="isPlayer" name="icon"></slot>
+    <slot v-if="isPlayer" name="audio"></slot>
+    <canvas ref="firstCanvas" id="firstCanvas"
+      style="position:absolute; top:0; left:0; width:100%; height:100%;"></canvas>
+    <canvas ref="secondCanvas" id="secondCanvas"
+      style="position:absolute; top:0; left:0; width:100%; height:100%; display:none;"></canvas>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { getAssetsImages } from '@/utils/image';
-import { onMounted, ref } from 'vue';
-// 定义画布和图片帧的引用
-const canvas = ref<HTMLCanvasElement | null>(null);
-const frameImages = ref<HTMLImageElement[]>([]); // 存储序列帧
-let frameIndex = 0; // 当前帧索引
-const totalFrames = 28; // 假设有30帧动画
-// 加载序列帧图像
-const loadImages = (): Promise<void[]> => {
-  const imagePromises = [];
+import { debounce, getAssetsImages } from '@/utils/image';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
-  for (let i = 0; i < totalFrames; i++) {
+// 定义两个 canvas 的引用
+const firstCanvas = ref<HTMLCanvasElement | null>(null);
+const secondCanvas = ref<HTMLCanvasElement | null>(null);
+
+const firstFrameImages = ref<HTMLImageElement[]>([]);
+const secondFrameImages = ref<HTMLImageElement[]>([]);
+
+let isPlayer = ref(true);
+
+const firstTotalFrames = 43;
+
+const secondTotalFrames = 95;
+
+// 新增变量用于控制动画速度
+const animationSpeed = ref(1);
+
+// 加载第一个序列帧图像
+const loadFirstImages = (): Promise<HTMLImageElement[]> => {
+  const imagePromises = [];
+  for (let i = 0; i < firstTotalFrames; i++) {
     const img = new Image();
-    img.src = getAssetsImages(`hand/hand${i}.png`);
-    // 使用 Promise 来确保图片加载完成
-    const imageLoadPromise = new Promise<void>((resolve, reject) => {
-      img.onload = () => resolve();
-      img.onerror = () => reject(new Error(`Image failed to load: frame${i}.png`));
+    img.src = getAssetsImages(`start/back${i}.webp`);
+    const imageLoadPromise = new Promise<HTMLImageElement>((resolve, reject) => {
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error(`Image failed to load: start/back${i}.webp`));
     });
-    frameImages.value.push(img);
     imagePromises.push(imageLoadPromise);
   }
-
   return Promise.all(imagePromises);
-};
+}
 
-const canvasWidth = 800; // 原始动画尺寸
-const canvasHeight = 600; // 原始动画尺寸
-
-// 动态设置Canvas的尺寸
-// const resizeCanvas = () => {
-//   if (!canvas.value) return;
-
-//   // 获取窗口尺寸并按比例调整
-//   const scaleFactor = window.innerWidth / canvasWidth * window.devicePixelRatio;
-//   canvas.value.width = window.innerWidth * window.devicePixelRatio;
-//   canvas.value.height = canvasHeight * scaleFactor;
-// };
-
+// 加载第二个序列帧图像
+const loadSecondImages = (): Promise<HTMLImageElement[]> => {
+  const imagePromises = [];
+  for (let i = 0; i < secondTotalFrames; i++) {
+    const img = new Image();
+    img.src = getAssetsImages(`transition/transition${i + 1}.webp`);
+    const imageLoadPromise = new Promise<HTMLImageElement>((resolve, reject) => {
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error(`Image failed to load: transition/transition${i + 1}.webp`));
+    });
+    imagePromises.push(imageLoadPromise);
+  }
+  return Promise.all(imagePromises);
+}
 
 // 渲染动画帧
-const drawFrame = (ctx: CanvasRenderingContext2D) => {
-  // 清空画布
-  ctx.clearRect(0, 0, canvas.value!.width, canvas.value!.height);
-  // 绘制当前帧
-  ctx.drawImage(frameImages.value[frameIndex], 0, 0);
-  // 更新帧索引，循环播放动画
-  frameIndex = (frameIndex + 1) % totalFrames;
-  // 请求下一帧动画
-  requestAnimationFrame(() => drawFrame(ctx));
-};
+const drawFrame = (ctx: CanvasRenderingContext2D, images: HTMLImageElement[], index: number) => {
+  if (!ctx) return index;
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  const img = images[index];
+  const scaleX = ctx.canvas.width / img.width;
+  const scaleY = ctx.canvas.height / img.height;
+  const scale = Math.max(scaleX, scaleY);
+  const drawWidth = img.width * scale;
+  const drawHeight = img.height * scale;
+  const offsetX = (ctx.canvas.width - drawWidth) / 2;
+  const offsetY = (ctx.canvas.height - drawHeight) / 2;
+  ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+  return (index + 1) % images.length;
+}
 
-onMounted(() => {
-  if (!canvas.value) return;
-  const ctx = canvas.value.getContext('2d');
+// 重新调整 canvas 的大小
+const resizeCanvas = () => {
+  const dpr = window.devicePixelRatio || 1;
+  if (firstCanvas.value) {
+    firstCanvas.value.width = window.innerWidth * dpr;
+    firstCanvas.value.height = window.innerHeight * dpr;
+  }
+  if (secondCanvas.value) {
+    secondCanvas.value.width = window.innerWidth * dpr;
+    secondCanvas.value.height = window.innerHeight * dpr;
+  }
+}
+
+const debouncedResizeCanvas = debounce(() => {
+  resizeCanvas();
+}, 200);
+
+// 播放动画
+const playAnimation = (canvasElement: HTMLCanvasElement | null, images: HTMLImageElement[], speed: number) => {
+  const ctx = canvasElement?.getContext('2d');
   if (!ctx) return;
 
-  // 调整 canvas 尺寸
-  // resizeCanvas();
+  const baseFps = 30;
+  const frameInterval = Math.round(1000 / (baseFps * speed));
+  let lastTime = 0;
+  let currentIndex = 0;
 
-  // 加载图片并开始绘制动画
-  loadImages().then(() => {
-    drawFrame(ctx);
+  return new Promise<void>((resolve) => {
+    const draw = () => {
+      const now = performance.now();
+      if (now - lastTime >= frameInterval) {
+        currentIndex = drawFrame(ctx, images, currentIndex);
+        lastTime = now;
+      }
+      if (currentIndex === 0) {
+        resolve();
+      }
+      requestAnimationFrame(draw);
+    };
+    draw();
+  });
+}
+
+// 控制加载动画
+const loadAnimations = async () => {
+  try {
+    const firstLoaded = await loadFirstImages();
+    firstFrameImages.value = firstLoaded;
+
+    const secondLoaded = await loadSecondImages();
+    secondFrameImages.value = secondLoaded;
+
+    // 两个动画都加载完成，通知父组件
+    emits('component-loaded', true);
+  } catch (error) {
+    console.error('加载动画出错:', error);
+  }
+}
+
+// 控制播放第一个动画
+const playFirstAnimation = async () => {
+  if (firstFrameImages.value.length > 0 && firstCanvas.value) {
+    await resizeCanvas();
+    await playAnimation(firstCanvas.value, firstFrameImages.value, animationSpeed.value);
+  }
+}
+
+// 控制播放第二个动画
+const playSecondAnimation = async () => {
+  if (secondFrameImages.value.length > 0 && secondCanvas.value && firstCanvas.value) {
+    isPlayer.value = false;
+    secondCanvas.value.style.display = 'block';
+    firstCanvas.value.style.display = 'none';
+    await resizeCanvas();
+    await playAnimation(secondCanvas.value, secondFrameImages.value, animationSpeed.value);
+    // 动画播放完发送事件给父组件
+    emits('video-ended', true);
+
+  }
+}
+
+onMounted(() => {
+  firstCanvas.value = document.getElementById('firstCanvas') as HTMLCanvasElement;
+  secondCanvas.value = document.getElementById('secondCanvas') as HTMLCanvasElement;
+  const initAnimation = async () => {
+    await playFirstAnimation();
+  };
+  // 提前加载动画
+  loadAnimations().then(() => {
+    initAnimation();
   });
 
-  // 监听窗口大小变化
-  // window.addEventListener('resize', resizeCanvas);
+
+  window.addEventListener('resize', debouncedResizeCanvas);
+  // 添加触摸事件监听，滑动后切换到第二个动画
+  window.addEventListener('touchstart', (e) => {
+    const startY = e.touches[0].clientY;
+    const handleTouchMove = (e: TouchEvent) => {
+      const currentY = e.touches[0].clientY;
+      if (currentY < startY) {
+        playSecondAnimation();
+        window.removeEventListener('touchmove', handleTouchMove);
+      }
+    };
+    window.addEventListener('touchmove', handleTouchMove);
+  });
 });
 
-// onBeforeUnmount(() => {
-//   // 移除resize事件监听
-//   window.removeEventListener('resize', resizeCanvas);
-// });
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', debouncedResizeCanvas);
+  window.removeEventListener('touchstart', () => { });
+});
 
+// 声明 emits
+const emits = defineEmits<{
+  (e: 'component-loaded', value: boolean): void;
+  (e: 'video-ended', value: boolean): void;
+}>();
 
 </script>
 
@@ -87,18 +201,9 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 341px;
-  width: 801px;
+  height: 100vh;
+  width: 100vw;
   background-color: transparent;
   margin: 0;
 }
-
-#canvas {
-  width: 100%;
-  height: 100%;
-}
-
-// canvas {
-//   border: 1px solid #ccc;
-// }
 </style>

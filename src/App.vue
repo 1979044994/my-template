@@ -1,29 +1,70 @@
 <template>
-  <LoadingPage :openTrigger="openTrigger" v-if="isLoading" @componentDestroy="handleComponentDestroy" />
-  <div v-if="firstPage" class="firstpage">
-    <!-- <SequenceFrameAnimationImg :animation-speed="1" v-preload @component-loaded="handleComponentLoaded"
-      @video-ended="handleVideoEnded" class="back" imgUrl="back" :start="false">
-      <template v-slot:audio>
-        <AudioPlayer ref="audioPlayer" @click="handleAudioStart" :src="audioSrc" />
+  <LoadingPage :openTrigger="openTrigger" v-if="!isLoading" @componentDestroy="handleComponentDestroy" />
+  <div v-if="!firstPage" class="firstpage">
+    <SequenceFrameAnimation @video-ended="handleVideoEnded" @component-loaded="handleComponentLoaded">
+      <template v-slot:icon>
+        <div class="icon"></div>
       </template>
-    </SequenceFrameAnimationImg> -->
-
-    <SequenceFrameAnimationVideo :animation-speed="0.5" v-preload @component-loaded="handleComponentLoaded"
-      @video-ended="handleVideoEnded" class="back" imgUrl="back" :start="false">
       <template v-slot:audio>
-        <AudioPlayer ref="audioPlayer" @click="handleAudioStart" />
+        <AudioPlayer ref="audioPlayer" :src="audioSrc" @click="handleAudioStart" />
       </template>
-    </SequenceFrameAnimationVideo>
+    </SequenceFrameAnimation>
   </div>
   <div v-else>
-    <Swiper :allow-touch-move="false" @swiper="onSwiper" @slideChange="onSlideChange" :direction="'vertical'"
-      :modules="modules" class="mySwiper">
+    <Swiper @swiper="onSwiper" @slideChange="onSlideChange" direction="vertical" :modules="modules" class="mySwiper">
       <swiper-slide>
         <div class="squre">
-          <!-- <div class="home" ref="homeRef" @touchstart="handleTouchStart" @pointerdown="handleMouseStart"
-            @pointerup="handleMouseEnd" @touchend="handleTouchEnd">
+          <div class="title">
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="squre">
+          <div class="home">
 
-          </div> -->
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="squre">
+          <div class="home">
+
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="squre">
+          <div class="home">
+
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="squre">
+          <div class="home">
+
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="squre">
+          <div class="home">
+
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="squre">
+          <div class="home">
+
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="squre">
+          <div class="home">
+
+          </div>
         </div>
       </swiper-slide>
     </Swiper>
@@ -31,15 +72,18 @@
 </template>
 
 <script lang="ts" setup>
+import 'animate.css';
 import 'swiper/css';
 import 'swiper/css/mousewheel';
 import 'swiper/css/pagination';
 import { Mousewheel, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { ref } from 'vue';
-import AudioPlayer from './components/AudioPlayer.vue';
 import LoadingPage from './components/LoadingPage.vue';
-import SequenceFrameAnimationVideo from './components/SequenceFrameAnimationVideo.vue';
+import SequenceFrameAnimation from './components/SequenceFrameAnimation.vue';
+// import SequenceFrameAnimationVideo from './components/SequenceFrameAnimationVideo.vue';
+// import SequenceFrameAnimationImg from './components/SequenceFrameAnimationImg.vue';
+import AudioPlayer from './components/AudioPlayer.vue';
 
 
 let swiperInstance = ref()
@@ -92,19 +136,29 @@ const handleAudioStart = () => {
 </script>
 
 <style scoped lang="scss">
-.firstpage {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background: url(./assets/bg.png) no-repeat;
+// .firstpage {
+//   position: relative;
+//   width: 100%;
+//   height: 100vh;
+//   background: url(./assets/bg.png) no-repeat;
+//   background-size: cover;
+
+//   .back {
+//     width: 100%;
+//     height: 100%;
+//   }
+// }
+
+.icon {
+  position: absolute;
+  top: 45px;
+  left: 31px;
+  width: 154px;
+  height: 89px;
+  background: url(./assets/logo.png) no-repeat;
   background-size: cover;
-
-  .back {
-    width: 100%;
-    height: 100%;
-  }
+  z-index: 9;
 }
-
 
 .squre {
   width: 100%;

@@ -7,7 +7,7 @@
 </template>
 <script lang="ts" setup>
 import { getAssetsImages } from '@/utils/image';
-import { defineEmits, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { defineEmits, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 // 定义props
 const props = defineProps({
@@ -24,6 +24,7 @@ const props = defineProps({
     default: 1
   }
 })
+const configUrl = 'https://yjcmndzb.sanguosha.com/';
 
 // 存储当前帧图片的路径，响应式数据
 const currentFrameSrc = ref<string>('');
@@ -72,7 +73,7 @@ const loadImagePaths = (): Promise<void> => {
     if (props.start) {
       imgPath = getAssetsImages(`${props.imgUrl}/${props.imgUrl}${i}.png`);
     } else {
-      imgPath = getAssetsImages(`${props.imgUrl}/${props.imgUrl}${i}.webp`);
+      imgPath = `${configUrl}${props.imgUrl}/${props.imgUrl}${i}.webp`;
     }
 
     const cachedImage = getFromCache(imgPath);
@@ -97,12 +98,16 @@ const loadImagePaths = (): Promise<void> => {
     };
     imagePromises.push(imageLoadPromise);
   }
+  console.log('imagePromises', imagePromises);
+
   return Promise.all(imagePromises).then(() => {
     frameImagePaths.value = frameImagePaths.value.concat(imagePromises.map((_, i) => {
       if (props.start) {
         return getAssetsImages(`${props.imgUrl}/${props.imgUrl}${i}.png`);
       } else {
-        return getAssetsImages(`${props.imgUrl}/${props.imgUrl}${i}.webp`);
+        console.log('configUrl', configUrl);
+
+        return `${configUrl}${props.imgUrl}/${props.imgUrl}${i}.webp`;
       }
     }));
   });
@@ -112,6 +117,8 @@ const loadImagePaths = (): Promise<void> => {
 let startY = 0;
 const switchFrame = (): void => {
   currentFrameSrc.value = frameImagePaths.value[frameIndex];
+  // console.log('currentFrameSrc', currentFrameSrc.value);
+
   frameIndex = (frameIndex + 1) % totalFrames; // 每次切换一帧
 };
 
@@ -160,6 +167,8 @@ const loadingProgress = ref(0); // 加载进度百分比
 
 const handleTouchStart = (e: TouchEvent) => {
   startY = e.touches[0].clientY;
+  console.log('startY', startY);
+
 }
 
 const handleTouchEnd = (e: TouchEvent) => {
@@ -178,7 +187,7 @@ const startCanvasVideo = () => {
   video.src = 'https://yjcmndzb.sanguosha.com/transition.mp4'; // 替换为实际的视频地址
   video.crossOrigin = "anonymous"; // 如果有跨域情况需正确配置
   video.muted = true;
-  // video.autoplay = true;
+  video.autoplay = true;
   // video.loop = true;
 
   video.addEventListener('loadedmetadata', () => {
@@ -188,8 +197,10 @@ const startCanvasVideo = () => {
 
     const dpr = window.devicePixelRatio || 1;
     if (canvas.value) {
-      canvas.value.width = videoWidth * dpr;
-      canvas.value.height = videoHeight * dpr;
+      if (canvas.value) {
+        canvas.value.width = videoWidth * dpr;
+        canvas.value.height = videoHeight * dpr;
+      }
     }
     // canvas.value.style.width = `${videoWidth}px`;
     // canvas.value.style.height = `${videoHeight}px`;
@@ -232,13 +243,11 @@ const startCanvasVideo = () => {
 }
 
 const preloadAll = async () => {
+  console.log('preloadAll开始加载');
   // 先加载图片序列帧
   await loadImagePaths();
   // 再加载视频
   await loadVideo();
-  // 加载完成后隐藏进度条（这里简单通过设置加载进度为100%来模拟，实际可根据需求调整样式隐藏逻辑）
-  loadingProgress.value = 100;
-
   console.log('video ended加载完成');
 
   // 发射自定义事件告知父组件本组件加载完成
@@ -247,37 +256,48 @@ const preloadAll = async () => {
 
 const loadVideo = () => {
   return new Promise<void>((resolve, reject) => {
-    if (!canvas.value) return reject(new Error('Canvas element not found'));
+    if (!canvas.value) return reject(new Error('Canvas element not found,000000000000'));
     video = document.createElement('video');
     video.src = 'https://yjcmndzb.sanguosha.com/transition.mp4';
     video.crossOrigin = "anonymous";
+    video.preload = 'auto';
     video.autoplay = false; // 预加载时不自动播放
     video.muted = true;
+
 
     video.addEventListener('loadedmetadata', () => {
       const videoWidth = video.videoWidth;
       const videoHeight = video.videoHeight;
-
       const dpr = window.devicePixelRatio || 1;
       canvas.value.width = videoWidth * dpr;
       canvas.value.height = videoHeight * dpr;
       // canvas.value.style.width = `${videoWidth}px`;
       // canvas.value.style.height = `${videoHeight}px`;
-      if (!canvas.value) return reject(new Error('Canvas element not found'));
+      if (!canvas.value) return reject(new Error('Canvas element not found,1111111111111111'));
+      console.log('canvas.value', canvas.value);
+
       const ctx = canvas.value.getContext('2d');
-      if (!ctx) return reject(new Error('Could not get 2D context for canvas'));
+      console.log('ctx', ctx);
+
       if (!ctx) return reject(new Error('Could not get 2D context for canvas'));
       if (!!video) {
+        console.log(1212122);
+
         // 绘制视频第一帧到canvas上，模拟预加载绘制
         ctx.drawImage(video, 0, 0, canvas.value.width, canvas.value.height);
-        video.addEventListener('canplay', () => {
+        console.log(9999999999999999);
+
+        video.addEventListener('canplaythrough', () => {
+          console.log('video canplay');
+
           resolve();
         });
       }
 
     });
-
     video.addEventListener('error', (error) => {
+      console.log('video error', error);
+
       reject(error);
     });
   });
@@ -293,14 +313,22 @@ onMounted(() => {
     imgElement.addEventListener('touchstart', handleTouchStart as EventListener);
     imgElement.addEventListener('touchend', handleTouchEnd as EventListener);
   }
+  canvas.value = document.querySelector('.canvas');
+  nextTick(() => {
 
-  preloadAll().then(() => {
-    // 预加载完成后可以开始播放动画帧等操作
-    switchFrame();
-    playAnimation();
+    preloadAll().then(() => {
+      console.log('preloadAll加载完成');
+
+      // 预加载完成后可以开始播放动画帧等操作
+      switchFrame();
+      playAnimation();
+    });
+
   });
 
-  canvas.value = document.querySelector('.canvas');
+
+
+
 
   onBeforeUnmount(() => {
     if (animationFrameId) {
@@ -356,6 +384,6 @@ onMounted(() => {
   top: 0;
   left: 0;
   z-index: 2;
-  display: none;
+
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="door-container">
       <div class="door left-door"></div>
       <div class="door right-door"></div>
-      <div class="circle-wrapper">
+      <div class="circle-wrapper " :class="{ 'stop-rotate': isOpen }">
         <div class="left-semicircle"></div>
         <div class="right-semicircle"></div>
       </div>
@@ -130,6 +130,11 @@ onBeforeUnmount(() => {
     top: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
+    animation: rotateCircle 2s linear infinite;
+  }
+
+  .stop-rotate {
+    animation: none;
   }
 
   .left-semicircle {
@@ -209,6 +214,16 @@ onBeforeUnmount(() => {
 
     to {
       opacity: 0;
+    }
+  }
+
+  @keyframes rotateCircle {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
     }
   }
 }

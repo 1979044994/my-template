@@ -5,6 +5,7 @@
   background: url(../background1.jpg) no-repeat;
   background-size: cover;
 }
+
 ::-webkit-scrollbar {
   width: 11px;
   background: #fef4ec;
@@ -14,6 +15,7 @@
   background: #e57c30;
   border-radius: 6px;
 }
+
 .container {
   height: 100vh;
   width: 100vw;
@@ -22,131 +24,59 @@
   align-items: center;
 }
 
-.squre {
+.mySwiper {
+  height: 100vh;
+  /* 占据整个视口高度 */
+  width: 100vw;
+  /* 占据整个视口宽度 */
+}
+.mySwiper .swiper-slide {
+  &:nth-child(1) .squre {
+    background: url(../swiper/swiper1.webp) top center no-repeat;
+    background-size: 100% auto;
+  }
+
+  &:nth-child(2) .squre {
+    background: url(../swiper/swiper2.webp) top center  no-repeat;
+    background-size: 100% auto;
+  }
+
+  &:nth-child(3) .squre {
+    background: url(../swiper/swiper3.webp) top center  no-repeat;
+    background-size: 100% auto;
+  }
+
+  &:nth-child(4) .squre {
+    background: url(../swiper/swiper4.webp) top center  no-repeat;
+    background-size: 100% auto;
+  }
+
+  &:nth-child(5) .squre {
+    background: url(../swiper/swiper5.webp) top center  no-repeat;
+    background-size: 100% auto;
+  }
+  &:nth-child(6) .squre {
+    background: url(../swiper/swiper6.webp) top center  no-repeat;
+    background-size: 100% auto;
+  }
+  &:nth-child(7) .squre {
+    background: url(../swiper/swiper7.webp) top center  no-repeat;
+    background-size: 100% auto;
+  }
+  &:nth-child(8) .squre {
+    background: url(../swiper/swiper8.webp) top center  no-repeat;
+    background-size: 100% auto;
+  }
+}
+
+.mySwiper .swiper-slide .squre {
   width: 750px;
   height: 100%;
-  background: url(../home-back.png) center no-repeat;
-  background-size: 100% 100%;
   display: flex;
   align-items: center;
+}
 
-  .home {
-    position: relative;
-    transform: scale(1);
-    width: 750px;
-    height: 1334px;
-    background: url(../home-back.png) center no-repeat;
-    background-size: 100% auto;
-    .home-card {
-      position: relative;
-      width: 690px;
-      height: 988px;
-      background: url(../home-card.png) center no-repeat;
-      background-size: 100% auto;
-      margin: 0 auto;
-      margin-top: -40px;
-      z-index: -1;
-      .your {
-        width: 312px;
-        height: 37px;
-        position: absolute;
-        top: 73px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .cn-your {
-        background: url(../cn-your.png) no-repeat;
-        background-size: cover;
-      }
-      .en-your {
-        background: url(../en-your.png) no-repeat;
-        background-size: contain;
-      }
-
-      .subject {
-        width: 563px;
-        height: 123px;
-        position: absolute;
-        top: 109px;
-        left: 50%;
-
-        transform: translateX(-50%);
-      }
-      .cn-subject {
-        background: url(../cn-home-subject.png) no-repeat;
-        background-size: cover;
-      }
-      .en-subject {
-        background: url(../en-home-subject.png) no-repeat;
-        background-size: cover;
-      }
-    }
-    .person {
-      position: absolute;
-      bottom: 0;
-      width: 750px;
-      height: 922px;
-      background: url(../home-person.png) no-repeat;
-      background-size: cover;
-      .pop {
-        width: 123px;
-        height: 71px;
-        background: url(../pop.png) no-repeat;
-        background-size: 100% auto;
-        margin-top: 238px;
-        margin-left: 445px;
-        animation: mymove 2s infinite;
-        -webkit-animation: mymove 2s infinite;
-      }
-
-      @keyframes mymove {
-        0% {
-          transform: translate(0px, 0px);
-        }
-        50% {
-          transform: translate(0px, -10px);
-        }
-        100% {
-          transform: translate(0px, 0px);
-        }
-      }
-
-      /*Safari 和 Chrome:*/
-      @-webkit-keyframes mymove {
-        0% {
-          transform: translate(0px, 0px);
-        }
-        50% {
-          transform: translate(0px, -10px);
-        }
-        100% {
-          transform: translate(0px, 0px);
-        }
-      }
-    }
-    .icon {
-      position: absolute;
-      top: 23px;
-      right: 70px;
-      width: 204px;
-      height: 130px;
-      background: url(../icon.png) no-repeat;
-      background-size: cover;
-    }
-    .title {
-      width: 389px;
-      height: 198px;
-      margin: 24px auto 0 67px;
-    }
-    .cn-title {
-      background: url(../cn-home-title.png) no-repeat;
-      background-size: cover;
-    }
-    .en-title {
-      background: url(../en-home-title.png) no-repeat;
-      background-size: cover;
-    }
-  }
+.squre {
   .bottom {
     position: fixed;
     bottom: 0;
@@ -157,6 +87,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     .cn-bottom {
       display: inline-block;
       width: 266px;
@@ -164,6 +95,7 @@
       background: url(../cn-slide.png) no-repeat;
       background-size: 100% 100%;
     }
+
     .en-bottom {
       display: inline-block;
       width: 266px;
@@ -172,6 +104,7 @@
       background-size: 100% 100%;
     }
   }
+
   .bottom-last {
     position: fixed;
     bottom: 0;
@@ -184,10 +117,12 @@
     justify-content: center;
   }
 }
+
 .fill-bg {
   background: url(../home-back.png) center no-repeat;
   background-size: 100% 100%;
   background-position: 100%;
+
   .fill {
     transform: scale(1);
     position: relative;
@@ -196,12 +131,14 @@
     background: url(../fill-back.png) center no-repeat;
     background-size: 100% auto;
   }
+
   .fill-logo {
     width: 392px;
     height: 190px;
     margin-top: 19px;
     margin-left: 86px;
   }
+
   .fill-back {
     position: relative;
     width: 688px;
@@ -209,6 +146,7 @@
     background: url(../cp-card.png) center no-repeat;
     background-size: 100% auto;
     margin: -82px auto 0 auto;
+
     .title {
       position: absolute;
       width: 532px;
@@ -217,14 +155,17 @@
       left: 50%;
       transform: translateX(-50%);
     }
+
     .cn-title {
       background: url(../cn-cp-title.png) no-repeat;
       background-size: cover;
     }
+
     .en-title {
       background: url(../en-cp-title.png) no-repeat;
       background-size: cover;
     }
+
     .input-list {
       position: absolute;
       top: 436px;
@@ -237,6 +178,7 @@
       width: 443px;
 
       margin: 29px auto 0 auto;
+
       input {
         height: 80px;
         background: #ffffff;
@@ -244,20 +186,24 @@
         outline: none;
         margin-bottom: 40px;
       }
+
       .subject {
         width: 221px;
         height: 27px;
         margin-top: 30px;
         margin-bottom: 20px;
       }
+
       .cn-cp-subject {
         background: url(../cn-cp-subject.png) no-repeat;
         background-size: cover;
       }
+
       .en-cp-subject {
         background: url(../en-cp-subject.png) no-repeat;
         background-size: contain;
       }
+
       .cn-input {
         width: 369px;
         height: 70px;
@@ -266,6 +212,7 @@
         padding-left: 73px;
 
         outline: none;
+
         &:nth-child(4) {
           width: 238px;
           height: 89px;
@@ -284,12 +231,14 @@
             font-size: 24px;
           }
         }
+
         &:nth-child(2) {
           border: 4px solid #d89cd1;
           padding-left: 84px;
           box-shadow: 0 0 10px #d89cd1;
           width: 358px;
           color: #d89cd1;
+
           &::placeholder {
             color: #e8e8e8;
             line-height: normal;
@@ -297,21 +246,25 @@
             font-size: 38px;
           }
         }
+
         &:nth-child(1) {
           border: 4px solid #d89cd1;
           color: #d89cd1;
           padding-left: 84px;
           box-shadow: 0 0 10px #d89cd1;
           width: 358px;
+
           &::placeholder {
             color: #e8e8e8;
             font-size: 38px;
           }
         }
       }
+
       .en-input {
         width: 411px;
         padding-left: 28px;
+
         &:nth-child(4) {
           width: 238px;
           height: 89px;
@@ -331,18 +284,21 @@
             text-align: center;
           }
         }
+
         &:nth-child(2) {
           border: 4px solid #d89cd1;
           color: #d89cd1;
           padding-left: 84px;
           box-shadow: 0 0 10px #d89cd1;
         }
+
         &:nth-child(1) {
           border: 4px solid #d89cd1;
           color: #d89cd1;
           padding-left: 84px;
           box-shadow: 0 0 10px #d89cd1;
         }
+
         &::placeholder {
           font-size: 26px;
           line-height: 0px;
@@ -353,6 +309,7 @@
       }
     }
   }
+
   .confirm {
     width: 189px;
     height: 90px;
@@ -360,22 +317,27 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
   .cn-confirm {
     background: url(../cn-confirm.png) no-repeat;
     background-size: cover;
   }
+
   .en-confirm {
     background: url(../en-confirm.png) no-repeat;
     background-size: cover;
   }
+
   .cn-cp-logo {
     background: url(../cn-cp-logo.png) no-repeat;
     background-size: cover;
   }
+
   .en-cp-logo {
     background: url(../en-cp-logo.png) no-repeat;
     background-size: cover;
   }
+
   .topic {
     position: relative;
     width: 750px;
@@ -383,12 +345,14 @@
     height: 1334px;
     background: url(../fill-back.png) center no-repeat;
     background-size: 100% auto;
+
     .fill-logo {
       width: 392px;
       height: 190px;
       margin-top: 19px;
       margin-left: 86px;
     }
+
     .topic-back {
       position: relative;
       width: 688px;
@@ -396,6 +360,7 @@
       background: url(../cp-card.png) center no-repeat;
       background-size: 100% auto;
       margin: -82px auto 0 auto;
+
       .question {
         display: flex;
         align-items: center;
@@ -411,6 +376,7 @@
         height: 63px;
         background-color: #393939;
       }
+
       .title {
         position: absolute;
         width: 524px;
@@ -420,15 +386,18 @@
         background: url(../question-back.png) no-repeat;
         background-size: cover;
       }
+
       .select {
         position: absolute;
         top: 360px;
       }
     }
+
     .en-subject {
       font-size: 32px;
       line-height: normal;
     }
+
     .cn-subject {
       font-size: 42px;
       line-height: 54px;
@@ -486,10 +455,12 @@
       //   bottom: -1px;
       // }
     }
+
     .title-content {
       width: 95%;
       //  text-indent: 2em;
     }
+
     .button {
       display: flex;
       width: 100%;
@@ -502,32 +473,39 @@
         background-color: transparent;
         outline: none;
       }
+
       .submit {
         width: 315px;
         height: 106px;
         background: url(../cn-result.png) no-repeat;
         background-size: cover;
       }
+
       .cn-submit {
         background: url(../cn-result.png) no-repeat;
         background-size: 100% auto;
       }
+
       .en-submit {
         background: url(../en-result.png) no-repeat;
         background-size: 100% auto;
       }
+
       .cn-prev {
         background: url(../cn-prev.png) no-repeat;
         background-size: cover;
       }
+
       .cn-next {
         background: url(../cn-next.png) no-repeat;
         background-size: cover;
       }
+
       .en-prev {
         background: url(../en-prev.png) no-repeat;
         background-size: cover;
       }
+
       .en-next {
         background: url(../en-next.png) no-repeat;
         background-size: cover;
@@ -535,10 +513,12 @@
     }
   }
 }
+
 .result-bg {
   // align-items: flex-start;
   background: url(../result-bg.png) no-repeat;
   overflow: auto;
+
   .result {
     position: relative;
     display: flex;
@@ -548,78 +528,95 @@
     height: 1334px;
     background: url(../result-bg.png) center no-repeat;
     background-size: 100% 100%;
+
     .result-con {
       width: 750px;
       height: 1194px;
       // margin-top: 71px;
     }
+
     .result-code {
       display: flex;
       width: 585px;
       margin-top: 10px;
       justify-content: space-between;
       align-items: flex-end;
+
       .result-title {
         width: 84px;
         height: 111px;
       }
+
       .cn-result {
         background: url(../cn-result-title.png) no-repeat;
         background-size: cover;
       }
+
       .en-result {
         background: url(../en-result-title.png) no-repeat;
         background-size: cover;
       }
+
       .result-code-num {
         width: 84px;
         height: 111px;
       }
+
       .cn-code {
         background: url(../cn-code.png) no-repeat;
         background-size: cover;
       }
+
       .redo-button {
         width: 243px;
         height: 110px;
       }
+
       .save-button {
         width: 76px;
         height: 110px;
       }
+
       .en-redo {
         background: url(../en-redo.png) no-repeat;
         background-size: 100% auto;
       }
+
       .en-save {
         background: url(../en-save.png) no-repeat;
         background-size: cover;
       }
+
       .cn-redo {
         background: url(../cn-redo.png) no-repeat;
         background-size: 100% auto;
       }
+
       .cn-save {
         background: url(../cn-save.png) no-repeat;
         background-size: cover;
       }
+
       .en-code {
         background: url(../en-code.png) no-repeat;
         background-size: cover;
       }
     }
+
     .result-bottom {
       display: flex;
       justify-content: space-between;
       width: 621px;
       height: 168px;
       margin-top: 50px;
+
       .cn-bottom-right {
         width: 390px;
         display: flex;
         margin-left: 87px;
         flex-direction: column;
         flex-shrink: 0;
+
         :nth-child(1) {
           font-family: DengXian;
           font-size: 36px;
@@ -630,6 +627,7 @@
           font-style: normal;
           text-transform: none;
         }
+
         :nth-child(2) {
           font-family: DengXian;
           font-size: 18px;
@@ -639,6 +637,7 @@
           font-style: normal;
           text-transform: none;
         }
+
         :nth-child(3) {
           font-family: DengXian;
           font-size: 18px;
@@ -649,12 +648,14 @@
           text-transform: none;
         }
       }
+
       .en-bottom-right {
         width: 390px;
         display: flex;
         margin-left: 87px;
         flex-direction: column;
         flex-shrink: 0;
+
         :nth-child(1) {
           font-family: DengXian;
           font-size: 28px;
@@ -666,6 +667,7 @@
           font-style: normal;
           text-transform: none;
         }
+
         :nth-child(2) {
           font-family: DengXian;
           font-size: 22px;
@@ -675,6 +677,7 @@
           font-style: normal;
           text-transform: none;
         }
+
         :nth-child(3) {
           font-family: DengXian;
           font-size: 14px;
@@ -685,8 +688,10 @@
           text-transform: none;
         }
       }
+
       .bottom-right {
         width: 133px;
+
         .button {
           display: flex;
           align-items: center;
@@ -708,6 +713,7 @@
           margin-top: 23px;
           margin-bottom: 23px;
         }
+
         :nth-child(3) {
           font-family: DengXian;
           font-size: 10px;
@@ -720,6 +726,7 @@
         }
       }
     }
+
     .cp-title {
       display: flex;
       align-items: center;
@@ -730,6 +737,7 @@
       font-family: HYETouSongW;
       white-space: nowrap;
       font-size: 28px;
+
       &::before {
         content: "";
         display: inline-block;
@@ -738,6 +746,7 @@
         margin-right: 10px;
         background-color: #2c2c2c;
       }
+
       &::after {
         content: "";
         margin-left: 10px;
@@ -757,10 +766,12 @@
   width: 140px;
   height: 47px;
 }
+
 .cn-btn {
   background: url(../cn-change.png) no-repeat;
   background-size: cover;
 }
+
 .en-btn {
   background: url(../en-change.png) no-repeat;
   background-size: cover;
@@ -770,12 +781,15 @@
   button {
     cursor: pointer;
   }
+
   .button {
     cursor: pointer;
   }
+
   .change {
     cursor: pointer;
   }
+
   // .squre {
   //   .home {
   //     transform: scale(0.9);
@@ -788,34 +802,43 @@
       // height: 100%;
       transform: scale(0.9);
     }
+
     .confirm {
       cursor: pointer;
     }
+
     // .topic {
     //   .title {
     //     margin-top: 60px;
     //   }
     // }
   }
+
   .result {
     transform: scale(0.9);
   }
+
   .fill-bg .topic {
     transform: scale(0.722639);
   }
+
   .result-bg {
     overflow: hidden;
     align-items: center;
+
     .save-button {
       cursor: pointer;
     }
+
     .redo-button {
       cursor: pointer;
     }
   }
+
   .outside {
     cursor: pointer;
   }
+
   .input-list {
     input {
       font-size: 32px;
