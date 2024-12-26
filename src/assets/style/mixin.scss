@@ -557,6 +557,7 @@
       }
     }
   }
+
   &:nth-child(6) .squre {
     background: url(../swiper/swiper6.webp) top center no-repeat;
     background-size: 100% auto;
@@ -568,10 +569,10 @@
       background: url(@/assets/title/title6.webp) no-repeat;
       background-size: cover;
     }
-    .main{
+    .main {
       position: absolute;
       top: 124px;
-       left: 50px;
+      left: 50px;
       height: 878px;
       width: 585px;
     }
@@ -585,16 +586,16 @@
     .achievement {
       position: absolute;
       top: 94px;
-      left:55px;
+      left: 55px;
       font-family: Source Han Sans SC;
       font-weight: 400;
       font-size: 24px;
       .achievement-item {
         margin-bottom: 39px;
-        .time{
-          color: #B33520;
+        .time {
+          color: #b33520;
         }
-        .content{
+        .content {
           margin-top: 8px;
         }
         &:nth-child(1) {
@@ -615,13 +616,150 @@
       }
     }
   }
+
   &:nth-child(7) .squre {
     background: url(../swiper/swiper7.webp) top center no-repeat;
     background-size: 100% auto;
+    .title {
+      width: 331px;
+      height: 459px;
+      top: 349px;
+      right: 49px;
+      background: url(@/assets/title/title7.webp) no-repeat;
+      background-size: cover;
+    }
+    .submission {
+      position: absolute;
+      top: 762px;
+      left: 69px;
+      .line {
+        width: 50px;
+        height: 730px;
+        background: url(@/assets/line3.webp) no-repeat;
+        background-size: cover;
+      }
+      .content {
+        position: absolute;
+        top: 111px;
+        left: 50px;
+        width: 580px;
+        height: 364px;
+        font-family: Source Han Sans SC;
+        font-weight: 400;
+        font-size: 30px;
+        color: #343026;
+        line-height: 40px;
+        span {
+          font-size: 36px;
+        }
+        .normal {
+          font-size: 30px;
+        }
+        p {
+          height: 430px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: space-between;
+        }
+      }
+    }
+    .nothing {
+      width: 651px;
+      position: absolute;
+      top: 820px;
+      left: 50%;
+      margin-left: -325px;
+      .nothing-title {
+        text-align: right;
+        margin-right: 22px;
+        height: 147px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .border {
+        width: 651px;
+        margin-top: 26px;
+        height: 348px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        position: relative;
+        background-size: 611px 322px;
+        .nothing-general {
+          width: 651px;
+          height: 348px;
+        }
+        .name {
+          position: absolute;
+          width: 651px;
+          font-family: Source Han Sans SC;
+          font-weight: 400;
+          font-size: 26px;
+          color: #fdeab1;
+          line-height: 30px;
+          text-align: center;
+          bottom: 16px;
+        }
+      }
+    }
   }
+
   &:nth-child(8) .squre {
     background: url(../swiper/swiper8.webp) top center no-repeat;
     background-size: 100% auto;
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 176px;
+      .user {
+        display: flex;
+        height: 168px;
+        width: 630px;
+        margin-bottom: 26px;
+        .user-avatar {
+          width: 163px;
+          height: 168px;
+          margin-right: 35px;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-image: url(https://yjcmndzb.sanguosha.com/swlide.png);
+
+          background-size: 149px 149px;
+          .avatar-img {
+            width: 163px;
+            height: 168px;
+          }
+        }
+        .user-text {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          .user-name {
+            font-family: Source Han Sans SC;
+            font-weight: 500;
+            font-size: 41px;
+            color: #6a5448;
+            margin-bottom: 16px;
+          }
+          .user-level {
+            font-family: Source Han Sans SC;
+            font-weight: 400;
+            font-size: 35px;
+            color: #9b9082;
+            line-height: 53px;
+            opacity: 0.8;
+          }
+        }
+      }
+      .user-border {
+        width: 630px;
+        height: 242px;
+        background: url(@/assets/kaung-small.webp) no-repeat;
+        background-size: cover;
+      }
+    }
   }
 }
 
@@ -629,8 +767,6 @@
   width: 750px;
   height: 100%;
   position: relative;
-  display: flex;
-  align-items: center;
 
   .title {
     position: absolute;

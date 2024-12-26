@@ -12,7 +12,7 @@
   </div>
   <div v-else>
     <Swiper @swiper="onSwiper" @init="init" @slide-change-transition-end="slideChangeTransitionEnd"
-      @slideChange="onSlideChange" direction="vertical" :modules="modules" class="mySwiper">
+      @slideChange="onSlideChange" direction="vertical" class="mySwiper">
       <swiper-slide>
         <div class="squre ">
           <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
@@ -260,15 +260,79 @@
       </swiper-slide>
       <swiper-slide>
         <div class="squre">
-          <div class="home">
+          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
+          </div>
+          <div v-if="false" swiper-animate-effect="animate__fadeInLeftBig" swiper-animate-duration="1s"
+            class="submission animation">
+            <div class="line"></div>
+            <div class="content">
+              <span>2024年</span><br />
+              <p>
+                <span class="normal">“一将成名”武将设计大赛共开展 <span class="red-text">4届</span></span><br />
+                <span class="normal">主公共参与投稿 <span class="red-text">99</span> 次</span><br />
+                <span class="normal"> 累计获票 <span class="red-text">99</span></span><br />
+                <span class="normal"> 在 <span class="red-text">望梅止渴</span>命题中荣获</span><br />
+                <span class="normal"> <span class="red-text">最佳技能设计奖</span></span>
+              </p>
+
+            </div>
+          </div>
+          <div class="nothing">
+            <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1s"
+              class="nothing-title animation">
+              <span> 2024年 </span>
+              <span> “一将成名”武将设计大赛共开展 <span class="red-text">4届</span></span>
+              <span> 10位命题武将，在诸位的巧思之下焕发新生</span>
+            </div>
+            <swiper :spaceBetween="30" :effect="'fade'" :pagination="{
+              clickable: true,
+            }" :modules="modules" swiper-animate-effect="animate__fadeInLeftBig" swiper-animate-duration="1s"
+              class="generalSwiper animation">
+              <swiper-slide>
+                <div class="border" style="background-image: url(https://yjcmndzb.sanguosha.com/swlide.png);">
+                  <img class="nothing-general" src="@/assets/general-border.webp" alt="">
+                  <div class="name">名字</div>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="border" style="background-image: url(https://yjcmndzb.sanguosha.com/avatar.png);">
+                  <img class="nothing-general" src="@/assets/general-border.webp" alt="">
+                  <div class="name">名字1</div>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="border">
+                  <img class="nothing-general" src="@/assets/general-border.webp" alt="">
+                  <div class="name">名字2</div>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="border">
+                  <img class="nothing-general" src="@/assets/general-border.webp" alt="">
+                  <div class="name">名字3</div>
+                </div>
+              </swiper-slide>
+            </swiper>
 
           </div>
         </div>
       </swiper-slide>
       <swiper-slide>
         <div class="squre">
-          <div class="home">
-
+          <div class="user-info">
+            <div class="user">
+              <div class="user-avatar">
+                <img class="avatar-img" src="@/assets/user-avatar.webp" alt="">
+              </div>
+              <div class="user-text">
+                <div class="user-name">昵称最多六字</div>
+                <div class="user-level">上将军</div>
+              </div>
+            </div>
+            <div class="user-border">
+              <div class="user-header"></div>
+              <div class="user-body"></div>
+            </div>
           </div>
         </div>
       </swiper-slide>
@@ -279,9 +343,10 @@
 import { swiperAnimate, swiperAnimateCache } from '@/utils/swiper.animate';
 import 'animate.css';
 import 'swiper/css';
+import 'swiper/css/effect-fade';
 import 'swiper/css/mousewheel';
 import 'swiper/css/pagination';
-import { Mousewheel, Navigation, Pagination } from 'swiper/modules';
+import { EffectFade, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { ref } from 'vue';
 import LoadingPage from './components/LoadingPage.vue';
@@ -335,7 +400,7 @@ const onSlideChange = (swiper: { activeIndex: any; }) => {
   // new WOW().init()
   console.log('slide change', swiper, activeIndex);
 };
-const modules = [Pagination, Navigation, Mousewheel];
+const modules = [Pagination, EffectFade];
 
 const handleVideoEnded = (e: any) => {
   console.log('video ended', e);
@@ -372,7 +437,7 @@ const handleAudioStart = () => {
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 // .firstpage {
 //   position: relative;
 //   width: 100%;
@@ -397,23 +462,17 @@ const handleAudioStart = () => {
   z-index: 9;
 }
 
-.squre {
-  width: 100%;
-  height: 100vh;
-  background-color: #f00;
-}
+.swiper-pagination {
+  right: 49px !important;
+  left: auto !important;
+  width: 86px !important;
+  bottom: 70px !important;
 
-.light {
-  width: 182px;
-  height: 192px;
-}
-
-.hand {
-  position: absolute;
-}
-
-.word {
-  width: 528px;
-  height: 834px;
+  .swiper-pagination-bullet-active {
+    width: 16px;
+    height: 6px;
+    background: #FFFFFF;
+    border-radius: 3px;
+  }
 }
 </style>
