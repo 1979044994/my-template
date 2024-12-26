@@ -12,10 +12,7 @@
             <div class="home-card">
               <div class="your" :class="language ? 'cn-your' : 'en-your'"></div>
               <div class="subject" :class="language ? 'cn-subject' : 'en-subject'"></div>
-
-
             </div>
-
             <div class="person">
 
               <div class="pop"></div>
