@@ -325,7 +325,7 @@
                 <swiper-slide v-for="(item, index) in charList" :key="index">
                   <div class="border" :style="{ backgroundImage: `url(${item.url})` }">
                     <img class="nothing-general" src="@/assets/general-border.webp" alt="">
-                    <div class="name">{{ item.name }}</div>
+                    <div class="name">设计者：{{ item.name }}</div>
                   </div>
                 </swiper-slide>
               </swiper>
@@ -415,7 +415,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getReport } from '@/service/api';
+import { getReport, getShare } from '@/service/api';
 import { swiperAnimate, swiperAnimateCache } from '@/utils/swiper.animate';
 import 'animate.css';
 import 'swiper/css';
@@ -612,6 +612,10 @@ const getReportData = async () => {
   reportData.value = data;
   console.log('res', data);
 };
+const shareReport = async () => {
+  const { data } = await getShare()
+  console.log('share', data);
+}
 getReportData();
 let swiperInstance = ref()
 let firstPage = ref(true)
@@ -678,7 +682,7 @@ const handleAudioStart = () => {
 }
 
 const handleShareReport = () => {
-  console.log('分享战报');
+  shareReport()
 }
 
 </script>
@@ -709,11 +713,8 @@ const handleShareReport = () => {
 }
 
 .swiper-pagination {
-  right: 70px !important;
-  left: auto !important;
-  width: 186px !important;
   bottom: 70px !important;
-  text-align: right !important;
+
 
   .swiper-pagination-bullet-active {
     width: 16px;
