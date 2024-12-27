@@ -76,14 +76,30 @@ const addCoat = () => {
 
 // 擦除操作
 const erase = (e: MouseEvent | TouchEvent) => {
-  if (ctx && posX !== null && posY !== null) {
-    const x = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const y = 'touches' in e ? e.touches[0].clientY : e.clientY;
+  if (!canvas.value || !ctx) return; // 防止 canvas 或 ctx 为 null
 
+  const rect = canvas.value.getBoundingClientRect();
+  let x = 0;
+  let y = 0;
+
+  if ('touches' in e && e.touches.length > 0) {
+    // 触摸事件
+    x = e.touches[0].clientX - rect.left;
+    y = e.touches[0].clientY - rect.top;
+  } else if ('clientX' in e && 'clientY' in e) {
+    // 鼠标事件
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+  }
+
+  // 确保坐标有效后再进行擦除操作
+  if (x >= 0 && y >= 0) {
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
     ctx.arc(x, y, cursorRadius.value, 0, 2 * Math.PI);
     ctx.fill();
+    getScratchedPercentage();
+    // emit('updateScratchedPercentage', currPerct.value); // 更新刮开百分比
   }
 };
 
@@ -131,6 +147,8 @@ const endMouseScratch = (e: MouseEvent) => {
 // 触摸事件处理
 const startTouchScratch = (e: TouchEvent) => {
   if (e.touches.length > 0) {
+    console.log(e.touches[0].clientX, e.touches[0].clientY);
+
     posX = e.touches[0].clientX;
     posY = e.touches[0].clientY;
     canvas.value?.addEventListener('touchmove', eraseTouchMove, { passive: true });
