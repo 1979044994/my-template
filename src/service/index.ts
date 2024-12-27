@@ -66,6 +66,14 @@ function responseInterceptor(response: Response) {
 
 // 创建请求拦截器
 function requestInterceptor(config: any) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token');
+  if (token) {
+    if (!config.headers) {
+      config.headers = {};
+    }
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
   if (config.method === "get" && config.params) {
     let url = config.url + "?" + new URLSearchParams(config.params).toString();
     url = url.slice(0, -1);
@@ -76,6 +84,7 @@ function requestInterceptor(config: any) {
 }
 
 // 创建一个新的 Fetch 请求方法
+// 创建一个新的 Fetch 请求方法
 export default function request(config: any) {
   // 创建请求拦截器
   if (config.interceptors && config.interceptors.requestInterceptor) {
@@ -84,12 +93,17 @@ export default function request(config: any) {
     config = requestInterceptor(config);
   }
 
-  // 发起请求
-  return fetchRequest(config.url, {
+  const fetchOptions: RequestInit = {
     method: config.method,
-    headers,
-    body: JSON.stringify(config.data)
-  })
+    headers
+  };
+
+  if (config.method && !['GET', 'HEAD'].includes(config.method)) {
+    fetchOptions.body = JSON.stringify(config.data);
+  }
+
+  // 发起请求
+  return fetchRequest(config.url, fetchOptions)
     .then(response => {
       // 返回结果
       return response;

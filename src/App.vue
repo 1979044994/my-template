@@ -14,7 +14,7 @@
     <Swiper @swiper="onSwiper" @init="init" @slide-change-transition-end="slideChangeTransitionEnd"
       @slideChange="onSlideChange" direction="vertical" class="mySwiper">
       <swiper-slide>
-        <div class="squre ">
+        <div class="squre first">
           <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
 
           </div>
@@ -29,7 +29,7 @@
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div class="squre">
+        <div class="squre second">
           <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
           </div>
           <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="line animation"></div>
@@ -41,7 +41,7 @@
               <span class="red-text">9999</span>
             </div>
           </div>
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="3s" class="content">
+          <div class="content">
             <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="0.6s"
               class="content-item animation">
               <div class="mode">
@@ -70,7 +70,7 @@
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div class="squre">
+        <div class="squre third">
           <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
             <div class="fb"></div>
           </div>
@@ -111,7 +111,7 @@
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div class="squre">
+        <div class="squre fourth">
           <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
           </div>
           <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1s" class="zzq-right animation">
@@ -163,7 +163,7 @@
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div class="squre">
+        <div class="squre fifth">
           <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
           </div>
           <div swiper-animate-effect="animate__fadeInUpBig" swiper-animate-duration="1s" class="events animation">
@@ -217,7 +217,7 @@
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div class="squre">
+        <div class="squre sixth">
           <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
           </div>
           <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="1s" class="animation main">
@@ -259,7 +259,7 @@
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div class="squre">
+        <div class="squre seventh">
           <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
           </div>
           <div v-if="false" swiper-animate-effect="animate__fadeInLeftBig" swiper-animate-duration="1s"
@@ -318,8 +318,8 @@
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div class="squre">
-          <div class="user-info">
+        <div class="squre eighth">
+          <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.6s" class="user-info animation">
             <div class="user">
               <div class="user-avatar">
                 <img class="avatar-img" src="@/assets/user-avatar.webp" alt="">
@@ -330,9 +330,64 @@
               </div>
             </div>
             <div class="user-border">
-              <div class="user-header"></div>
-              <div class="user-body"></div>
+              <div class="user-header">
+                <div class="header-item">
+                  <span class="red-text">129</span>
+                  <span>全年胜场</span>
+                </div>
+                <div class="header-item">
+                  <span class="red-text">9999</span>
+                  <span>获得帅点</span>
+                </div>
+                <div class="header-item">
+                  <span class="red-text">9999</span>
+                  <span>最高连胜</span>
+                </div>
+              </div>
+              <div class="user-body">
+                <div class="body-item">
+                  <span class="red-text">9999<span class="mini">天</span></span>
+                  <span>累计在线</span>
+                </div>
+                <div class="body-item">
+                  <span class="red-text">9999</span>
+                  <span>自走棋四强</span>
+                </div>
+                <div class="body-item">
+                  <span class="red-text">9999</span>
+                  <span>全场最佳</span>
+                </div>
+              </div>
             </div>
+          </div>
+          <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.9s" class="mbti animation">
+            <div class="mbti-title">我的游戏MBTI是</div>
+            <div class="mbti-value">INTJ</div>
+            <div class="mbti-line"></div>
+            <div class="mbti-content">
+              <div class="mbti-item">
+                <div class="mbti-item-content"> <span class="red-more">I</span>-2024年组队游戏占比低于30%
+                  你更习惯单枪匹马战斗文字文字</div>
+              </div>
+              <div class="mbti-item">
+                <div class="mbti-item-content"> <span class="red-more">I</span>-2024年组队游戏占比低于30%
+                  你更习惯单枪匹马战斗文字文字</div>
+              </div>
+              <div class="mbti-item">
+                <div class="mbti-item-content"> <span class="red-more">I</span>-2024年组队游戏占比低于30%
+                  你更习惯单枪匹马战斗文字文字</div>
+              </div>
+              <div class="mbti-item">
+                <div class="mbti-item-content"> <span class="red-more">I</span>-2024年组队游戏占比低于30%
+                  你更习惯单枪匹马战斗文字文字</div>
+              </div>
+            </div>
+          </div>
+          <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1.2s"
+            class="scratch animation swiper-no-swiping">
+            <scratch imageUrl="https://yjcmndzb.sanguosha.com/%E6%9C%AA%E5%88%AE%E5%BC%80.webp" />
+          </div>
+          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1.5s" class="share animation">分享战报 领取奖励
           </div>
         </div>
       </swiper-slide>
@@ -340,6 +395,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { getReport } from '@/service/api';
 import { swiperAnimate, swiperAnimateCache } from '@/utils/swiper.animate';
 import 'animate.css';
 import 'swiper/css';
@@ -350,6 +406,7 @@ import { EffectFade, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { ref } from 'vue';
 import LoadingPage from './components/LoadingPage.vue';
+import scratch from './components/scratch.vue';
 import SequenceFrameAnimation from './components/SequenceFrameAnimation.vue';
 // import SequenceFrameAnimationVideo from './components/SequenceFrameAnimationVideo.vue';
 import AudioPlayer from './components/AudioPlayer.vue';
@@ -372,8 +429,11 @@ const prizeList = [
     prize: '真布公主殿下',
   }
 ]
-
-
+const getReportData = async () => {
+  const res = await getReport();
+  console.log('res', res);
+};
+getReportData();
 let swiperInstance = ref()
 let firstPage = ref(true)
 
@@ -421,7 +481,7 @@ const handleComponentLoaded = () => {
 };
 
 //音频操作
-const audioSrc = ref('your_audio_file.mp3');
+const audioSrc = 'https://yjcmndzb.sanguosha.com/bgm.mp3';
 const audioPlayer = ref<InstanceType<typeof AudioPlayer> | null>(null);
 
 const handleAudioStart = () => {
