@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import coverImage from '@/assets/un.webp'; // 使用 Vite 导入语法
+import coverImage from '@/assets/un.webp';
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 // 接收父组件传入的图片路径
@@ -31,7 +31,6 @@ let posX: number | null = null;
 let posY: number | null = null;
 const canvas = ref<HTMLCanvasElement | null>(null);
 const currPerct = ref(0);
-
 
 // 提前获取绘图上下文
 let ctx: CanvasRenderingContext2D | null = null;
@@ -77,15 +76,13 @@ const addCoat = () => {
 
 // 擦除操作
 const erase = (e: MouseEvent | TouchEvent) => {
-  console.log('erase');
-
   if (ctx && posX !== null && posY !== null) {
     const x = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const y = 'touches' in e ? e.touches[0].clientY : e.clientY;
 
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
-    ctx.arc(x - canvasWidth.value / 2, y - canvasHeight.value / 2, cursorRadius.value, 0, 2 * Math.PI);
+    ctx.arc(x, y, cursorRadius.value, 0, 2 * Math.PI);
     ctx.fill();
   }
 };
@@ -109,7 +106,7 @@ const startMouseScratch = (e: MouseEvent) => {
   posX = e.clientX;
   posY = e.clientY;
   if (e.button === 0) {
-    canvas.value?.addEventListener('mousemove', eraseMouseMove);
+    canvas.value?.addEventListener('mousemove', eraseMouseMove, { passive: true });
   }
 };
 
@@ -126,6 +123,7 @@ const endMouseScratch = (e: MouseEvent) => {
     getScratchedPercentage();
     if (currPerct.value >= maxEraseArea.value) {
       done.value = true;
+      drawRevealedImage();
     }
   }
 };
@@ -152,7 +150,23 @@ const endTouchScratch = (e: TouchEvent) => {
     getScratchedPercentage();
     if (currPerct.value >= maxEraseArea.value) {
       done.value = true;
+      drawRevealedImage();
     }
+  }
+};
+
+// 绘制刮开后显示的图片
+const drawRevealedImage = () => {
+  if (ctx) {
+    const img = new Image();
+    img.src = props.imageUrl;
+    img.onload = () => {
+      const imgWidth = img.width;
+      const imgHeight = img.height;
+      const x = (canvasWidth.value - imgWidth) / 2;
+      const y = (canvasHeight.value - imgHeight) / 2;
+      ctx.drawImage(img, x, y, imgWidth, imgHeight);
+    };
   }
 };
 
