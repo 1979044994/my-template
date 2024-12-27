@@ -32,15 +32,15 @@ let posY: number | null = null;
 const canvas = ref<HTMLCanvasElement | null>(null);
 const currPerct = ref(0);
 
+
 // 提前获取绘图上下文
 let ctx: CanvasRenderingContext2D | null = null;
 const initContext = () => {
   if (canvas.value) {
-    ctx = canvas.value.getContext('2d');
+    ctx = canvas.value.getContext('2d', { willReadFrequently: true });
   }
 };
 
-// 添加遮罩层（刮刮乐未刮开部分）
 // 添加遮罩层（刮刮乐未刮开部分）
 const addCoat = () => {
   if (ctx) {
@@ -77,6 +77,8 @@ const addCoat = () => {
 
 // 擦除操作
 const erase = (e: MouseEvent | TouchEvent) => {
+  console.log('erase');
+
   if (ctx && posX !== null && posY !== null) {
     const x = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const y = 'touches' in e ? e.touches[0].clientY : e.clientY;
@@ -133,7 +135,7 @@ const startTouchScratch = (e: TouchEvent) => {
   if (e.touches.length > 0) {
     posX = e.touches[0].clientX;
     posY = e.touches[0].clientY;
-    canvas.value?.addEventListener('touchmove', eraseTouchMove);
+    canvas.value?.addEventListener('touchmove', eraseTouchMove, { passive: true });
   }
 };
 

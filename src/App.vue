@@ -322,28 +322,10 @@
                 clickable: true,
               }" :modules="modules" swiper-animate-effect="animate__fadeInLeftBig" swiper-animate-duration="1s"
                 class="generalSwiper animation">
-                <swiper-slide>
-                  <div class="border" style="background-image: url(https://yjcmndzb.sanguosha.com/swlide.png);">
+                <swiper-slide v-for="(item, index) in charList" :key="index">
+                  <div class="border" :style="{ backgroundImage: `url(${item.url})` }">
                     <img class="nothing-general" src="@/assets/general-border.webp" alt="">
-                    <div class="name">名字</div>
-                  </div>
-                </swiper-slide>
-                <swiper-slide>
-                  <div class="border" style="background-image: url(https://yjcmndzb.sanguosha.com/avatar.png);">
-                    <img class="nothing-general" src="@/assets/general-border.webp" alt="">
-                    <div class="name">名字1</div>
-                  </div>
-                </swiper-slide>
-                <swiper-slide>
-                  <div class="border">
-                    <img class="nothing-general" src="@/assets/general-border.webp" alt="">
-                    <div class="name">名字2</div>
-                  </div>
-                </swiper-slide>
-                <swiper-slide>
-                  <div class="border">
-                    <img class="nothing-general" src="@/assets/general-border.webp" alt="">
-                    <div class="name">名字3</div>
+                    <div class="name">{{ item.name }}</div>
                   </div>
                 </swiper-slide>
               </swiper>
@@ -420,7 +402,7 @@
             <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1.2s"
               class="scratch animation swiper-no-swiping">
               <!-- <scratch :imageUrl="reportData?.mbti_img" /> -->
-              <scratch imageUrl="https://yjcmndzb.sanguosha.com/%E6%9C%AA%E5%88%AE%E5%BC%80.webp" />
+              <scratch imageUrl="https://yjcmndzb.sanguosha.com/swlide.png" />
             </div>
             <div @click="handleShareReport" swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1.5s"
               class="share animation">分享战报 领取奖励
@@ -467,6 +449,50 @@ const prizeList = [
     prize: '真布公主殿下',
   }
 ]
+const configImageUrl = 'https://yjcmndzb.sanguosha.com/yjcm/';
+const charList = [
+  {
+    url: `${configImageUrl}yjcm-xukun.jpg`,
+    name: "卤香蛋2"
+  },
+  {
+    url: `${configImageUrl}yjcm-simafu.jpg`,
+    name: "黑暗魔女"
+  },
+  {
+    url: `${configImageUrl}yjcm-xuangongzhu.jpg`,
+    name: "谜城惊雨声"
+  },
+  {
+    url: `${configImageUrl}yjcm-linghuyu.jpg`,
+    name: "浮兮璃璃"
+  },
+  {
+    url: `${configImageUrl}yjcm-majun.jpg`,
+    name: "白日梦花"
+  },
+  {
+    url: `${configImageUrl}yjcm-mouguojia.jpg`,
+    name: "水友1671282085763"
+  },
+  {
+    url: `${configImageUrl}yjcm-xunyuxunyou.png`,
+    name: "刘永单推人"
+  },
+  {
+    url: `${configImageUrl}yjcm-wangmeizhike.jpg`,
+    name: "特莉丝Triss"
+  },
+  {
+    url: `${configImageUrl}yjcm-shenpangtong.jpg`,
+    name: "昵称不合法"
+  },
+  {
+    url: `${configImageUrl}yjcm-peixiu.jpg`,
+    name: "改名因为怕被喷"
+  }
+];
+
 interface ReportData {
 
   account: string;
@@ -683,10 +709,11 @@ const handleShareReport = () => {
 }
 
 .swiper-pagination {
-  right: 49px !important;
+  right: 70px !important;
   left: auto !important;
-  width: 86px !important;
+  width: 186px !important;
   bottom: 70px !important;
+  text-align: right !important;
 
   .swiper-pagination-bullet-active {
     width: 16px;
