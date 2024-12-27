@@ -31,7 +31,7 @@
   /* 占据整个视口宽度 */
 }
 .mySwiper .swiper-slide {
- .first.squre {
+  .first.squre {
     background: url(../swiper/swiper1.webp) top center no-repeat;
     background-size: 100% auto;
     .title {
@@ -79,6 +79,22 @@
         background-size: 100% auto;
         line-height: 37px;
         text-align: center;
+      }
+    }
+    .other {
+      width: 595px;
+      margin: 332px auto;
+      .red-text {
+        line-height: 72px;
+      }
+      .gift {
+
+        font-weight: 400;
+        font-size: 36px;
+        text-align: center;
+        color: #343026;
+        margin-top: 66px;
+        line-height: 60px;
       }
     }
   }
@@ -153,11 +169,13 @@
             margin: 23px 0 0 62px;
           }
           .mode-text {
-            margin-left: 54px;
-            margin-top: 50px;
+            margin-left: 30px;
+            margin-top: 60px;
             font-family: Source Han Sans SC;
             font-weight: bold;
             font-size: 60px;
+            text-align: center;
+            width: 200px;
           }
           .mode-name {
             font-family: Source Han Sans SC;
@@ -204,6 +222,7 @@
       // background: url(@/assets/gennel-border.webp) no-repeat;
       background-repeat: no-repeat;
       background-position: center 8px;
+      // border-radius: 50%;
       background-size: 235px 235px;
       .general-avatar {
         width: 256px;
@@ -211,13 +230,21 @@
         position: relative;
         z-index: 2;
       }
+      .avatar-img {
+        position: absolute;
+        width: 235px;
+        height: 235px;
+        left: 10px;
+        top: 7px;
+        border-radius: 50%;
+      }
       .gennger-rate {
         position: absolute;
         display: flex;
         justify-content: center;
         bottom: 38px;
         left: 23px;
-        z-index: 1;
+        z-index: 3;
         width: 203px;
         height: 63px;
         font-family: Source Han Sans SC;
@@ -246,7 +273,7 @@
       }
       .gennger-name {
         position: absolute;
-        top: 32px;
+        top: 22px;
         right: 24px;
         width: 35px;
         z-index: 3;
@@ -276,6 +303,14 @@
       zoom: 1.2;
       left: 93px;
       top: 900px;
+      .avatar-img {
+        position: absolute;
+        width: 235px;
+        height: 235px;
+        left: 12px;
+        top: 8px;
+        border-radius: 50%;
+      }
     }
   }
 
@@ -297,11 +332,18 @@
       right: 56px;
       .zzq-level {
         position: relative;
-        height: 161px;
+        height: 173px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 200px;
         background: url(@/assets/zzq.webp) no-repeat bottom center;
         background-size: 187px 161px;
         right: -85px;
+        .zzq-level-img {
+          width: 165px;
+          height: 151px;
+        }
       }
       .zzq-num {
         font-family: Source Han Sans SC;
@@ -361,6 +403,7 @@
       align-items: center;
       height: 256px;
       .body-item {
+        position: relative;
         width: 194px;
         height: 190px;
         display: flex;
@@ -391,6 +434,14 @@
             color: #fdeab1;
             letter-spacing: 0.3em;
           }
+        }
+        .body-avatar {
+          width: 173px;
+          height: 173px;
+          left: 10px;
+          border-radius: 50%;
+          top: 3px;
+          position: absolute;
         }
       }
     }
@@ -831,7 +882,7 @@
       height: 68px;
       background: url(@/assets/share.webp) no-repeat;
       background-size: cover;
-      margin: 36px auto;
+      margin: 49px auto;
       text-align: center;
       font-family: Source Han Sans SC;
       font-weight: 400;
@@ -839,7 +890,7 @@
       color: #665247;
       line-height: 68px;
     }
-    .scratch{
+    .scratch {
       position: absolute;
       width: 210px;
       height: 396px;

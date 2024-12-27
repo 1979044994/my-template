@@ -68,15 +68,14 @@ function responseInterceptor(response: Response) {
 function requestInterceptor(config: any) {
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get('token');
-  if (token) {
-    if (!config.headers) {
-      config.headers = {};
-    }
-    config.headers['Authorization'] = `Bearer ${token}`;
+  // if (token) {
+  if (!config.headers) {
+    config.headers = {};
   }
-  if (config.method === "get" && config.params) {
+  // config.headers['Authenticate'] = `testlogin`;
+  config.headers['Authenticate'] = `${token}`;
+  if (config.method === "GET" && config.params) {
     let url = config.url + "?" + new URLSearchParams(config.params).toString();
-    url = url.slice(0, -1);
     config.params = {};
     config.url = url;
   }
@@ -92,9 +91,9 @@ export default function request(config: any) {
   } else {
     config = requestInterceptor(config);
   }
-
+  const { method, headers } = config
   const fetchOptions: RequestInit = {
-    method: config.method,
+    method,
     headers
   };
 

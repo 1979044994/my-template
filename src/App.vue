@@ -15,382 +15,420 @@
       @slideChange="onSlideChange" direction="vertical" class="mySwiper">
       <swiper-slide>
         <div class="squre first">
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
+          <div v-if="reportData && !reportData.is_new && !reportData.is_qq" swiper-animate-effect="animate__fadeIn"
+            swiper-animate-duration="1s" class="title animation">
 
           </div>
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="content normal animation">
+          <div v-if="reportData && !reportData.is_new && !reportData.is_qq" swiper-animate-effect="animate__fadeIn"
+            swiper-animate-duration="1s" class="content normal animation">
             <span>主公在过去一年累计增加</span>
-            <div class="center"><span class="red-text">18378945</span>帅点</div>
-            <div>任<span class="red-text">表骑将军</span></div>
-            <img class="level-icon" src="https://yjcmndzb.sanguosha.com/home-icon.png" alt="">
-            <div class="beyong">超越 <span class="yellow">99.99%</span> 的主公</div>
+            <div class="center"><span class="red-text">{{ reportData?.add_shuai_dian }}</span>帅点</div>
+            <div>任<span class="red-text">{{ reportData?.office_level_name }}</span></div>
+            <img class="level-icon" :src="reportData?.office_level_img" alt="">
+            <div class="beyong">超越 <span class="yellow">{{ reportData?.shuai_dian_rate }}</span> 的主公</div>
           </div>
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="line animation"></div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="squre second">
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
-          </div>
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="line animation"></div>
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="normal animation">
-            <span>全年累计击败敌将数</span>
-            <span class="red-text">9999</span>
-            <div class="num-two">
-              <span>在s99赛季 <span class="red">模式名称</span> 中 取得最高连胜数</span>
-              <span class="red-text">9999</span>
-            </div>
-          </div>
-          <div class="content">
-            <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="0.6s"
-              class="content-item animation">
-              <div class="mode">
-                <img class="mode-icon" src="https://yjcmndzb.sanguosha.com/level-icon.png" alt="">
-                <div class="mode-name">2v2排位</div>
-              </div>
-              <div class="optimum">本年度最高段位</div>
-            </div>
-            <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="0.9s"
-              class="content-item animation">
-              <div class="mode">
-                <div class="mode-text red">9999</div>
-                <div class="mode-name black">身份休闲</div>
-              </div>
-              <div class="optimum">本年度最高积分</div>
-            </div>
-            <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1.2s"
-              class="content-item animation">
-              <div class="mode">
-                <div class="mode-text red">9999</div>
-                <div class="mode-name black">国战天梯</div>
-              </div>
-              <div class="optimum">本年度最高积分</div>
-            </div>
+          <div v-if="reportData && !reportData.is_new && !reportData.is_qq" swiper-animate-effect="animate__fadeIn"
+            swiper-animate-duration="1s" class="line animation"></div>
+          <div class="other" v-else>
+            <div v-if="reportData && reportData.is_qq" class="red-text">抱歉，您当前的渠道不支持 生成年度战报</div>
+            <div v-if="reportData && reportData.is_new" class="red-text">抱歉，未能查询到足够的数据 生成年度战报</div>
+            <div class="gift">小杀奉上薄礼一份，<br />
+              主公可至游戏内信件中领取~</div>
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide>
-        <div class="squre third">
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
-            <div class="fb"></div>
-          </div>
-          <div swiper-animate-effect="animate__fadeInDownBig" swiper-animate-duration="1.2s"
-            style="background-image: url(https://yjcmndzb.sanguosha.com/avatar.png);"
-            class="general general-one animation">
-            <img class="general-avatar" src="@/assets/gennel-border.webp" alt="">
-            <div class="gennger-rate">
-              <div class="more-rate"><span class="rate">39</span> %</div>
-              <div class="feng">/</div>
-              <span class="num">50场</span>
+      <template v-if="reportData && !reportData.is_new && !reportData.is_qq">
+        <swiper-slide>
+          <div class="squre second">
+            <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
             </div>
-            <div class="gennger-name">谋贾诩</div>
-          </div>
-          <div swiper-animate-effect="animate__fadeInDownBig" swiper-animate-duration="0.9s"
-            style="background-image: url(https://yjcmndzb.sanguosha.com/avatar.png);"
-            class="general general-two animation">
-            <img class="general-avatar" src="@/assets/gennel-border.webp" alt="">
-            <div class="gennger-rate">
-              <div class="more-rate"><span class="rate">39</span> %</div>
-              <div class="feng">/</div>
-              <span class="num">50场</span>
-            </div>
-            <div class="gennger-name">谋贾诩</div>
-          </div>
-          <div swiper-animate-effect="animate__fadeInDownBig" swiper-animate-duration="0.6s"
-            style="background-image: url(https://yjcmndzb.sanguosha.com/avatar.png);"
-            class="general general-three animation">
-            <img class="general-avatar" src="@/assets/gennel-border.webp" alt="">
-            <div class="gennger-rate">
-              <div class="more-rate"><span class="rate">39</span> %</div>
-              <div class="feng">/</div>
-
-              <span class="num">50场</span>
-            </div>
-            <div class="gennger-name">谋贾诩</div>
-          </div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="squre fourth">
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
-          </div>
-          <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1s" class="zzq-right animation">
-
-            <div class="zzq-level"></div>
-            <div class="zzq-num">9999</div>
-            <div class="zzq-text">自走棋模式最高段位</div>
-          </div>
-          <div swiper-animate-effect="animate__fadeInUpBig" swiper-animate-duration="1s" class="zzq-boder animation">
-            <div class="zzq-header">
-              <div class="header-item">
-                <span class="red-text">14543</span>
-                <span>游玩局数</span>
-              </div>
-              <div class="header-item">
-                <span class="red-text">14543</span>
-                <span>四强次数</span>
-              </div>
-              <div class="header-item">
-                <span class="red-text">14543</span>
-                <span>夺冠次数</span>
+            <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="line animation"></div>
+            <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="normal animation">
+              <span>全年累计击败敌将数</span>
+              <span class="red-text">{{ reportData?.beat_general }}</span>
+              <div class="num-two">
+                <span>在{{ reportData?.most_win_season
+                  }}赛季<span class="red">S{{ reportData?.most_win_mode }}</span> 中 取得最高连胜数</span>
+                <span class="red-text">{{ reportData?.most_win }}</span>
               </div>
             </div>
-            <div class="zzq-waist">
-              <div class="waist-item">
-                <span class="red-text">14543</span>
-                <span>淘汰主公数</span>
-              </div>
-              <div class="waist-item">
-                <span class="red-text">14543</span>
-                <span>消灭武将数</span>
-              </div>
-            </div>
-            <div class="zzq-body">
-              <div class="body-item" style="background-image: url(https://yjcmndzb.sanguosha.com/avatar.png);">
-                <div class="body-border">
-                  <div class="body-name vertical">张角</div>
+            <div class="content">
+              <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="0.6s"
+                class="content-item animation">
+                <div class="mode">
+                  <img class="mode-icon" :src="reportData?.joy_rank_img" alt="">
+                  <div class="mode-name">{{ reportData?.joy_mode }}</div>
                 </div>
-
+                <div class="optimum">本年度最高段位</div>
               </div>
-              <div class="body-item" style="background-image: url(https://yjcmndzb.sanguosha.com/avatar.png);">
-                <div class="body-border">
-                  <div class="body-name vertical">李世民</div>
+              <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="0.9s"
+                class="content-item animation">
+                <div class="mode">
+                  <div class="mode-text red">{{ reportData?.sf_score }}</div>
+                  <div class="mode-name black">{{ reportData?.sf_name }}</div>
+                </div>
+                <div class="optimum">本年度最高积分</div>
+              </div>
+              <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1.2s"
+                class="content-item animation">
+                <div class="mode">
+                  <div class="mode-text red">{{ reportData?.nation_score }}</div>
+                  <div class="mode-name black">{{ reportData?.nation_name }}</div>
+                </div>
+                <div class="optimum">本年度最高积分</div>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="squre third">
+            <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
+              <div class="fb"></div>
+            </div>
+            <div v-if="reportData?.g3_name" swiper-animate-effect="animate__fadeInDownBig"
+              swiper-animate-duration="1.2s" class="general general-one animation">
+              <img class="general-avatar" src="@/assets/gennel-border.webp" alt="">
+              <img class="avatar-img" :src="reportData?.g3_img" alt="">
+              <div class="gennger-rate">
+                <div class="more-rate"><span class="rate">{{
+                  reportData && reportData.g3_rate ?
+                    Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
+                    0
+                }}</span> %</div>
+                <div class="feng">/</div>
+                <span class="num">{{ reportData?.g3_num }}场</span>
+              </div>
+              <div class="gennger-name">{{ reportData?.g3_name }}</div>
+            </div>
+            <div v-if="reportData?.g2_name" swiper-animate-effect="animate__fadeInDownBig"
+              swiper-animate-duration="0.9s" class="general general-two animation">
+              <img class="general-avatar" src="@/assets/gennel-border.webp" alt="">
+              <img class="avatar-img" :src="reportData?.g2_img" alt="">
+              <div class="gennger-rate">
+                <div class="more-rate"><span class="rate">{{
+                  reportData && reportData.g2_rate ?
+                    Math.floor(parseFloat(reportData.g2_rate.replace('%', ''))) :
+                    0
+                }}</span> %</div>
+                <div class="feng">/</div>
+                <span class="num">{{ reportData?.g2_num }}场</span>
+              </div>
+              <div class="gennger-name">{{ reportData?.g2_name }}</div>
+            </div>
+            <div swiper-animate-effect="animate__fadeInDownBig" swiper-animate-duration="0.6s"
+              class="general general-three animation">
+              <img class="avatar-img" :src="reportData?.g1_img" alt="">
+              <img class="general-avatar" src="@/assets/gennel-border.webp" alt="">
+              <div class="gennger-rate">
+                <div class="more-rate"><span class="rate"> {{
+                  reportData && reportData.g1_rate ?
+                    Math.floor(parseFloat(reportData.g1_rate.replace('%', ''))) :
+                    0
+                }}</span> %</div>
+                <div class="feng">/</div>
+
+                <span class="num">{{ reportData?.g1_num }}场</span>
+              </div>
+              <div class="gennger-name">{{ reportData?.g1_name }}</div>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide v-if="reportData && reportData.zzq_num > 0">
+          <div class="squre fourth">
+            <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
+            </div>
+            <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1s" class="zzq-right animation">
+
+              <div class="zzq-level">
+
+                <img class="zzq-level-img" :src="reportData?.zzq_rank_img" alt="">
+              </div>
+              <div class="zzq-num">{{ reportData?.zzq_rank_score }}</div>
+              <div class="zzq-text">自走棋模式最高段位</div>
+            </div>
+            <div swiper-animate-effect="animate__fadeInUpBig" swiper-animate-duration="1s" class="zzq-boder animation">
+              <div class="zzq-header">
+                <div class="header-item">
+                  <span class="red-text">{{ reportData?.zzq_num }}</span>
+                  <span>游玩局数</span>
+                </div>
+                <div class="header-item">
+                  <span class="red-text">{{ reportData?.zzq_four }}</span>
+                  <span>四强次数</span>
+                </div>
+                <div class="header-item">
+                  <span class="red-text">{{ reportData?.zzq_win }}</span>
+                  <span>夺冠次数</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="squre fifth">
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
-          </div>
-          <div swiper-animate-effect="animate__fadeInUpBig" swiper-animate-duration="1s" class="events animation">
-            <div class="level-info">
-              <span class="level-title">2024年,三国杀技术等级评定正式上线 主公踊跃参与，荣获评级</span>
-              <div class="level-num">
-                <img class="major" src="@/assets/major.webp" alt="">
-                <span class="amateur-color">业余一段</span>
+              <div class="zzq-waist">
+                <div class="waist-item">
+                  <span class="red-text">{{ reportData?.zzq_kill_general }}</span>
+                  <span>淘汰主公数</span>
+                </div>
+                <div class="waist-item">
+                  <span class="red-text">{{ reportData?.zzq_kill_chess }}</span>
+                  <span>消灭武将数</span>
+                </div>
               </div>
-            </div>
-
-            <div v-if="false" class="events-border">
-              <div class="events-title">
-                小杀全民赛也在2024年全面焕新
-              </div>
-              <div class="line"></div>
-              <div class="num">
-                <span> 主公夺得全民赛胜场数</span>
-                <span class="red-text">999</span>
-              </div>
-              <div class="line"></div>
-              <div class="num">
-                <span> 主公夺得全民赛胜场数</span>
-                <span class="red-text">999</span>
-              </div>
-              <div class="line"></div>
-              <div class="events-footer">
-                小杀全民赛也在2024年全面焕新
-              </div>
-            </div>
-            <div class="events-borders">
-              <div class="events-title">
-                2024,小杀全民赛再启航，他们站上荣耀之巅
-              </div>
-              <div class="events-body">
-                <div v-for="(item, index) in prizeList" class="reason-item">
-                  <div class="reason-header">- S{{ index + 2 }} -</div>
-                  <div class="reason-box">
-                    <span class="name">{{ item.name }}</span>
-                    <span class="name">{{ item.prize }}</span>
+              <div class="zzq-body">
+                <div class="body-item">
+                  <img class="body-avatar" :src="reportData?.zzq_total_general_img" alt="">
+                  <div class="body-border">
+                    <div class="body-name vertical">{{ reportData?.zzq_total_general_name }}</div>
+                  </div>
+                </div>
+                <div class="body-item">
+                  <img class="body-avatar" :src="reportData?.zzq_four_general_img" alt="">
+                  <div class="body-border">
+                    <div class="body-name vertical">{{ reportData?.zzq_four_general_name }}</div>
                   </div>
                 </div>
               </div>
+            </div>
+
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="squre fifth">
+            <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
+            </div>
+            <div swiper-animate-effect="animate__fadeInUpBig" swiper-animate-duration="1s" class="events animation">
+              <div v-if="reportData?.qm_dw" class="level-info">
+                <span class="level-title">2024年,三国杀技术等级评定正式上线 主公踊跃参与，荣获评级</span>
+                <div class="level-num">
+                  <img class="major" v-if="checkSpeciality(reportData?.qm_dw)" src="@/assets/major.webp" alt="">
+                  <img v-else src="@/assets/amateur.webp" class="amateur" alt="">
+                  <span :class="checkSpeciality(reportData?.qm_dw) ? 'major-color' : 'amateur-color'">{{
+                    reportData?.qm_dw
+                  }}</span>
+                </div>
+              </div>
+
+              <div v-if="reportData && reportData.qm" class="events-border">
+                <div class="events-title">
+                  小杀全民赛也在2024年全面焕新
+                </div>
+                <div class="line"></div>
+                <div class="num">
+                  <span> 主公夺得全民赛胜场数</span>
+                  <span class="red-text">{{ reportData?.qm_win }}</span>
+                </div>
+                <div class="line"></div>
+                <div class="num">
+                  <span> 第{{ reportData?.qm_rank_season }}届小杀全民赛积分排名</span>
+                  <span class="red-text">{{ reportData?.qm_rank }}</span>
+                </div>
+                <div class="line"></div>
+                <div class="events-footer">
+                  小杀全民赛也在2024年全面焕新
+                </div>
+              </div>
+              <div v-else class="events-borders">
+                <div class="events-title">
+                  2024,小杀全民赛再启航，他们站上荣耀之巅
+                </div>
+                <div class="events-body">
+                  <div v-for="(item, index) in prizeList" class="reason-item">
+                    <div class="reason-header">- S{{ index + 2 }} -</div>
+                    <div class="reason-box">
+                      <span class="name">{{ item.name }}</span>
+                      <span class="name">{{ item.prize }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="line"></div>
+                <div class="events-footer">
+                  未来，期待你能大放异彩
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="squre sixth">
+            <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
+            </div>
+            <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="1s" class="animation main">
               <div class="line"></div>
-              <div class="events-footer">
-                未来，期待你能大放异彩
-              </div>
-            </div>
-          </div>
+              <div class="achievement ">
 
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="squre sixth">
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
+                <div v-if="reportData && reportData?.get_general_date" class="achievement-item">
+                  <span class="time">{{ reportData?.get_general_date }}</span>
+                  <p class="content">
+                    通过 <span class="red"> {{ activityMap.get(reportData?.get_general_method) }}</span>,获 得了武将<span
+                      class="red"> {{ reportData?.get_general }}</span>,天降洪福，举世皆 惊
+                  </p>
+                </div>
+                <div v-if="reportData && reportData?.get_skin_date" class="achievement-item">
+                  <span class="time">{{ reportData?.get_skin_date }}</span>
+                  <p class="content">
+                    通过<span class="red"> {{ skinAcquisitionMap.get(reportData?.get_skin_method) }}</span>,获得 了皮肤<span
+                      class="red"> {{ reportData?.get_skin }}</span>,鸿 运当头，幸哉幸哉
+                  </p>
+                </div>
+                <div v-if="reportData && reportData?.get_sprite_date" class="achievement-item">
+                  <span class="time">{{ reportData?.get_sprite_date }}</span>
+                  <p class="content">
+                    是用普通转生丹成功获得<span class="red">{{ reportData?.get_sprite_rank }}</span>将 灵<span class="red"> {{
+                      reportData?.get_sprite }}</span>,转生轮回，逆天改命
+                  </p>
+                </div>
+                <div class="achievement-item">
+                  <span class="time">{{ reportData?.most_game_date }}</span>
+                  <p class="content">
+                    主公发动了<span class="red">{{ reportData?.most_game }}</span>次战役，整个三国都被你如滔天之 焰的斗志点亮
+                  </p>
+                </div>
+                <div class="achievement-item">
+                  <span class="time">{{ reportData?.latest_game_date }}</span>
+                  <p class="content">
+                    主公于<span class="red">{{ reportData?.latest_game_time }}</span>发动了今年最晚的一次战斗，敌将在 半睡半醒之间被你轻松解决
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="1s" class="animation main">
-            <div class="line"></div>
-            <div class="achievement ">
+        </swiper-slide>
+        <swiper-slide>
+          <div class="squre seventh">
+            <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
+            </div>
+            <div v-if="reportData && reportData.general_post > 0" swiper-animate-effect="animate__fadeInLeftBig"
+              swiper-animate-duration="1s" class="submission animation">
+              <div class="line"></div>
+              <div class="content">
+                <span>2024年</span><br />
+                <p>
+                  <span class="normal">“一将成名”武将设计大赛共开展 <span class="red-text">4届</span></span><br />
+                  <span class="normal">主公共参与投稿 <span class="red-text">{{ reportData.general_post }}</span>
+                    次</span><br />
+                  <span class="normal"> 累计获票 <span class="red-text">{{ reportData.general_tickets }}</span></span><br />
+                  <span class="normal"> 在 <span class="red-text">{{ reportData.general_title }}</span>命题中荣获</span><br />
+                  <span class="normal"> <span class="red-text">{{ reportData.general_prize }}</span></span>
+                </p>
 
-              <div class="achievement-item">
-                <span class="time">2023年3月15日</span>
-                <p class="content">
-                  通过 <span class="red"> 最多有六个字</span>,获 得了武将<span class="red"> 最多有六个 字</span>,天降洪福，举世皆 惊
-                </p>
-              </div>
-              <div class="achievement-item">
-                <span class="time">2023年3月15日</span>
-                <p class="content">
-                  通过<span class="red"> 最多有六个字</span>,获得 了皮肤<span class="red"> 最多有六个字</span>,鸿 运当头，幸哉幸哉
-                </p>
-              </div>
-              <div class="achievement-item">
-                <span class="time">2023年3月15日</span>
-                <p class="content">
-                  是用普通转生丹成功获得<span class="red">两字</span>将 灵<span class="red"> 三个字</span>,转生轮回，逆天改命
-                </p>
-              </div>
-              <div class="achievement-item">
-                <span class="time">2023年3月15日</span>
-                <p class="content">
-                  主公发动了<span class="red">121</span>次战役，整个三国都被你如滔天之 焰的斗志点亮
-                </p>
-              </div>
-              <div class="achievement-item">
-                <span class="time">2023年3月15日</span>
-                <p class="content">
-                  主公于<span class="red">23:50</span>发动了今年最晚的一次战斗，敌将在 半睡半醒之间被你轻松解决
-                </p>
               </div>
             </div>
-          </div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="squre seventh">
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
-          </div>
-          <div v-if="false" swiper-animate-effect="animate__fadeInLeftBig" swiper-animate-duration="1s"
-            class="submission animation">
-            <div class="line"></div>
-            <div class="content">
-              <span>2024年</span><br />
-              <p>
-                <span class="normal">“一将成名”武将设计大赛共开展 <span class="red-text">4届</span></span><br />
-                <span class="normal">主公共参与投稿 <span class="red-text">99</span> 次</span><br />
-                <span class="normal"> 累计获票 <span class="red-text">99</span></span><br />
-                <span class="normal"> 在 <span class="red-text">望梅止渴</span>命题中荣获</span><br />
-                <span class="normal"> <span class="red-text">最佳技能设计奖</span></span>
-              </p>
+            <div v-else class="nothing">
+              <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1s"
+                class="nothing-title animation">
+                <span> 2024年 </span>
+                <span> “一将成名”武将设计大赛共开展 <span class="red-text">4届</span></span>
+                <span> 10位命题武将，在诸位的巧思之下焕发新生</span>
+              </div>
+              <swiper :spaceBetween="30" :effect="'fade'" :pagination="{
+                clickable: true,
+              }" :modules="modules" swiper-animate-effect="animate__fadeInLeftBig" swiper-animate-duration="1s"
+                class="generalSwiper animation">
+                <swiper-slide>
+                  <div class="border" style="background-image: url(https://yjcmndzb.sanguosha.com/swlide.png);">
+                    <img class="nothing-general" src="@/assets/general-border.webp" alt="">
+                    <div class="name">名字</div>
+                  </div>
+                </swiper-slide>
+                <swiper-slide>
+                  <div class="border" style="background-image: url(https://yjcmndzb.sanguosha.com/avatar.png);">
+                    <img class="nothing-general" src="@/assets/general-border.webp" alt="">
+                    <div class="name">名字1</div>
+                  </div>
+                </swiper-slide>
+                <swiper-slide>
+                  <div class="border">
+                    <img class="nothing-general" src="@/assets/general-border.webp" alt="">
+                    <div class="name">名字2</div>
+                  </div>
+                </swiper-slide>
+                <swiper-slide>
+                  <div class="border">
+                    <img class="nothing-general" src="@/assets/general-border.webp" alt="">
+                    <div class="name">名字3</div>
+                  </div>
+                </swiper-slide>
+              </swiper>
 
             </div>
           </div>
-          <div class="nothing">
-            <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1s"
-              class="nothing-title animation">
-              <span> 2024年 </span>
-              <span> “一将成名”武将设计大赛共开展 <span class="red-text">4届</span></span>
-              <span> 10位命题武将，在诸位的巧思之下焕发新生</span>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="squre eighth">
+            <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.6s" class="user-info animation">
+              <div class="user">
+                <div class="user-avatar" :style="{ backgroundImage: `url(${reportData?.avatar})` }">
+                  <img class="avatar-img" src="@/assets/user-avatar.webp" alt="">
+                </div>
+                <div class="user-text">
+                  <div class="user-name">{{ reportData?.nickname }}</div>
+                  <div class="user-level">{{ reportData?.office_level_name }}</div>
+                </div>
+              </div>
+              <div class="user-border">
+                <div class="user-header">
+                  <div class="header-item">
+                    <span class="red-text">{{ reportData?.total_win }}</span>
+                    <span>全年胜场</span>
+                  </div>
+                  <div class="header-item">
+                    <span class="red-text">{{ reportData?.shuai_dian }}</span>
+                    <span>获得帅点</span>
+                  </div>
+                  <div class="header-item">
+                    <span class="red-text">{{ reportData?.max_win }}</span>
+                    <span>最高连胜</span>
+                  </div>
+                </div>
+                <div class="user-body">
+                  <div class="body-item">
+                    <span class="red-text">{{ reportData?.online }}<span class="mini">天</span></span>
+                    <span>累计在线</span>
+                  </div>
+                  <div class="body-item">
+                    <span class="red-text">{{ reportData?.four }}</span>
+                    <span>自走棋四强</span>
+                  </div>
+                  <div class="body-item">
+                    <span class="red-text">{{ reportData?.mvp }}</span>
+                    <span>全场最佳</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <swiper :spaceBetween="30" :effect="'fade'" :pagination="{
-              clickable: true,
-            }" :modules="modules" swiper-animate-effect="animate__fadeInLeftBig" swiper-animate-duration="1s"
-              class="generalSwiper animation">
-              <swiper-slide>
-                <div class="border" style="background-image: url(https://yjcmndzb.sanguosha.com/swlide.png);">
-                  <img class="nothing-general" src="@/assets/general-border.webp" alt="">
-                  <div class="name">名字</div>
+            <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.9s" class="mbti animation">
+              <div class="mbti-title">我的游戏MBTI是</div>
+              <div class="mbti-value">{{ MBTI }}</div>
+              <div class="mbti-line"></div>
+              <div class="mbti-content">
+                <div class="mbti-item">
+                  <div class="mbti-item-content"> <span class="red-more">{{ reportData?.mbti1 }}</span>-{{
+                    personalityMap.get(reportData?.mbti1 ?? '') }}</div>
                 </div>
-              </swiper-slide>
-              <swiper-slide>
-                <div class="border" style="background-image: url(https://yjcmndzb.sanguosha.com/avatar.png);">
-                  <img class="nothing-general" src="@/assets/general-border.webp" alt="">
-                  <div class="name">名字1</div>
+                <div class="mbti-item">
+                  <div class="mbti-item-content"> <span class="red-more">{{ reportData?.mbti2 }}</span>-{{
+                    personalityMap.get(reportData?.mbti2 ?? '') }}</div>
                 </div>
-              </swiper-slide>
-              <swiper-slide>
-                <div class="border">
-                  <img class="nothing-general" src="@/assets/general-border.webp" alt="">
-                  <div class="name">名字2</div>
+                <div class="mbti-item">
+                  <div class="mbti-item-content"> <span class="red-more">{{ reportData?.mbti3 }}</span>-{{
+                    personalityMap.get(reportData?.mbti3 ?? '') }}</div>
                 </div>
-              </swiper-slide>
-              <swiper-slide>
-                <div class="border">
-                  <img class="nothing-general" src="@/assets/general-border.webp" alt="">
-                  <div class="name">名字3</div>
+                <div class="mbti-item">
+                  <div class="mbti-item-content"> <span class="red-more">{{ reportData?.mbti4 }}</span>-{{
+                    personalityMap.get(reportData?.mbti4 ?? '') }}</div>
                 </div>
-              </swiper-slide>
-            </swiper>
+              </div>
+            </div>
+            <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1.2s"
+              class="scratch animation swiper-no-swiping">
+              <!-- <scratch :imageUrl="reportData?.mbti_img" /> -->
+              <scratch imageUrl="https://yjcmndzb.sanguosha.com/%E6%9C%AA%E5%88%AE%E5%BC%80.webp" />
+            </div>
+            <div @click="handleShareReport" swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1.5s"
+              class="share animation">分享战报 领取奖励
+            </div>
+          </div>
+        </swiper-slide>
 
-          </div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="squre eighth">
-          <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.6s" class="user-info animation">
-            <div class="user">
-              <div class="user-avatar">
-                <img class="avatar-img" src="@/assets/user-avatar.webp" alt="">
-              </div>
-              <div class="user-text">
-                <div class="user-name">昵称最多六字</div>
-                <div class="user-level">上将军</div>
-              </div>
-            </div>
-            <div class="user-border">
-              <div class="user-header">
-                <div class="header-item">
-                  <span class="red-text">129</span>
-                  <span>全年胜场</span>
-                </div>
-                <div class="header-item">
-                  <span class="red-text">9999</span>
-                  <span>获得帅点</span>
-                </div>
-                <div class="header-item">
-                  <span class="red-text">9999</span>
-                  <span>最高连胜</span>
-                </div>
-              </div>
-              <div class="user-body">
-                <div class="body-item">
-                  <span class="red-text">9999<span class="mini">天</span></span>
-                  <span>累计在线</span>
-                </div>
-                <div class="body-item">
-                  <span class="red-text">9999</span>
-                  <span>自走棋四强</span>
-                </div>
-                <div class="body-item">
-                  <span class="red-text">9999</span>
-                  <span>全场最佳</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.9s" class="mbti animation">
-            <div class="mbti-title">我的游戏MBTI是</div>
-            <div class="mbti-value">INTJ</div>
-            <div class="mbti-line"></div>
-            <div class="mbti-content">
-              <div class="mbti-item">
-                <div class="mbti-item-content"> <span class="red-more">I</span>-2024年组队游戏占比低于30%
-                  你更习惯单枪匹马战斗文字文字</div>
-              </div>
-              <div class="mbti-item">
-                <div class="mbti-item-content"> <span class="red-more">I</span>-2024年组队游戏占比低于30%
-                  你更习惯单枪匹马战斗文字文字</div>
-              </div>
-              <div class="mbti-item">
-                <div class="mbti-item-content"> <span class="red-more">I</span>-2024年组队游戏占比低于30%
-                  你更习惯单枪匹马战斗文字文字</div>
-              </div>
-              <div class="mbti-item">
-                <div class="mbti-item-content"> <span class="red-more">I</span>-2024年组队游戏占比低于30%
-                  你更习惯单枪匹马战斗文字文字</div>
-              </div>
-            </div>
-          </div>
-          <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1.2s"
-            class="scratch animation swiper-no-swiping">
-            <scratch imageUrl="https://yjcmndzb.sanguosha.com/%E6%9C%AA%E5%88%AE%E5%BC%80.webp" />
-          </div>
-          <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1.5s" class="share animation">分享战报 领取奖励
-          </div>
-        </div>
-      </swiper-slide>
+      </template>
     </Swiper>
   </div>
 </template>
@@ -404,7 +442,7 @@ import 'swiper/css/mousewheel';
 import 'swiper/css/pagination';
 import { EffectFade, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import LoadingPage from './components/LoadingPage.vue';
 import scratch from './components/scratch.vue';
 import SequenceFrameAnimation from './components/SequenceFrameAnimation.vue';
@@ -429,14 +467,128 @@ const prizeList = [
     prize: '真布公主殿下',
   }
 ]
+interface ReportData {
+
+  account: string;
+  add_shuai_dian: number;
+  avatar: string;
+  beat_general: number;
+  four: number;
+  g1_img: string;
+  g1_name: string;
+  g1_num: string;
+  g1_rate: string;
+  g1_resource: string;
+  g2_img: string;
+  g2_name: string;
+  g2_num: string;
+  g2_rate: string;
+  g2_resource: string;
+  g3_img: string;
+  g3_name: string;
+  g3_num: string;
+  g3_rate: string;
+  g3_resource: string;
+  general_post: number;
+  general_prize: string;
+  general_tickets: number;
+  general_title: string;
+  get_general: string;
+  get_general_date: string;
+  get_general_method: number;
+  get_skin: string;
+  get_skin_date: string;
+  get_skin_method: number;
+  get_sprite: string;
+  get_sprite_date: string;
+  get_sprite_rank: string;
+  is_new: number;
+  is_qq: number;
+  joy_mode: string;
+  joy_rank_img: string;
+  joy_rank_name: string;
+  latest_game_date: string;
+  latest_game_time: string;
+  max_win: number;
+  mbti1: string;
+  mbti2: string;
+  mbti3: string;
+  mbti4: string;
+  mbti_img: string;
+  most_game: number;
+  most_game_date: string;
+  most_win: number;
+  most_win_mode: string;
+  most_win_season: string;
+  mvp: number;
+  nation_name: string;
+  nation_score: number;
+  nickname: string;
+  office_level: number;
+  office_level_img: string;
+  office_level_name: string;
+  online: number;
+  qm: number;
+  qm_dw: string;
+  qm_rank: number;
+  qm_rank_season: string;
+  qm_win: number;
+  sf_name: string;
+  sf_score: number;
+  shuai_dian: number;
+  shuai_dian_rate: string;
+  total_win: number;
+  zzq_four: number;
+  zzq_four_general_img: string;
+  zzq_four_general_name: string;
+  zzq_four_general_resource: string;
+  zzq_kill_chess: number;
+  zzq_kill_general: number;
+  zzq_num: number;
+  zzq_rank_img: string;
+  zzq_rank_score: number;
+  zzq_total_general_img: string;
+  zzq_total_general_name: string;
+  zzq_total_general_resource: string;
+  zzq_win: number;
+
+
+}
+const activityMap = new Map([
+  [1, "开启武庙宝箱"],
+  [2, "开启神武宝箱"],
+  [3, "开启谋宝箱"],
+  [4, "珍宝"],
+  [5, "祈福"],
+  [6, "开启星河宝箱"],
+  [7, "如意签"],
+  [8, "纳贤"],
+  [9, "招募"]
+]);
+const skinAcquisitionMap = new Map([
+  [1, "锦绣"],
+  [2, "皮肤开包"]
+]);
+
+const personalityMap = new Map([
+  ['E', '主公广结天下好友，并肩作战是你最闪耀的时刻'],
+  ['I', '王者向来孤独，主公真是单枪匹马孤胆英雄！'],
+  ['S', '主公品味专一，执着于经典，有着你自己的坚守'],
+  ['N', '主公勇于尝试新事物，未知对你有着莫大的吸引力'],
+  ['T', '主公颇为内敛，有着不以物喜，不以己悲的胸怀'],
+  ['F', '主公敢爱敢恨，谁不喜欢“打直球”的人呢？'],
+  ['J', '主公累计登录超过30天，“出勤率”超高！'],
+  ['P', '主公累计登录不足30天，小杀期待与你更多相遇~']
+]);
+const reportData = ref<ReportData | null>(null);
 const getReportData = async () => {
-  const res = await getReport();
-  console.log('res', res);
+  const { data: { data } } = await getReport();
+  reportData.value = data;
+  console.log('res', data);
 };
 getReportData();
 let swiperInstance = ref()
 let firstPage = ref(true)
-
 const openTrigger = ref(false);
 
 const onSwiper = (swiper: any) => {
@@ -451,17 +603,22 @@ const slideChangeTransitionEnd = (e: any) => {
 
   swiperAnimate(e);
 }
-function getRandomBoolean() {
-  return Math.random() < 0.5;
+const checkSpeciality = (str: string) => {
+  if (typeof str === "string" && str.length >= 2) {
+    const firstTwoChars = str.slice(0, 2);
+    return firstTwoChars === "专业";
+  }
+  return false;
 }
-
 const onSlideChange = (swiper: { activeIndex: any; }) => {
   const { activeIndex } = swiper
   // new WOW().init()
   console.log('slide change', swiper, activeIndex);
 };
 const modules = [Pagination, EffectFade];
-
+const MBTI = computed(() => {
+  return (reportData.value?.mbti1 ?? '') + (reportData.value?.mbti2 ?? '') + (reportData.value?.mbti3 ?? '') + (reportData.value?.mbti4 ?? '')
+})
 const handleVideoEnded = (e: any) => {
   console.log('video ended', e);
   firstPage.value = false
@@ -494,6 +651,9 @@ const handleAudioStart = () => {
   }
 }
 
+const handleShareReport = () => {
+  console.log('分享战报');
+}
 
 </script>
 

@@ -58,7 +58,7 @@ export default defineConfig(({ command, mode }) => {
         ],
       },
     },
-    base: VITE_NODE_ENV === 'production' ? './' : './',
+    base: VITE_NODE_ENV === 'production' ? 'https://yjcmndzb.sanguosha.com/' : './',
     server: {
       host: "0.0.0.0",
     },

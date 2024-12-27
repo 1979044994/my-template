@@ -30,15 +30,16 @@ export function generateSignature(obj: Record<string, any> | null, secret = 'ikk
     }
   }
   const toBeHashed = paramString + secret;
+  console.log(toBeHashed, 'toBeHashed', md5(toBeHashed), 'md5(toBeHashed)');
   return { sign: md5(toBeHashed), timestamp: sortedParams.timestamp };
 }
 
 export const getReport = (param: any = {}) => {
   const { sign, timestamp } = generateSignature(param);
-  return request({ url: `/v1/report2024`, method: 'GET', data: { ...param, sign, timestamp } });
+  return request({ url: `/v1/report2024`, method: 'GET', params: { ...param, sign, timestamp } });
 };
 
 export const getShare = (param: any = {}) => {
   const { sign, timestamp } = generateSignature(param);
-  return request({ url: `/v1/report2024/share`, method: 'GET', data: { ...param, sign, timestamp } });
+  return request({ url: `/v1/report2024/share`, method: 'GET', params: { ...param, sign, timestamp } });
 };

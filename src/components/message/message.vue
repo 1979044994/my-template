@@ -1,6 +1,6 @@
 <template>
   <div class="pop-message" :style="style[type]" v-show="visible">
-    <i class="icon" :class="[style[type].icon]"></i>
+    <!-- <i class="icon" :class="[style[type].icon]"></i> -->
     <span class="text">{{ str }}</span>
   </div>
 </template>

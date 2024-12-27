@@ -1,160 +1,221 @@
 <template>
-  <div class="scratch-canvas">
-    <img src="https://yjcmndzb.sanguosha.com/un.webp" alt="pic" />
-    <canvas ref="canvas" :width="width" :height="height"></canvas>
+  <div class="scratch-card">
+    <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import coverImage from '@/assets/un.webp'; // 使用 Vite 导入语法
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
-const width = 400;
-const height = 300;
-const canvas = ref<HTMLCanvasElement | null>(null);
-const ctx = ref<CanvasRenderingContext2D | null>(null);
-const done = ref(false);
-const currPerct = ref(0);
-const posX = ref(0);
-const posY = ref(0);
-const maskColor = 'grey';
-const cursorRadius = 10;
-const maxEraseArea = 10;
-const text = '刮一刮';
-
-const firstEraseCbk = () => {
-  console.log('第一次刮的回调');
-};
-const lastEraseCbk = () => {
-  console.log('刮开的回调');
-};
-
-const reset = () => {
-  done.value = false;
-  currPerct.value = 0;
-  if (ctx.value) {
-    ctx.value.clearRect(0, 0, width, height);
-    addCoat();
-  }
-};
-
-onMounted(() => {
-  if (canvas.value) {
-    ctx.value = canvas.value.getContext('2d');
-    if (ctx.value) {
-      addCoat();
-    }
+// 接收父组件传入的图片路径
+const props = defineProps({
+  imageUrl: {
+    type: String,
+    required: true
+  },
+  // 自定义未刮开时显示的内容，不传则无额外绘制
+  coverContent: {
+    type: String,
+    default: ''
   }
 });
 
+const canvasWidth = ref(400);
+const canvasHeight = ref(300);
+const maskColor = ref('grey');
+const cursorRadius = ref(10);
+const maxEraseArea = ref(90);
+const done = ref(false);
+let posX: number | null = null;
+let posY: number | null = null;
+const canvas = ref<HTMLCanvasElement | null>(null);
+const currPerct = ref(0);
+
+// 提前获取绘图上下文
+let ctx: CanvasRenderingContext2D | null = null;
+const initContext = () => {
+  if (canvas.value) {
+    ctx = canvas.value.getContext('2d');
+  }
+};
+
+// 添加遮罩层（刮刮乐未刮开部分）
+// 添加遮罩层（刮刮乐未刮开部分）
 const addCoat = () => {
-  if (ctx.value) {
-    ctx.value.beginPath();
-    ctx.value.fillStyle = maskColor;
-    ctx.value.fillRect(0, 0, width, height);
-    if (text) {
-      ctx.value.font = 'bold 48px serif';
-      ctx.value.fillStyle = '#fff';
-      ctx.value.textAlign = 'center';
-      ctx.value.textBaseline = 'middle';
-      ctx.value.fillText(text, width / 2, height / 2);
-    }
+  if (ctx) {
+    const width = canvasWidth.value;
+    const height = canvasHeight.value;
+    // 先清除画布
+    ctx.clearRect(0, 0, width, height);
+
+    // 绘制遮罩层
+    ctx.beginPath();
+    ctx.fillStyle = maskColor.value;
+    ctx.fillRect(0, 0, width, height);
+
+    // 绘制未刮开时的图片
+    const img = new Image();
+    img.src = coverImage;
+    img.onload = () => {
+      let imgWidth = img.width;
+      let imgHeight = img.height;
+      // 计算等比例缩放的尺寸
+      if (imgWidth > width || imgHeight > height) {
+        const ratioW = width / imgWidth;
+        const ratioH = height / imgHeight;
+        const ratio = Math.min(ratioW, ratioH);
+        imgWidth = imgWidth * ratio;
+        imgHeight = imgHeight * ratio;
+      }
+      const x = (width - imgWidth) / 2;
+      const y = (height - imgHeight) / 2;
+      ctx.drawImage(img, x, y, imgWidth, imgHeight);
+    };
   }
 };
 
-const erase = (e: MouseEvent) => {
-  if (done.value) return;
-  const x = e.clientX;
-  const y = e.clientY;
-  if (ctx.value) {
-    ctx.value.globalCompositeOperation = 'destination-out';
-    ctx.value.beginPath();
-    ctx.value.arc(x - width / 2, y, cursorRadius, 0, Math.PI * 2);
-    ctx.value.fill();
+// 擦除操作
+const erase = (e: MouseEvent | TouchEvent) => {
+  if (ctx && posX !== null && posY !== null) {
+    const x = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const y = 'touches' in e ? e.touches[0].clientY : e.clientY;
+
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x - canvasWidth.value / 2, y - canvasHeight.value / 2, cursorRadius.value, 0, 2 * Math.PI);
+    ctx.fill();
   }
 };
 
+// 获取刮开百分比
 const getScratchedPercentage = () => {
-  if (ctx.value) {
-    const pixels = ctx.value.getImageData(0, 0, width, height).data;
+  if (ctx) {
+    const pixels = ctx.getImageData(0, 0, canvasWidth.value, canvasHeight.value).data;
     let transparentPixels = 0;
     for (let i = 0; i < pixels.length; i += 4) {
       if (pixels[i + 3] < 128) {
         transparentPixels++;
       }
     }
-    currPerct.value = ((transparentPixels / pixels.length * 4 * 100)).toFixed(2);
+    currPerct.value = ((transparentPixels / (pixels.length / 4)) * 100).toFixed(2);
   }
 };
 
-const fadeOut = (alpha: number) => {
-  return () => {
-    if (ctx.value) {
-      ctx.value.save();
-      ctx.value.globalCompositeOperation = 'source-in';
-      ctx.value.fillStyle = ctx.value.fillStyle + (alpha -= 1).toString(16);
-      ctx.value.fillRect(0, 0, width, height);
-      ctx.value.restore();
-      if (alpha > 210) {
-        requestAnimationFrame(() => fadeOut(alpha)());
-      }
-    }
-  };
+// 鼠标事件处理
+const startMouseScratch = (e: MouseEvent) => {
+  posX = e.clientX;
+  posY = e.clientY;
+  if (e.button === 0) {
+    canvas.value?.addEventListener('mousemove', eraseMouseMove);
+  }
 };
 
-canvas.value?.addEventListener('mousedown', (e) => {
-  console.log('mousedown');
+const eraseMouseMove = (e: MouseEvent) => {
+  erase(e);
+};
 
-  if (done.value) {
-    return;
-  }
-  posX.value = e.clientX;
-  posY.value = e.clientY;
-  if (e.which === 1 && e.button === 0) {
-    const bindEarse = erase.bind(this);
-    canvas.value?.addEventListener('mousemove', bindEarse);
-  }
-  if (currPerct.value === 0) {
-    firstEraseCbk();
-  }
-});
-
-document.addEventListener('mouseup', (e) => {
-  if (done.value) {
-    return;
-  }
+const endMouseScratch = (e: MouseEvent) => {
   if (e.target === canvas.value) {
-    if (posX.value === e.clientX && posY.value === e.clientY) {
+    if (posX === e.clientX && posY === e.clientY) {
       erase(e);
     }
-    canvas.value?.removeEventListener('mousemove', erase);
+    canvas.value?.removeEventListener('mousemove', eraseMouseMove);
     getScratchedPercentage();
-    if (currPerct.value >= maxEraseArea) {
+    if (currPerct.value >= maxEraseArea.value) {
       done.value = true;
-      requestAnimationFrame(fadeOut(255)());
-      lastEraseCbk();
-      setTimeout(() => {
-        reset();
-      }, 2000);
     }
   }
+};
+
+// 触摸事件处理
+const startTouchScratch = (e: TouchEvent) => {
+  if (e.touches.length > 0) {
+    posX = e.touches[0].clientX;
+    posY = e.touches[0].clientY;
+    canvas.value?.addEventListener('touchmove', eraseTouchMove);
+  }
+};
+
+const eraseTouchMove = (e: TouchEvent) => {
+  erase(e);
+};
+
+const endTouchScratch = (e: TouchEvent) => {
+  if (e.target === canvas.value) {
+    if (posX === e.changedTouches[0].clientX && posY === e.changedTouches[0].clientY) {
+      erase(e);
+    }
+    canvas.value?.removeEventListener('touchmove', eraseTouchMove);
+    getScratchedPercentage();
+    if (currPerct.value >= maxEraseArea.value) {
+      done.value = true;
+    }
+  }
+};
+
+// 初始化和添加事件监听
+const onMountedCb = () => {
+  initContext();
+  addCoat();
+  if (canvas.value) {
+    canvas.value.addEventListener('mousedown', startMouseScratch);
+    canvas.value.addEventListener('touchstart', startTouchScratch);
+    document.addEventListener('mouseup', endMouseScratch);
+    document.addEventListener('touchend', endTouchScratch);
+  }
+};
+
+onMounted(onMountedCb);
+
+// 清理事件监听
+const cleanupListeners = () => {
+  if (canvas.value) {
+    canvas.value.removeEventListener('mousedown', startMouseScratch);
+    canvas.value.removeEventListener('touchstart', startTouchScratch);
+  }
+  document.removeEventListener('mouseup', endMouseScratch);
+  document.removeEventListener('touchend', endTouchScratch);
+};
+
+onBeforeUnmount(() => {
+  cleanupListeners();
+});
+
+// 画布尺寸动态调整
+const updateCanvasSize = () => {
+  if (canvas.value) {
+    canvasWidth.value = canvas.value.offsetWidth;
+    canvasHeight.value = canvas.value.offsetHeight;
+    addCoat();
+  }
+};
+
+watch([canvasWidth, canvasHeight], () => {
+  addCoat();
+});
+
+onMounted(() => {
+  updateCanvasSize();
+  window.addEventListener('resize', updateCanvasSize);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateCanvasSize);
 });
 </script>
 
 <style scoped>
-.scratch-canvas {
+.scratch-card {
+  position: relative;
   width: 100%;
   height: 100%;
 }
 
-img {
+.scratch-card canvas {
   width: 100%;
   height: 100%;
-  position: absolute;
-  z-index: -1;
-}
-
-canvas {
-  width: 100%;
-  height: 100%;
+  border: 1px solid #ccc;
+  cursor: pointer;
 }
 </style>
