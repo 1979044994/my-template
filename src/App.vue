@@ -15,29 +15,29 @@
       @slideChange="onSlideChange" direction="vertical" class="mySwiper">
       <swiper-slide>
         <div class="squre first">
-          <div v-if="reportData && !reportData.is_new && !reportData.is_qq" swiper-animate-effect="animate__fadeIn"
-            swiper-animate-duration="1s" class="title animation">
+          <div v-if="reportData && reportData.is_new !== 1 && reportData.is_qq !== 1"
+            swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
 
           </div>
-          <div v-if="reportData && !reportData.is_new && !reportData.is_qq" swiper-animate-effect="animate__fadeIn"
-            swiper-animate-duration="1s" class="content normal animation">
+          <div v-if="reportData && reportData.is_new !== 1 && reportData.is_qq !== 1"
+            swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="content normal animation">
             <span>主公在过去一年累计增加</span>
             <div class="center"><span class="red-text">{{ reportData?.add_shuai_dian }}</span>帅点</div>
             <div>任<span class="red-text">{{ reportData?.office_level_name }}</span></div>
             <img class="level-icon" :src="reportData?.office_level_img" alt="">
             <div class="beyong">超越 <span class="yellow">{{ reportData?.shuai_dian_rate }}</span> 的主公</div>
           </div>
-          <div v-if="reportData && !reportData.is_new && !reportData.is_qq" swiper-animate-effect="animate__fadeIn"
-            swiper-animate-duration="1s" class="line animation"></div>
+          <div v-if="reportData && reportData.is_new !== 1 && reportData.is_qq !== 1"
+            swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="line animation"></div>
           <div class="other" v-else>
-            <div v-if="reportData && reportData.is_qq" class="red-text">抱歉，您当前的渠道不支持 生成年度战报</div>
-            <div v-if="reportData && reportData.is_new" class="red-text">抱歉，未能查询到足够的数据 生成年度战报</div>
+            <div v-if="reportData && reportData.is_qq == 1" class="red-text">抱歉，您当前的渠道不支持 生成年度战报</div>
+            <div v-if="reportData && reportData.is_new == 1" class="red-text">抱歉，未能查询到足够的数据 生成年度战报</div>
             <div class="gift">小杀奉上薄礼一份，<br />
               主公可至游戏内信件中领取~</div>
           </div>
         </div>
       </swiper-slide>
-      <template v-if="reportData && !reportData.is_new && !reportData.is_qq">
+      <template v-if="reportData && reportData.is_new !== 1 && reportData.is_qq !== 1">
         <swiper-slide>
           <div class="squre second">
             <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
@@ -91,10 +91,10 @@
               <img class="avatar-img" :src="reportData?.g3_img" alt="">
               <div class="gennger-rate">
                 <div class="more-rate"><span class="rate">{{
-                  reportData && reportData.g3_rate ?
+                    reportData && reportData.g3_rate ?
                     Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
                     0
-                }}</span> %</div>
+                    }}</span> %</div>
                 <div class="feng">/</div>
                 <span class="num">{{ reportData?.g3_num }}场</span>
               </div>
@@ -106,10 +106,10 @@
               <img class="avatar-img" :src="reportData?.g2_img" alt="">
               <div class="gennger-rate">
                 <div class="more-rate"><span class="rate">{{
-                  reportData && reportData.g2_rate ?
+                    reportData && reportData.g2_rate ?
                     Math.floor(parseFloat(reportData.g2_rate.replace('%', ''))) :
                     0
-                }}</span> %</div>
+                    }}</span> %</div>
                 <div class="feng">/</div>
                 <span class="num">{{ reportData?.g2_num }}场</span>
               </div>
@@ -121,10 +121,10 @@
               <img class="general-avatar" src="@/assets/gennel-border.webp" alt="">
               <div class="gennger-rate">
                 <div class="more-rate"><span class="rate"> {{
-                  reportData && reportData.g1_rate ?
+                    reportData && reportData.g1_rate ?
                     Math.floor(parseFloat(reportData.g1_rate.replace('%', ''))) :
                     0
-                }}</span> %</div>
+                    }}</span> %</div>
                 <div class="feng">/</div>
 
                 <span class="num">{{ reportData?.g1_num }}场</span>
@@ -201,7 +201,7 @@
                   <img v-else src="@/assets/amateur.webp" class="amateur" alt="">
                   <span :class="checkSpeciality(reportData?.qm_dw) ? 'major-color' : 'amateur-color'">{{
                     reportData?.qm_dw
-                  }}</span>
+                    }}</span>
                 </div>
               </div>
 
