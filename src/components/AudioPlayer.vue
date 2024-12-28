@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import type { Ref } from 'vue';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 
 // 接收父组件传递的音频src
 const props = defineProps({
@@ -21,12 +21,14 @@ const isPlaying: Ref<boolean> = ref(false);
 const initAudio = () => {
   audio.value = new Audio(props.src);
   audio.value.loop = true;
+  audio.value.muted = true;  // 静音播放
   // 监听音频播放结束事件
   audio.value.addEventListener('ended', onAudioEnded);
 };
 
 const playAudio = () => {
   if (audio.value) {
+    audio.value.muted = false;  // 取消静音
     audio.value.play();
     isPlaying.value = true;
   }
@@ -43,9 +45,17 @@ const onAudioEnded = () => {
   isPlaying.value = false;
 };
 
-onMounted(() => {
+onMounted(async () => {
   initAudio();
-  playAudio();
+  await nextTick();
+  const playPromise = audio.value?.play();
+  if (playPromise) {
+    try {
+      await playPromise;
+    } catch (error) {
+      console.error('音频播放失败:', error);
+    }
+  }
 });
 
 onBeforeUnmount(() => {
