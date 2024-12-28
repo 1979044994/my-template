@@ -26,6 +26,8 @@ const firstTotalFrames = 43;
 
 const secondTotalFrames = 95;
 
+let playAnimationed = false
+
 // 新增变量用于控制动画速度
 const animationSpeed = ref(1);
 
@@ -144,8 +146,10 @@ const playFirstAnimation = async () => {
 
 // 控制播放第二个动画
 const playSecondAnimation = async () => {
+  if (playAnimationed) return;
   if (secondFrameImages.value.length > 0 && secondCanvas.value && firstCanvas.value) {
     isPlayer.value = false;
+    playAnimationed = true
     emits('audio-satrt', false);
     secondCanvas.value.style.display = 'block';
     firstCanvas.value.style.display = 'none';

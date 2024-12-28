@@ -94,8 +94,8 @@
                 </div>
                 <div class="general-text">
                   <div class="more-rate"><span class="rate">{{
-                    reportData && reportData.g3_rate ?
-                      Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
+  reportData && reportData.g3_rate ?
+    Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
                       0
                       }}</span> %</div>
                   <div class="feng">/</div>
@@ -347,7 +347,7 @@
             </div>
           </swiper-slide>
           <swiper-slide>
-            <div class="squre eighth">
+            <div ref="shareBox" class="squre eighth">
               <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.6s"
                 class="user-info animation">
                 <div class="user">
@@ -421,7 +421,9 @@
               <div @click="handleShareReport" swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1.5s"
                 class="share animation">分享战报 领取奖励
               </div>
+
             </div>
+            <ImagePreview ref="imagePreviewRef"></ImagePreview>
           </swiper-slide>
 
         </template>
@@ -431,15 +433,18 @@
 </template>
 <script setup lang="ts">
 import { getReport, getShare } from '@/service/api';
+import { downloadByBinary, getEnvironment, showToast } from '@/utils/image';
 import { swiperAnimate, swiperAnimateCache } from '@/utils/swiper.animate';
 import 'animate.css';
+import html2canvas from 'html2canvas';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/mousewheel';
 import 'swiper/css/pagination';
 import { EffectFade, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
+import ImagePreview from './components/ImagePreview.vue';
 import LoadingPage from './components/LoadingPage.vue';
 import scratch from './components/scratch.vue';
 import SequenceFrameAnimation from './components/SequenceFrameAnimation.vue';
@@ -543,15 +548,15 @@ const charList = [
 // getWxSignature()
 wx.config({
   debug: true, // 开启调试模式
-    appId: 'wxd4f1448ebbb567a4', // 公众号唯一标识
-    timestamp: 1735357203, // 时间戳
-    nonceStr: 'rek198Hqxe', // 随机串
-    signature: 'ca1d9ede4b3fb8e88edae78e4bef448f5bb5c93d', // 签名
-    jsApiList: [
-      'onMenuShareTimeline', // 分享到朋友圈
-      'onMenuShareAppMessage' // 分享给朋友
-    ]
-  });
+  appId: 'wxd4f1448ebbb567a4', // 公众号唯一标识
+  timestamp: 1735357203, // 时间戳
+  nonceStr: 'rek198Hqxe', // 随机串
+  signature: 'ca1d9ede4b3fb8e88edae78e4bef448f5bb5c93d', // 签名
+  jsApiList: [
+    'onMenuShareTimeline', // 分享到朋友圈
+    'onMenuShareAppMessage' // 分享给朋友
+  ]
+});
 interface ReportData {
 
   account: string;
@@ -665,6 +670,7 @@ const personalityMap = new Map([
   ['J', '主公累计登录超过30天，“出勤率”超高！'],
   ['P', '主公累计登录不足30天，小杀期待与你更多相遇~']
 ]);
+const imagePreviewRef = ref<any>(null);
 let isHidden = ref(true)
 const handleAudioHidden = (e: boolean) => {
   isHidden.value = e
@@ -746,17 +752,57 @@ const handleAudioStart = () => {
 }
 
 const handleShareReport = () => {
+  handleSave();
   shareReport();
-
   // 分享给朋友
-  wx.onMenuShareAppMessage({
-    title: 'H5页面标题', // 分享标题
-    desc: 'H5页面', // 分享
-    link: 'https://example.com/h5/page', // 分享链接
-    imgUrl: 'https://example.com/h5/image.jpg', // 分享图标
-    success: function () { }
-  });
+  // wx.onMenuShareAppMessage({
+  //   title: 'H5页面标题', // 分享标题
+  //   desc: 'H5页面', // 分享
+  //   link: 'https://example.com/h5/page', // 分享链接
+  //   imgUrl: 'https://example.com/h5/image.jpg', // 分享图标
+  //   success: function () { }
+  // });
 }
+
+const shareBox = ref<HTMLDivElement | null>(null)
+const handleSave = () => {
+  console.log('save');
+  if (shareBox.value) {
+    html2canvas(shareBox.value, {
+      width: shareBox.value.offsetWidth,
+      // height: shareBox.value.offsetHeight,
+      scale: 2
+    }).then(function (canvas) {
+      if (getEnvironment()) {
+        const url = canvas.toDataURL("image/png")
+        if (url) {
+          imagePreviewRef.value.showPreview([url]);
+          // showImagePreview([url])
+          nextTick(() => {
+            showToast('已为您生成图片，请长按保存！')
+          })
+        } else {
+          nextTick(() => {
+            showToast('保存失败，请稍后重试！')
+          })
+        }
+      }
+      else {
+        canvas.toBlob((blob) => {
+          if (blob) {
+            //这个是下载blob文件的方法
+            downloadByBinary(blob, + new Date(), "image/png")
+            showToast('保存成功！')
+          } else {
+            showToast('保存失败，请稍后重试！')
+          }
+        });
+      }
+
+    })
+  }
+}
+
 
 </script>
 

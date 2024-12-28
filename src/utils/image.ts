@@ -27,7 +27,7 @@ export function downloadByBinary(blob: Blob | MediaSource, fileNameTimestamp: an
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `太太我喜欢你${fileNameTimestamp}.${fileType.split('/')[1]}`;
+  a.download = `2024年度战报${fileNameTimestamp}.${fileType.split('/')[1]}`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
