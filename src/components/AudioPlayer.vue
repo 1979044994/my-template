@@ -71,7 +71,7 @@ defineExpose({
   position: absolute;
   right: 50px;
   top: 52px;
-  z-index: 10;
+  z-index: 6;
 }
 
 .close {

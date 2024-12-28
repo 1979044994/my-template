@@ -96,7 +96,7 @@
                   <div class="more-rate"><span class="rate">{{
   reportData && reportData.g3_rate ?
     Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
-                      0
+    0
                       }}</span> %</div>
                   <div class="feng">/</div>
                   <span class="num">{{ reportData?.g3_num }}场</span>
@@ -348,8 +348,7 @@
           </swiper-slide>
           <swiper-slide>
             <div ref="shareBox" class="squre eighth">
-              <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.6s"
-                class="user-info animation">
+              <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.6s" class="user-info ">
                 <div class="user">
                   <div class="user-avatar" :style="{ backgroundImage: `url(${reportData?.avatar})` }">
                     <img class="avatar-img" src="@/assets/user-avatar.webp" alt="">
@@ -390,7 +389,7 @@
                   </div>
                 </div>
               </div>
-              <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.9s" class="mbti animation">
+              <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.9s" class="mbti ">
                 <div class="mbti-title">我的游戏MBTI是</div>
                 <div class="mbti-value">{{ MBTI }}</div>
                 <div class="mbti-line"></div>
@@ -414,12 +413,12 @@
                 </div>
               </div>
               <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1.2s"
-                class="scratch animation swiper-no-swiping">
+                class="scratch  swiper-no-swiping">
                 <scratch :imageUrl="reportData?.mbti_img" />
                 <!-- <scratch imageUrl="https://yjcmndzb.sanguosha.com/swlide.png" /> -->
               </div>
-              <div @click="handleShareReport" swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1.5s"
-                class="share animation">分享战报 领取奖励
+              <div data-html2canvas-ignore="true" @click="handleShareReport" swiper-animate-effect="animate__fadeIn"
+                swiper-animate-duration="1.5s" class="share ">分享战报 领取奖励
               </div>
 
             </div>
@@ -771,7 +770,12 @@ const handleSave = () => {
     html2canvas(shareBox.value, {
       width: shareBox.value.offsetWidth,
       // height: shareBox.value.offsetHeight,
-      scale: 2
+      scale: 2,
+      useCORS: true,
+      // onclone: cb => {
+      //   cb.getElementById('image').style.display = 'block'
+      // }
+
     }).then(function (canvas) {
       if (getEnvironment()) {
         const url = canvas.toDataURL("image/png")
