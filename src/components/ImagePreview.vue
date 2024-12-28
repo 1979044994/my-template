@@ -3,6 +3,7 @@
     <div class="image-container">
       <img class="image-content" :src="url" @click.stop />
     </div>
+    <div class="button">前往发帖</div>
   </div>
 </template>
 
@@ -46,9 +47,21 @@ defineExpose({
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   z-index: 999;
 }
 
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 200px;
+  color: #fff;
+  height: 80px;
+  border-radius: 40px;
+  background-color: #ff636d;
+}
 .image-container {
   max-width: 80%;
   max-height: 80%;
