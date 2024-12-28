@@ -17,8 +17,13 @@ function timeout(delay: number | undefined) {
   });
 }
 // 创建请求方法
-function fetchRequest(url: RequestInfo, options: RequestInit | undefined) {
-  const newUrl = `${baseURL}${url}`;
+function fetchRequest(url: RequestInfo, options: RequestInit | undefined, config: any) {
+  let newBaseURL = getServiceBaseURL(import.meta.env).baseURL;
+  if (config.baseUrl) {
+    newBaseURL = config.baseUrl;
+  }
+  const newUrl = `${newBaseURL}${url}`;
+
   const controller = new AbortController();
   const signal = controller.signal;
 
@@ -102,7 +107,7 @@ export default function request(config: any) {
   }
 
   // 发起请求
-  return fetchRequest(config.url, fetchOptions)
+  return fetchRequest(config.url, fetchOptions, config)
     .then(response => {
       // 返回结果
       return response;

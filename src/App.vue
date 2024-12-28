@@ -93,7 +93,7 @@
                   <div class="more-rate"><span class="rate">{{
   reportData && reportData.g3_rate ?
     Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
-                      0
+    0
                       }}</span> %</div>
                   <div class="feng">/</div>
                   <span class="num">{{ reportData?.g3_num }}场</span>
@@ -498,19 +498,51 @@ const charList = [
     name: "改名因为怕被喷"
   }
 ];
+// const getWxSignature = async () => {
+//   const { data } = await getSignatureQuery({
+//     url: 'https://10thwxh55.sanguosha.com'
+//   });
+//   console.log(data);
+//   // wx.config({
+//   //   debug: true, // 开启调试模式
+//   //   appId: 'wx8bc525afe48627fd', // 公众号唯一标识
+//   //   timestamp: Math.floor(Date.now() / 1000), // 时间戳
+//   //   // nonceStr: nonceStr, // 随机串
+//   //   // signature: signature, // 签名
+//   //   jsApiList: [
+//   //     'onMenuShareTimeline', // 分享到朋友圈
+//   //     'onMenuShareAppMessage' // 分享给朋友
+//   //   ]
+//   // });
+// }
+// const getWxSignature = async () => {
+//   fetch('https://10thwx.sanguosha.com/wechat/jssdk?url=https://10thwxh55.sanguosha.com')
+//     .then(response => response.json())
+//     .then(data => {
+//       console.log(data);
+//       // 在这里可以访问 data.debug、data.beta 等属性
+//       const appId = data.appId;
+//       const nonceStr = data.nonceStr;
+//       const timestamp = data.timestamp;
+//       const signature = data.signature;
+//       // 对获取到的值进行进一步处理或使用
+//     })
+//     .catch(error => {
+//       console.error('获取数据出错：', error);
+//     });
+// }
+// getWxSignature()
 wx.config({
   debug: true, // 开启调试模式
-  appId: 'wx8bc525afe48627fd', // 公众号唯一标识
-  timestamp: Math.floor(Date.now() / 1000), // 时间戳
-  // nonceStr: nonceStr, // 随机串
-  // signature: signature, // 签名
-  jsApiList: [
-    'onMenuShareTimeline', // 分享到朋友圈
-    'onMenuShareAppMessage' // 分享给朋友
-  ]
-});
-
-
+    appId: 'wxd4f1448ebbb567a4', // 公众号唯一标识
+    timestamp: 1735357203, // 时间戳
+    nonceStr: 'rek198Hqxe', // 随机串
+    signature: 'ca1d9ede4b3fb8e88edae78e4bef448f5bb5c93d', // 签名
+    jsApiList: [
+      'onMenuShareTimeline', // 分享到朋友圈
+      'onMenuShareAppMessage' // 分享给朋友
+    ]
+  });
 interface ReportData {
 
   account: string;
