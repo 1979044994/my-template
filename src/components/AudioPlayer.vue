@@ -47,7 +47,7 @@ const onAudioEnded = () => {
 
 onMounted(async () => {
   initAudio();
-  playAudio();
+  // playAudio();
 });
 
 onBeforeUnmount(() => {

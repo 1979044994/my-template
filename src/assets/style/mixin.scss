@@ -77,8 +77,9 @@
         height: 37px;
         background: url(@/assets/beyong.webp) no-repeat;
         background-size: 100% auto;
-       display: flex;
-       align-items: center;justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
       }
     }
@@ -91,7 +92,6 @@
         line-height: 72px;
       }
       .gift {
-
         font-weight: 400;
         font-size: 36px;
         text-align: center;
@@ -247,19 +247,16 @@
         justify-content: center;
         bottom: 38px;
         left: 23px;
-        z-index: 3;
+        z-index: 1;
         width: 203px;
         height: 63px;
         font-family: Source Han Sans SC;
         font-weight: 400;
         font-size: 21px;
-        color: #fff5d7;
         line-height: 48px;
+        color: #fff5d7;
         background: url(@/assets/gennger-rate.webp) no-repeat;
         background-size: cover;
-        // .more-rate {
-        //   margin-right: 40px;
-        // }
         .feng {
           color: #fddd7e;
           margin: 0 5px;
@@ -270,9 +267,32 @@
           color: #fddd7e;
           font-size: 29px;
         }
-        // .num {
-        //   margin-left: -25px;
-        // }
+      }
+      .general-text {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        bottom: 38px;
+        left: 23px;
+        z-index: 5;
+         width: 203px;
+        height: 63px;
+        font-family: Source Han Sans SC;
+        font-weight: 400;
+              font-size: 21px;
+        line-height: 48px;
+        color: #fff5d7;
+
+        .feng {
+          color: #fddd7e;
+          margin: 0 5px;
+          font-weight: 100;
+          font-size: 29px;
+        }
+        .rate {
+          color: #fddd7e;
+       font-size: 29px;
+        }
       }
       .gennger-name {
         position: absolute;
@@ -303,16 +323,86 @@
       top: 901px;
     }
     .general-three {
-      zoom: 1.2;
-      left: 93px;
-      top: 900px;
+      position: absolute;
+      width: calc(256px * 1.2);
+      height: calc(280px * 1.2);
+      left: 113px;
+      top: 1054px;
+      // background: url(@/assets/gennel-border.webp) no-repeat;
+      background-repeat: no-repeat;
+      background-position: center 8px;
+      // border-radius: 50%;
+      background-size: calc(235px * 1.2) calc(235px * 1.2);
+      .general-avatar {
+        width: calc(256px * 1.2);
+        height: calc(280px * 1.2);
+        position: relative;
+        z-index: 2;
+      }
       .avatar-img {
         position: absolute;
-        width: 235px;
-        height: 235px;
-        left: 12px;
-        top: 8px;
+        width: calc(235px * 1.2);
+        height: calc(235px * 1.2);
+        left: 10px;
+        top: 7px;
         border-radius: 50%;
+      }
+      .gennger-rate {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        bottom: 48px;
+        left: 28px;
+        z-index: 1;
+        width: calc(203px * 1.2);
+        height: calc(63px * 1.2);
+
+        background: url(@/assets/gennger-rate.webp) no-repeat;
+        background-size: cover;
+      }
+      .general-text {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        bottom: 48px;
+        left: 28px;
+        z-index: 5;
+        width: calc(203px * 1.2);
+        height: calc(63px * 1.2);
+        font-family: Source Han Sans SC;
+        font-weight: 400;
+        font-size: calc(21px * 1.2);
+        color: #fff5d7;
+        line-height: calc(48px * 1.2);
+        .feng {
+          color: #fddd7e;
+          margin: 0 5px;
+          font-weight: 100;
+          font-size: calc(29px * 1.2);
+        }
+        .rate {
+          color: #fddd7e;
+          font-size: calc(29px * 1.2);
+        }
+      }
+      .gennger-name {
+        position: absolute;
+        top: 22px;
+        right: 24px;
+        width: calc(35px * 1.2);
+        z-index: 3;
+        height: calc(170px * 1.2);
+        background: url(@/assets/genner-name.webp) no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        writing-mode: vertical-rl; /* 文字竖排，从右往左 */
+        text-orientation: upright;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+        font-size: calc(24px * 1.2);
+        color: #fdeab1;
       }
     }
   }
@@ -894,7 +984,6 @@
       font-weight: 400;
       font-size: 30px;
       color: #665247;
-
     }
     .scratch {
       position: absolute;

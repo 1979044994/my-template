@@ -90,10 +90,13 @@
                 <img class="general-avatar" src="@/assets/gennel-border.webp" alt="">
                 <img class="avatar-img" :src="reportData?.g3_img" alt="">
                 <div class="gennger-rate">
+
+                </div>
+                <div class="general-text">
                   <div class="more-rate"><span class="rate">{{
-  reportData && reportData.g3_rate ?
-    Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
-    0
+                    reportData && reportData.g3_rate ?
+                      Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
+                      0
                       }}</span> %</div>
                   <div class="feng">/</div>
                   <span class="num">{{ reportData?.g3_num }}场</span>
@@ -105,11 +108,14 @@
                 <img class="general-avatar" src="@/assets/gennel-border.webp" alt="">
                 <img class="avatar-img" :src="reportData?.g2_img" alt="">
                 <div class="gennger-rate">
+
+                </div>
+                <div class="general-text">
                   <div class="more-rate"><span class="rate">{{
                     reportData && reportData.g2_rate ?
                       Math.floor(parseFloat(reportData.g2_rate.replace('%', ''))) :
                       0
-                      }}</span> %</div>
+                  }}</span> %</div>
                   <div class="feng">/</div>
                   <span class="num">{{ reportData?.g2_num }}场</span>
                 </div>
@@ -120,11 +126,14 @@
                 <img class="avatar-img" :src="reportData?.g1_img" alt="">
                 <img class="general-avatar" src="@/assets/gennel-border.webp" alt="">
                 <div class="gennger-rate">
+
+                </div>
+                <div class="general-text">
                   <div class="more-rate"><span class="rate"> {{
                     reportData && reportData.g1_rate ?
                       Math.floor(parseFloat(reportData.g1_rate.replace('%', ''))) :
                       0
-                      }}</span> %</div>
+                  }}</span> %</div>
                   <div class="feng">/</div>
 
                   <span class="num">{{ reportData?.g1_num }}场</span>
