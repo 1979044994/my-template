@@ -94,9 +94,9 @@
                 </div>
                 <div class="general-text">
                   <div class="more-rate"><span class="rate">{{
-  reportData && reportData.g3_rate ?
+                      reportData && reportData.g3_rate ?
     Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
-    0
+                      0
                       }}</span> %</div>
                   <div class="feng">/</div>
                   <span class="num">{{ reportData?.g3_num }}场</span>
@@ -115,7 +115,7 @@
                     reportData && reportData.g2_rate ?
                       Math.floor(parseFloat(reportData.g2_rate.replace('%', ''))) :
                       0
-                  }}</span> %</div>
+                      }}</span> %</div>
                   <div class="feng">/</div>
                   <span class="num">{{ reportData?.g2_num }}场</span>
                 </div>
@@ -133,7 +133,7 @@
                     reportData && reportData.g1_rate ?
                       Math.floor(parseFloat(reportData.g1_rate.replace('%', ''))) :
                       0
-                  }}</span> %</div>
+                      }}</span> %</div>
                   <div class="feng">/</div>
 
                   <span class="num">{{ reportData?.g1_num }}场</span>
@@ -348,7 +348,8 @@
           </swiper-slide>
           <swiper-slide>
             <div ref="shareBox" class="squre eighth">
-              <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.6s" class="user-info ">
+              <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.6s"
+                class="user-info animation">
                 <div class="user">
                   <div class="user-avatar" :style="{ backgroundImage: `url(${reportData?.avatar})` }">
                     <img class="avatar-img" src="@/assets/user-avatar.webp" alt="">
@@ -389,7 +390,7 @@
                   </div>
                 </div>
               </div>
-              <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.9s" class="mbti ">
+              <div swiper-animate-effect="animate__fadeInLeft" swiper-animate-duration="0.9s" class="mbti animation">
                 <div class="mbti-title">我的游戏MBTI是</div>
                 <div class="mbti-value">{{ MBTI }}</div>
                 <div class="mbti-line"></div>
@@ -413,16 +414,18 @@
                 </div>
               </div>
               <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="1.2s"
-                class="scratch  swiper-no-swiping">
-                <scratch :imageUrl="reportData?.mbti_img" />
+                class="scratch animation  swiper-no-swiping">
+                <scratch :name="personalityMbtiMap.get(MBTI)" :imageUrl="reportData?.mbti_img" />
                 <!-- <scratch imageUrl="https://yjcmndzb.sanguosha.com/swlide.png" /> -->
               </div>
+              <img id="qrcode" class="qrcode" src="https://yjcmndzb.sanguosha.com/qrcode.png" alt="">
+
               <div data-html2canvas-ignore="true" @click="handleShareReport" swiper-animate-effect="animate__fadeIn"
-                swiper-animate-duration="1.5s" class="share ">分享战报 领取奖励
+                swiper-animate-duration="1.5s" class="share animation">分享战报 领取奖励
               </div>
 
             </div>
-            <ImagePreview ref="imagePreviewRef"></ImagePreview>
+            <ImagePreview ref="imagePreviewRef"></ImagePreview>personalityMbtiMap
           </swiper-slide>
 
         </template>
@@ -546,7 +549,7 @@ const charList = [
 // }
 // getWxSignature()
 wx.config({
-  debug: true, // 开启调试模式
+  // debug: true, // 开启调试模式
   appId: 'wxd4f1448ebbb567a4', // 公众号唯一标识
   timestamp: 1735357203, // 时间戳
   nonceStr: 'rek198Hqxe', // 随机串
@@ -658,7 +661,24 @@ const skinAcquisitionMap = new Map([
   [1, "锦绣"],
   [2, "皮肤开包"]
 ]);
-
+const personalityMbtiMap = new Map([
+  ["INTP", "郭嘉"],
+  ["INTJ", "武诸葛亮"],
+  ["ENTP", "曹操"],
+  ["ENTJ", "谋周瑜"],
+  ["ENFJ", "刘备"],
+  ["INFJ", "姜维"],
+  ["INFP", "曹植"],
+  ["ENFP", "徐盛"],
+  ["ESFP", "孙尚香"],
+  ["ISFP", "貂蝉"],
+  ["ISTP", "威张辽"],
+  ["ESTP", "吕布"],
+  ["ISFJ", "谋鲁肃"],
+  ["ISTJ", "武关羽"],
+  ["ESFJ", "甄姬"],
+  ["ESTJ", "袁绍"]
+]);
 const personalityMap = new Map([
   ['E', '主公广结天下好友，并肩作战是你最闪耀的时刻'],
   ['I', '王者向来孤独，主公真是单枪匹马孤胆英雄！'],
@@ -772,9 +792,9 @@ const handleSave = () => {
       // height: shareBox.value.offsetHeight,
       scale: 2,
       useCORS: true,
-      // onclone: cb => {
-      //   cb.getElementById('image').style.display = 'block'
-      // }
+      onclone: cb => {
+        cb.getElementById('qrcode').style.display = 'block'
+      }
 
     }).then(function (canvas) {
       if (getEnvironment()) {

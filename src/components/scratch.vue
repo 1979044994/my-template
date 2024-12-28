@@ -1,6 +1,9 @@
 <template>
   <div class="scratch-card">
-    <img class="sourceImg" :src="props.imageUrl" alt="revealed">
+    <div class="sourceImg" :style="{ backgroundImage: `url(${props.imageUrl})` }">
+      <img class="sourceImg" src="@/assets/general-name.webp" alt="revealed">
+      <div class="name">{{ name }}</div>
+    </div>
     <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight" :style="{ opacity: canvasOpacity }"></canvas>
   </div>
 </template>
@@ -17,6 +20,10 @@ const props = defineProps({
   },
   // 自定义未刮开时显示的内容，不传则无额外绘制
   coverContent: {
+    type: String,
+    default: ''
+  },
+  name: {
     type: String,
     default: ''
   }
@@ -224,7 +231,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .scratch-card {
   position: relative;
   width: 100%;
@@ -234,9 +241,26 @@ onBeforeUnmount(() => {
 .sourceImg {
   width: 100%;
   height: 100%;
-
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
   position: absolute;
   z-index: 1;
+  // position: relative;
+
+  .name {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #F1EFED;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    font-size: 26px;
+    height: 57px;
+    z-index: 3;
+    width: 100%;
+  }
 }
 
 .scratch-card canvas {

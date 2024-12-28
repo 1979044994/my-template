@@ -985,6 +985,15 @@
       font-size: 30px;
       color: #665247;
     }
+    .qrcode{
+      position: absolute;
+      left: 50%;
+      display: none;
+      top: 1271px;
+      margin-left: -315px;
+      width: 630px;
+      height: 200px;
+    }
     .scratch {
       position: absolute;
       width: 210px;
