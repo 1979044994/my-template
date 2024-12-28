@@ -91,8 +91,8 @@
                 <img class="avatar-img" :src="reportData?.g3_img" alt="">
                 <div class="gennger-rate">
                   <div class="more-rate"><span class="rate">{{
-                    reportData && reportData.g3_rate ?
-                      Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
+  reportData && reportData.g3_rate ?
+    Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
                       0
                       }}</span> %</div>
                   <div class="feng">/</div>
@@ -203,7 +203,7 @@
                     <img v-else src="@/assets/amateur.webp" class="amateur" alt="">
                     <span :class="checkSpeciality(reportData?.qm_dw) ? 'major-color' : 'amateur-color'">{{
                       reportData?.qm_dw
-                      }}</span>
+                    }}</span>
                   </div>
                 </div>
 
@@ -498,6 +498,18 @@ const charList = [
     name: "改名因为怕被喷"
   }
 ];
+wx.config({
+  debug: true, // 开启调试模式
+  appId: 'wx8bc525afe48627fd', // 公众号唯一标识
+  timestamp: Math.floor(Date.now() / 1000), // 时间戳
+  // nonceStr: nonceStr, // 随机串
+  // signature: signature, // 签名
+  jsApiList: [
+    'onMenuShareTimeline', // 分享到朋友圈
+    'onMenuShareAppMessage' // 分享给朋友
+  ]
+});
+
 
 interface ReportData {
 
@@ -693,7 +705,16 @@ const handleAudioStart = () => {
 }
 
 const handleShareReport = () => {
-  shareReport()
+  shareReport();
+
+  // 分享给朋友
+  wx.onMenuShareAppMessage({
+    title: 'H5页面标题', // 分享标题
+    desc: 'H5页面', // 分享
+    link: 'https://example.com/h5/page', // 分享链接
+    imgUrl: 'https://example.com/h5/image.jpg', // 分享图标
+    success: function () { }
+  });
 }
 
 </script>
