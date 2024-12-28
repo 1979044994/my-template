@@ -1,7 +1,7 @@
 <template>
   <div class="animation-container">
     <slot v-if="isPlayer" name="icon"></slot>
-    <slot v-if="isPlayer" name="audio"></slot>
+    <slot name="audio"></slot>
     <canvas ref="firstCanvas" id="firstCanvas"
       style="position:absolute; top:0; left:0; width:100%; height:100%;"></canvas>
     <canvas ref="secondCanvas" id="secondCanvas"
@@ -146,6 +146,7 @@ const playFirstAnimation = async () => {
 const playSecondAnimation = async () => {
   if (secondFrameImages.value.length > 0 && secondCanvas.value && firstCanvas.value) {
     isPlayer.value = false;
+    emits('audio-satrt', false);
     secondCanvas.value.style.display = 'block';
     firstCanvas.value.style.display = 'none';
     await resizeCanvas();
@@ -192,6 +193,7 @@ onBeforeUnmount(() => {
 const emits = defineEmits<{
   (e: 'component-loaded', value: boolean): void;
   (e: 'video-ended', value: boolean): void;
+  (e: 'audio-satrt', value: boolean): void;
 }>();
 
 </script>

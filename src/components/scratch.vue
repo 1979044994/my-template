@@ -1,6 +1,7 @@
 <template>
   <div class="scratch-card">
-    <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
+    <img class="sourceImg" :src="props.imageUrl" alt="revealed">
+    <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight" :style="{ opacity: canvasOpacity }"></canvas>
   </div>
 </template>
 
@@ -31,6 +32,7 @@ let posX: number | null = null;
 let posY: number | null = null;
 const canvas = ref<HTMLCanvasElement | null>(null);
 const currPerct = ref(0);
+const canvasOpacity = ref(1);
 
 // 提前获取绘图上下文
 let ctx: CanvasRenderingContext2D | null = null;
@@ -70,36 +72,38 @@ const addCoat = () => {
       const x = (width - imgWidth) / 2;
       const y = (height - imgHeight) / 2;
       ctx.drawImage(img, x, y, imgWidth, imgHeight);
-    };
+    }
   }
 };
 
 // 擦除操作
 const erase = (e: MouseEvent | TouchEvent) => {
-  if (!canvas.value || !ctx) return; // 防止 canvas 或 ctx 为 null
+  if (!canvas.value || !ctx) return;
 
   const rect = canvas.value.getBoundingClientRect();
   let x = 0;
   let y = 0;
 
   if ('touches' in e && e.touches.length > 0) {
-    // 触摸事件
     x = e.touches[0].clientX - rect.left;
     y = e.touches[0].clientY - rect.top;
   } else if ('clientX' in e && 'clientY' in e) {
-    // 鼠标事件
     x = e.clientX - rect.left;
     y = e.clientY - rect.top;
   }
 
-  // 确保坐标有效后再进行擦除操作
   if (x >= 0 && y >= 0) {
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
     ctx.arc(x, y, cursorRadius.value, 0, 2 * Math.PI);
     ctx.fill();
+
     getScratchedPercentage();
-    // emit('updateScratchedPercentage', currPerct.value); // 更新刮开百分比
+    console.log(currPerct.value, maxEraseArea.value);
+
+    if (currPerct.value >= maxEraseArea.value) {
+      canvasOpacity.value = 0;
+    }
   }
 };
 
@@ -138,8 +142,7 @@ const endMouseScratch = (e: MouseEvent) => {
     canvas.value?.removeEventListener('mousemove', eraseMouseMove);
     getScratchedPercentage();
     if (currPerct.value >= maxEraseArea.value) {
-      done.value = true;
-      drawRevealedImage();
+      canvasOpacity.value = 0;
     }
   }
 };
@@ -147,8 +150,6 @@ const endMouseScratch = (e: MouseEvent) => {
 // 触摸事件处理
 const startTouchScratch = (e: TouchEvent) => {
   if (e.touches.length > 0) {
-    console.log(e.touches[0].clientX, e.touches[0].clientY);
-
     posX = e.touches[0].clientX;
     posY = e.touches[0].clientY;
     canvas.value?.addEventListener('touchmove', eraseTouchMove, { passive: true });
@@ -167,24 +168,8 @@ const endTouchScratch = (e: TouchEvent) => {
     canvas.value?.removeEventListener('touchmove', eraseTouchMove);
     getScratchedPercentage();
     if (currPerct.value >= maxEraseArea.value) {
-      done.value = true;
-      drawRevealedImage();
+      canvasOpacity.value = 0;
     }
-  }
-};
-
-// 绘制刮开后显示的图片
-const drawRevealedImage = () => {
-  if (ctx) {
-    const img = new Image();
-    img.src = props.imageUrl;
-    img.onload = () => {
-      const imgWidth = img.width;
-      const imgHeight = img.height;
-      const x = (canvasWidth.value - imgWidth) / 2;
-      const y = (canvasHeight.value - imgHeight) / 2;
-      ctx.drawImage(img, x, y, imgWidth, imgHeight);
-    };
   }
 };
 
@@ -246,10 +231,17 @@ onBeforeUnmount(() => {
   height: 100%;
 }
 
+.sourceImg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+}
+
 .scratch-card canvas {
   width: 100%;
   height: 100%;
-  border: 1px solid #ccc;
-  cursor: pointer;
+  position: absolute;
+  z-index: 2;
 }
 </style>

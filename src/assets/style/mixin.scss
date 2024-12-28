@@ -83,7 +83,9 @@
     }
     .other {
       width: 595px;
-      margin: 332px auto;
+      // margin: 332px auto;
+      margin: 0 auto;
+      padding-top: 332px;
       .red-text {
         line-height: 72px;
       }
@@ -774,7 +776,7 @@
           width: 163px;
           height: 168px;
           margin-right: 35px;
-          background-position: center center;
+          background-position: center 10px;
           background-repeat: no-repeat;
           background-image: url(https://yjcmndzb.sanguosha.com/swlide.png);
 

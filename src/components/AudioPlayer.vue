@@ -1,5 +1,4 @@
 <template>
-
   <div class="switch" :class="isPlaying ? 'pause' : 'close'"></div>
 </template>
 
@@ -12,7 +11,6 @@ const props = defineProps({
   src: {
     type: String,
     required: false
-
   }
 })
 
@@ -22,6 +20,7 @@ const isPlaying: Ref<boolean> = ref(false);
 
 const initAudio = () => {
   audio.value = new Audio(props.src);
+  audio.value.loop = true;
   // 监听音频播放结束事件
   audio.value.addEventListener('ended', onAudioEnded);
 };
