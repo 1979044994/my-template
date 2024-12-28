@@ -880,6 +880,9 @@
       }
     }
     .share {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 411px;
       height: 68px;
       background: url(@/assets/share.webp) no-repeat;
@@ -890,7 +893,7 @@
       font-weight: 400;
       font-size: 30px;
       color: #665247;
-      line-height: 68px;
+
     }
     .scratch {
       position: absolute;

@@ -1,15 +1,13 @@
 <template>
+  <AudioPlayer ref="audioPlayer" :src="audioSrc" @click="handleAudioStart" />
   <LoadingPage :openTrigger="openTrigger" v-if="isLoading" @componentDestroy="handleComponentDestroy" />
   <transition name="fade" mode="out-in">
     <div v-if="firstPage" class="firstpage">
-      <SequenceFrameAnimation @audio-satrt="handleAudioHidden" @video-ended="handleVideoEnded"
-        @component-loaded="handleComponentLoaded">
+      <SequenceFrameAnimation @video-ended="handleVideoEnded" @component-loaded="handleComponentLoaded">
         <template v-slot:icon>
           <div class="icon"></div>
         </template>
-        <template v-slot:audio>
-          <AudioPlayer ref="audioPlayer" v-show="isHidden" :src="audioSrc" @click="handleAudioStart" />
-        </template>
+
       </SequenceFrameAnimation>
     </div>
     <div v-else>
@@ -205,7 +203,7 @@
                     <img v-else src="@/assets/amateur.webp" class="amateur" alt="">
                     <span :class="checkSpeciality(reportData?.qm_dw) ? 'major-color' : 'amateur-color'">{{
                       reportData?.qm_dw
-                    }}</span>
+                      }}</span>
                   </div>
                 </div>
 
@@ -720,6 +718,7 @@ const handleShareReport = () => {
 .fade-else-leave-to {
   opacity: 0;
 }
+
 // .firstpage {
 //   position: relative;
 //   width: 100%;

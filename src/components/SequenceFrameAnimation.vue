@@ -1,7 +1,7 @@
 <template>
   <div class="animation-container">
     <slot v-if="isPlayer" name="icon"></slot>
-    <slot name="audio"></slot>
+    <!-- <slot name="audio"></slot> -->
     <canvas ref="firstCanvas" id="firstCanvas"
       style="position:absolute; top:0; left:0; width:100%; height:100%;"></canvas>
     <canvas ref="secondCanvas" id="secondCanvas"

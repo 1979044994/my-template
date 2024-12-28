@@ -45,6 +45,7 @@ const onAudioEnded = () => {
 
 onMounted(() => {
   initAudio();
+  playAudio();
 });
 
 onBeforeUnmount(() => {
