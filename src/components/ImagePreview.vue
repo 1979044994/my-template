@@ -3,7 +3,7 @@
     <div class="image-container">
       <img class="image-content" :src="url" @click.stop />
     </div>
-    <div class="button">前往发帖</div>
+    <div @click="handlePublish" class="button">前往发帖</div>
   </div>
 </template>
 
@@ -29,7 +29,11 @@ const showPreview = ([value]) => {
 const closePreview = () => {
   visible.value = false;
 };
-
+const handlePublish = () => {
+  wx.miniProgram.navigateTo({
+    url: '/pages/go-post/go-post',
+  });
+};
 defineExpose({
   showPreview,
   closePreview,
