@@ -142,7 +142,7 @@
               </div>
             </div>
           </swiper-slide>
-          <swiper-slide v-if="reportData && reportData.zzq_num > 0">
+          <swiper-slide v-if="reportData && reportData.zzq_num == 0">
             <div class="squre fourth">
               <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
               </div>
@@ -188,12 +188,14 @@
                     <div class="body-border">
                       <div class="body-name vertical">{{ reportData?.zzq_total_general_name }}</div>
                     </div>
+                    <div class="body-text">出场率最高的主公</div>
                   </div>
                   <div class="body-item">
                     <img class="body-avatar" :src="reportData?.zzq_four_general_img" alt="">
                     <div class="body-border">
                       <div class="body-name vertical">{{ reportData?.zzq_four_general_name }}</div>
                     </div>
+                    <div class="body-text">四强率最高的主公</div>
                   </div>
                 </div>
               </div>

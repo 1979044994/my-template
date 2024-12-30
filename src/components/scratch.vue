@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import coverImage from '@/assets/un.webp';
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 // 接收父组件传入的图片路径
 const props = defineProps({
@@ -49,41 +49,47 @@ const initContext = () => {
   }
 };
 
-// 添加遮罩层（刮刮乐未刮开部分）
 let isCoated = false;
+
+// 添加遮罩层（刮刮乐未刮开部分）
+let isImageLoaded = false;
+
 const addCoat = () => {
   if (ctx && !isCoated) {
     const width = canvasWidth.value;
     const height = canvasHeight.value;
-    // 先清除画布
-    ctx.clearRect(0, 0, width, height);
 
-    // 绘制遮罩层
-    ctx.beginPath();
+    ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = maskColor.value;
     ctx.fillRect(0, 0, width, height);
 
-    // 绘制未刮开时的图片
-    const img = new Image();
-    img.src = coverImage;
-    img.onload = () => {
-      let imgWidth = img.width;
-      let imgHeight = img.height;
-      // 计算等比例缩放的尺寸
-      if (imgWidth > width || imgHeight > height) {
-        const ratioW = width / imgWidth;
-        const ratioH = height / imgHeight;
-        const ratio = Math.min(ratioW, ratioH);
-        imgWidth = imgWidth * ratio;
-        imgHeight = imgHeight * ratio;
-      }
-      const x = (width - imgWidth) / 2;
-      const y = (height - imgHeight) / 2;
-      ctx.drawImage(img, x, y, imgWidth, imgHeight);
-      isCoated = true;
+    if (!isImageLoaded) {
+      const img = new Image();
+      img.src = coverImage;
+      img.onload = () => {
+        let imgWidth = img.width;
+        let imgHeight = img.height;
+
+        if (imgWidth > width || imgHeight > height) {
+          const ratio = Math.min(width / imgWidth, height / imgHeight);
+          imgWidth *= ratio;
+          imgHeight *= ratio;
+        }
+
+        const x = (width - imgWidth) / 2;
+        const y = (height - imgHeight) / 2;
+        ctx.drawImage(img, x, y, imgWidth, imgHeight);
+
+        isImageLoaded = true; // 标记图片已加载
+        isCoated = true; // 标记涂层已完成
+      };
+    } else {
+      isCoated = true; // 如果图片已加载，直接标记涂层完成
     }
   }
 };
+
+
 // 擦除操作
 const erase = (e: MouseEvent | TouchEvent) => {
   if (!canvas.value || !ctx) return;
@@ -212,15 +218,28 @@ onBeforeUnmount(() => {
 // 画布尺寸动态调整
 const updateCanvasSize = () => {
   if (canvas.value) {
-    canvasWidth.value = canvas.value.offsetWidth;
-    canvasHeight.value = canvas.value.offsetHeight;
-    addCoat();
+    const newWidth = canvas.value.offsetWidth;
+    const newHeight = canvas.value.offsetHeight;
+
+    if (newWidth !== canvasWidth.value || newHeight !== canvasHeight.value) {
+      canvasWidth.value = newWidth;
+      canvasHeight.value = newHeight;
+
+      // 需要重新绘制涂层
+      isCoated = false;
+      addCoat();
+    }
   }
 };
 
-watch([canvasWidth, canvasHeight], () => {
-  addCoat();
-});
+
+// watch([canvasWidth, canvasHeight], ([newWidth, newHeight], [oldWidth, oldHeight]) => {
+//   if (newWidth !== oldWidth || newHeight !== oldHeight) {
+//     isCoated = false; // 标记需要重新绘制
+//     addCoat();
+//   }
+// });
+
 
 onMounted(() => {
   updateCanvasSize();

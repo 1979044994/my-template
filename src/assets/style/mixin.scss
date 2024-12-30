@@ -189,8 +189,7 @@
 
             margin-left: 81px;
 
-                line-height: 1px;
-
+            line-height: 1px;
           }
           .black {
             margin-left: 78px;
@@ -296,7 +295,7 @@
         }
         .rate {
           color: #fddd7e;
-             font-size: calc(29px * 0.9);
+          font-size: calc(29px * 0.9);
         }
       }
       .gennger-name {
@@ -503,7 +502,7 @@
       .body-item {
         position: relative;
         width: 194px;
-        height: 190px;
+        height: 224px;
         display: flex;
         text-align: center;
         flex-direction: column;
@@ -540,6 +539,16 @@
           border-radius: 50%;
           top: 3px;
           position: absolute;
+        }
+        .body-text {
+          width: 214px;
+          height: 26px;
+          font-family: Source Han Sans SC;
+          font-weight: 400;
+          font-size: 26px;
+          color: #343026;
+text-align: center;
+margin-top: 7px;
         }
       }
     }
