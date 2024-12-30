@@ -65,6 +65,8 @@ const addCoat = () => {
     // 绘制未刮开时的图片
     const img = new Image();
     img.src = coverImage;
+    // 移除之前的 onload 绑定
+    img.onload = null;
     img.onload = () => {
       let imgWidth = img.width;
       let imgHeight = img.height;
@@ -82,7 +84,6 @@ const addCoat = () => {
     }
   }
 };
-
 // 擦除操作
 const erase = (e: MouseEvent | TouchEvent) => {
   if (!canvas.value || !ctx) return;

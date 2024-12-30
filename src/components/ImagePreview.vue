@@ -66,13 +66,14 @@ defineExpose({
   border-radius: 40px;
   background-color: #ff636d;
 }
+
 .image-container {
   max-width: 80%;
   max-height: 80%;
 }
 
 .image-content {
-  width: 562.5px;
-  height: 1000.5px;
+  width: 600px;
+    height: 1300px;
 }
 </style>
