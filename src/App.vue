@@ -64,7 +64,7 @@
                   class="content-item animation">
                   <div class="mode">
                     <div class="mode-text red">{{ reportData?.sf_score > 0 ? reportData?.sf_score : 1000 }}</div>
-                    <div class="mode-name black">{{ reportData?.sf_name }}</div>
+                    <div class="mode-name black">{{ reportData?.sf_name ? reportData?.sf_name : '身份休闲' }}</div>
                   </div>
                   <div class="optimum">本年度最高积分</div>
                 </div>
@@ -73,7 +73,7 @@
                   <div class="mode">
                     <div class="mode-text red">{{ reportData?.nation_score > 0 ? reportData?.nation_score : 1000 }}
                     </div>
-                    <div class="mode-name black">{{ reportData?.nation_name }}</div>
+                    <div class="mode-name black">{{ reportData?.nation_name ? reportData?.nation_name : '国战天梯' }}</div>
                   </div>
                   <div class="optimum">本年度最高积分</div>
                 </div>
@@ -97,7 +97,7 @@
                     reportData && reportData.g3_rate ?
                       Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
                       0
-                      }}</span> %</div>
+                  }}</span> %</div>
                   <div class="feng">/</div>
                   <span class="num">{{ reportData?.g3_num }}场</span>
                 </div>
@@ -321,7 +321,7 @@
                       reportData.general_title
                         }}</span>命题中荣获</span><br />
                     <span v-if="reportData.general_tickets > 0" class="normal"> <span class="red-text">{{
-                        reportData.general_prize }}</span></span>
+                      reportData.general_prize }}</span></span>
                   </p>
 
                 </div>
@@ -335,6 +335,9 @@
                 </div>
                 <swiper :spaceBetween="30" :effect="'fade'" :pagination="{
                   clickable: true,
+                }" :autoplay="{
+                  delay: 3000,
+                  disableOnInteraction: false,
                 }" :modules="modules" swiper-animate-effect="animate__fadeInLeftBig" swiper-animate-duration="1s"
                   class="generalSwiper animation">
                   <swiper-slide v-for="(item, index) in charList" :key="index">
@@ -429,7 +432,6 @@
             </div>
             <ImagePreview ref="imagePreviewRef"></ImagePreview>personalityMbtiMap
           </swiper-slide>
-
         </template>
       </Swiper>
     </div>
@@ -445,7 +447,7 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/mousewheel';
 import 'swiper/css/pagination';
-import { EffectFade, Pagination } from 'swiper/modules';
+import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { computed, nextTick, ref } from 'vue';
 import ImagePreview from './components/ImagePreview.vue';
@@ -727,7 +729,7 @@ const onSlideChange = (swiper: { activeIndex: any; }) => {
   // new WOW().init()
   console.log('slide change', swiper, activeIndex);
 };
-const modules = [Pagination, EffectFade];
+const modules = [Pagination, EffectFade, Autoplay];
 const MBTI = computed(() => {
   return (reportData.value?.mbti1 ?? '') + (reportData.value?.mbti2 ?? '') + (reportData.value?.mbti3 ?? '') + (reportData.value?.mbti4 ?? '')
 })
