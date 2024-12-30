@@ -142,7 +142,7 @@
               </div>
             </div>
           </swiper-slide>
-          <swiper-slide v-if="reportData && reportData.zzq_num == 0">
+          <swiper-slide v-if="reportData && reportData.zzq_num > 0">
             <div class="squre fourth">
               <div swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="title animation">
               </div>
