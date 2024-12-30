@@ -74,6 +74,6 @@ defineExpose({
 
 .image-content {
   width: 525px;
-    height: 1136px;
+    height: 1048px;
 }
 </style>

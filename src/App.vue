@@ -55,7 +55,9 @@
                 <div swiper-animate-effect="animate__fadeInRight" swiper-animate-duration="0.6s"
                   class="content-item animation">
                   <div class="mode">
-                    <img class="mode-icon" :src="reportData?.joy_rank_img" alt="">
+                    <img class="mode-icon"
+                      :src="reportData?.joy_rank_img ? reportData?.joy_rank_img : 'https://10th-djxt.oss-cn-hangzhou.aliyuncs.com/10001/normalRank1.png'"
+                      alt="">
                     <div class="mode-name">{{ reportData?.joy_mode }}</div>
                   </div>
                   <div class="optimum">本年度最高段位</div>
@@ -320,8 +322,8 @@
                     <span class="normal"> 累计获票 <span class="red-text">{{ reportData.general_tickets
                         }}</span></span><br />
                     <span v-if="reportData.general_prize" class="normal"> 在 <span class="red-text">{{
-                      reportData.general_title
-                    }}</span>命题中荣获</span><br />
+                        reportData.general_title
+                        }}</span>命题中荣获</span><br />
                     <span v-if="reportData.general_prize" class="normal"> <span class="red-text">{{
                         reportData.general_prize }}</span></span>
                   </p>
