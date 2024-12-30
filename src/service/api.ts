@@ -30,7 +30,6 @@ export function generateSignature(obj: Record<string, any> | null, secret = 'ikk
     }
   }
   const toBeHashed = paramString + secret;
-  console.log(toBeHashed, 'toBeHashed', md5(toBeHashed), 'md5(toBeHashed)');
 
   return { sign: md5(toBeHashed), timestamp: sortedParams.timestamp };
 }

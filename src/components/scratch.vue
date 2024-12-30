@@ -52,6 +52,7 @@ const checkScratched = () => {
 
 // 提前获取绘图上下文
 let ctx: CanvasRenderingContext2D | null = null;
+
 const initContext = () => {
   if (canvas.value) {
     ctx = canvas.value.getContext('2d', { willReadFrequently: true });

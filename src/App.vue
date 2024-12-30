@@ -479,6 +479,7 @@ const prizeList = [
   }
 ]
 const configImageUrl = 'https://yjcmndzb.sanguosha.com/yjcm/';
+
 const charList = [
   {
     url: `${configImageUrl}yjcm-xukun.jpg`,
@@ -643,6 +644,7 @@ interface ReportData {
 
 
 }
+
 const activityMap = new Map([
   [1, "开启武庙宝箱"],
   [2, "开启神武宝箱"],
@@ -654,10 +656,12 @@ const activityMap = new Map([
   [8, "纳贤"],
   [9, "招募"]
 ]);
+
 const skinAcquisitionMap = new Map([
   [1, "锦绣"],
   [2, "皮肤开包"]
 ]);
+
 const personalityMbtiMap = new Map([
   ["INTP", "郭嘉"],
   ["INTJ", "武诸葛亮"],
@@ -676,6 +680,7 @@ const personalityMbtiMap = new Map([
   ["ESFJ", "甄姬"],
   ["ESTJ", "袁绍"]
 ]);
+
 const personalityMap = new Map([
   ['E', '主公广结天下好友，并肩作战是你最闪耀的时刻'],
   ['I', '王者向来孤独，主公真是单枪匹马孤胆英雄！'],
@@ -686,22 +691,26 @@ const personalityMap = new Map([
   ['J', '主公累计登录超过30天，“出勤率”超高！'],
   ['P', '主公累计登录不足30天，小杀期待与你更多相遇~']
 ]);
+
 const imagePreviewRef = ref<any>(null);
 let isHidden = ref(true)
+
 const handleAudioHidden = () => {
   isHidden.value = true
   console.log('audio hidden');
 }
+
 const reportData = ref<ReportData | null>(null);
 const getReportData = async () => {
   const { data: { data } } = await getReport();
   reportData.value = data;
-  console.log('res', data);
 };
+
 const shareReport = async () => {
   const { data } = await getShare()
   console.log('share', data);
 }
+
 getReportData();
 let swiperInstance = ref()
 let firstPage = ref(true)
@@ -711,14 +720,16 @@ const onSwiper = (swiper: any) => {
   swiperInstance.value = swiper
   console.log(swiper);
 };
+
 const init = (e: any) => {
   swiperAnimateCache()
   swiperAnimate(e)
 }
-const slideChangeTransitionEnd = (e: any) => {
 
+const slideChangeTransitionEnd = (e: any) => {
   swiperAnimate(e);
 }
+
 const checkSpeciality = (str: string) => {
   if (typeof str === "string" && str.length >= 2) {
     const firstTwoChars = str.slice(0, 2);
@@ -726,26 +737,33 @@ const checkSpeciality = (str: string) => {
   }
   return false;
 }
+
 const onSlideChange = (swiper: { activeIndex: any; }) => {
   const { activeIndex } = swiper
   // new WOW().init()
   console.log('slide change', swiper, activeIndex);
 };
+
 const modules = [Pagination, EffectFade, Autoplay];
+
 const MBTI = computed(() => {
   return (reportData.value?.mbti1 ?? '') + (reportData.value?.mbti2 ?? '') + (reportData.value?.mbti3 ?? '') + (reportData.value?.mbti4 ?? '')
 })
+
 const handleVideoEnded = (e: any) => {
   console.log('video ended', e);
   firstPage.value = false
 }
+
 const handleComponentDestroy = () => {
   console.log('子组件已完成开门动画并即将销毁');
   isLoading.value = false
   // 这里可以添加更多的逻辑，比如从父组件的数据中移除对子组件相关的引用等，
   // 或者进行一些界面上的调整（虽然很多情况下Vue会自动处理组件销毁后的DOM更新等）
 };
+
 const isLoading = ref(true);
+
 // 定义处理子组件加载完成事件的函数
 const handleComponentLoaded = () => {
   console.log('component loaded');
@@ -755,6 +773,7 @@ const handleComponentLoaded = () => {
 
 //音频操作
 const audioSrc = 'https://yjcmndzb.sanguosha.com/bgm.mp3';
+
 const audioPlayer = ref<InstanceType<typeof AudioPlayer> | null>(null);
 
 const handleAudioStart = () => {
@@ -781,6 +800,7 @@ const handleShareReport = async () => {
 }
 
 const shareBox = ref<HTMLDivElement | null>(null)
+
 const handleSave = () => {
   console.log('进入 handleSave 函数');
   if (shareBox.value) {
@@ -839,8 +859,6 @@ const handleSave = () => {
     console.log('shareBox.value 是无效的 DOM 元素');
   }
 };
-
-
 </script>
 
 <style lang="scss">

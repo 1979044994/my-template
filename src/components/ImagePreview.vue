@@ -19,23 +19,27 @@ const props = defineProps({
 });
 
 const visible = ref(false);
-const url = ref('');
-const showPreview = ([value]) => {
-  console.log(value);
-  url.value = value;
 
+const url = ref('');
+
+const showPreview = ([value]) => {
+  url.value = value;
   visible.value = true;
 };
+
 const emit = defineEmits(['close']);
+
 const closePreview = () => {
   visible.value = false;
   emit('close');
 };
+
 const handlePublish = () => {
   wx.miniProgram.navigateTo({
     url: '/pages/go-post/go-post',
   });
 };
+
 defineExpose({
   showPreview,
   closePreview,
