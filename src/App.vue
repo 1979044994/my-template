@@ -230,7 +230,7 @@
                   <div class="line"></div>
                   <div class="num">
                     <span> 第{{ reportData?.qm_rank_season }}届小杀全民赛积分排名</span>
-                    <span class="red-text">{{ reportData?.qm_rank }}</span>
+                    <span class="red-text">{{ reportData?.qm_rank ? reportData?.qm_rank : '1000+' }}</span>
                   </div>
                   <div class="line"></div>
                   <div class="events-footer">
@@ -319,10 +319,10 @@
                       次</span><br />
                     <span class="normal"> 累计获票 <span class="red-text">{{ reportData.general_tickets
                         }}</span></span><br />
-                    <span v-if="reportData.general_tickets > 0" class="normal"> 在 <span class="red-text">{{
-                        reportData.general_title
-                        }}</span>命题中荣获</span><br />
-                    <span v-if="reportData.general_tickets > 0" class="normal"> <span class="red-text">{{
+                    <span v-if="reportData.general_prize" class="normal"> 在 <span class="red-text">{{
+                      reportData.general_title
+                    }}</span>命题中荣获</span><br />
+                    <span v-if="reportData.general_prize" class="normal"> <span class="red-text">{{
                         reportData.general_prize }}</span></span>
                   </p>
 

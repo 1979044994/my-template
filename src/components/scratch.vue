@@ -41,6 +41,15 @@ const canvas = ref<HTMLCanvasElement | null>(null);
 const currPerct = ref(0);
 const canvasOpacity = ref(1);
 
+// 从本地存储读取刮开状态
+const checkScratched = () => {
+  const scratched = localStorage.getItem('scratchCardScratched');
+  if (scratched === 'true') {
+    canvasOpacity.value = 0;
+    done.value = true;
+  }
+};
+
 // 提前获取绘图上下文
 let ctx: CanvasRenderingContext2D | null = null;
 const initContext = () => {
@@ -89,7 +98,6 @@ const addCoat = () => {
   }
 };
 
-
 // 擦除操作
 const erase = (e: MouseEvent | TouchEvent) => {
   if (!canvas.value || !ctx) return;
@@ -113,10 +121,10 @@ const erase = (e: MouseEvent | TouchEvent) => {
     ctx.fill();
 
     getScratchedPercentage();
-    console.log(currPerct.value, maxEraseArea.value);
-
     if (currPerct.value >= maxEraseArea.value) {
       canvasOpacity.value = 0;
+      done.value = true;
+      localStorage.setItem('scratchCardScratched', 'true');
     }
   }
 };
@@ -157,6 +165,8 @@ const endMouseScratch = (e: MouseEvent) => {
     getScratchedPercentage();
     if (currPerct.value >= maxEraseArea.value) {
       canvasOpacity.value = 0;
+      done.value = true;
+      localStorage.setItem('scratchCardScratched', 'true');
     }
   }
 };
@@ -183,12 +193,15 @@ const endTouchScratch = (e: TouchEvent) => {
     getScratchedPercentage();
     if (currPerct.value >= maxEraseArea.value) {
       canvasOpacity.value = 0;
+      done.value = true;
+      localStorage.setItem('scratchCardScratched', 'true');
     }
   }
 };
 
 // 初始化和添加事件监听
 const onMountedCb = () => {
+  checkScratched();
   initContext();
   addCoat();
   if (canvas.value) {
@@ -234,7 +247,7 @@ const updateCanvasSize = () => {
 
 
 // watch([canvasWidth, canvasHeight], ([newWidth, newHeight], [oldWidth, oldHeight]) => {
-//   if (newWidth !== oldWidth || newHeight !== oldHeight) {
+//   if (newWidth!== oldWidth || newHeight!== oldHeight) {
 //     isCoated = false; // 标记需要重新绘制
 //     addCoat();
 //   }
