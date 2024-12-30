@@ -47,7 +47,7 @@
                 <span class="red-text">{{ reportData?.beat_general }}</span>
                 <div class="num-two">
                   <span>在S{{ reportData?.most_win_season
-                    }}赛季<span class="red">{{ reportData?.most_win_mode }}</span> 中取得最高连胜数</span>
+                    }}赛季<span class="red">{{ reportData?.most_win_mode }}</span>中取得最高连胜数</span>
                   <span class="red-text">{{ reportData?.most_win }}</span>
                 </div>
               </div>
@@ -94,10 +94,10 @@
                 </div>
                 <div class="general-text">
                   <div class="more-rate"><span class="rate">{{
-                    reportData && reportData.g3_rate ?
+                      reportData && reportData.g3_rate ?
                       Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
                       0
-                  }}</span> %</div>
+                      }}</span> %</div>
                   <div class="feng">/</div>
                   <span class="num">{{ reportData?.g3_num }}场</span>
                 </div>
@@ -112,10 +112,10 @@
                 </div>
                 <div class="general-text">
                   <div class="more-rate"><span class="rate">{{
-                    reportData && reportData.g2_rate ?
+                      reportData && reportData.g2_rate ?
                       Math.floor(parseFloat(reportData.g2_rate.replace('%', ''))) :
                       0
-                  }}</span> %</div>
+                      }}</span> %</div>
                   <div class="feng">/</div>
                   <span class="num">{{ reportData?.g2_num }}场</span>
                 </div>
@@ -130,10 +130,10 @@
                 </div>
                 <div class="general-text">
                   <div class="more-rate"><span class="rate"> {{
-                    reportData && reportData.g1_rate ?
+                      reportData && reportData.g1_rate ?
                       Math.floor(parseFloat(reportData.g1_rate.replace('%', ''))) :
                       0
-                  }}</span> %</div>
+                      }}</span> %</div>
                   <div class="feng">/</div>
 
                   <span class="num">{{ reportData?.g1_num }}场</span>
@@ -212,7 +212,7 @@
                     <img v-else src="@/assets/amateur.webp" class="amateur" alt="">
                     <span :class="checkSpeciality(reportData?.qm_dw) ? 'major-color' : 'amateur-color'">{{
                       reportData?.qm_dw
-                    }}</span>
+                      }}</span>
                   </div>
                 </div>
 
@@ -318,10 +318,10 @@
                     <span class="normal"> 累计获票 <span class="red-text">{{ reportData.general_tickets
                         }}</span></span><br />
                     <span v-if="reportData.general_tickets > 0" class="normal"> 在 <span class="red-text">{{
-                      reportData.general_title
-                    }}</span>命题中荣获</span><br />
+                        reportData.general_title
+                        }}</span>命题中荣获</span><br />
                     <span v-if="reportData.general_tickets > 0" class="normal"> <span class="red-text">{{
-                      reportData.general_prize }}</span></span>
+                        reportData.general_prize }}</span></span>
                   </p>
 
                 </div>
