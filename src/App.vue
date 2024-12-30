@@ -97,10 +97,10 @@
               </div>
               <div class="general-text">
                 <div class="more-rate"><span class="rate">{{
-                  reportData && reportData.g3_rate ?
-                    Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
-                    0
-                    }}</span> %</div>
+  reportData && reportData.g3_rate ?
+    Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
+    0
+}}</span> %</div>
                 <div class="feng">/</div>
                 <span class="num">{{ reportData?.g3_num }}场</span>
               </div>
@@ -118,7 +118,7 @@
                   reportData && reportData.g2_rate ?
                     Math.floor(parseFloat(reportData.g2_rate.replace('%', ''))) :
                     0
-                    }}</span> %</div>
+                }}</span> %</div>
                 <div class="feng">/</div>
                 <span class="num">{{ reportData?.g2_num }}场</span>
               </div>
@@ -136,7 +136,7 @@
                   reportData && reportData.g1_rate ?
                     Math.floor(parseFloat(reportData.g1_rate.replace('%', ''))) :
                     0
-                    }}</span> %</div>
+                }}</span> %</div>
                 <div class="feng">/</div>
 
                 <span class="num">{{ reportData?.g1_num }}场</span>
@@ -285,7 +285,7 @@
                 <div v-if="reportData && reportData?.get_sprite_date" class="achievement-item">
                   <span class="time">{{ reportData?.get_sprite_date }}</span>
                   <p class="content">
-                    是用普通转生丹成功获得<span class="red">{{ reportData?.get_sprite_rank }}</span>将灵<span class="red"> {{
+                    在将灵转生中成功获得<span class="red">{{ reportData?.get_sprite_rank }}</span>将灵<span class="red"> {{
                       reportData?.get_sprite }}</span>,转生轮回，逆天改命
                   </p>
                 </div>
