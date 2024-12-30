@@ -50,8 +50,9 @@ const initContext = () => {
 };
 
 // 添加遮罩层（刮刮乐未刮开部分）
+let isCoated = false;
 const addCoat = () => {
-  if (ctx) {
+  if (ctx && !isCoated) {
     const width = canvasWidth.value;
     const height = canvasHeight.value;
     // 先清除画布
@@ -65,8 +66,6 @@ const addCoat = () => {
     // 绘制未刮开时的图片
     const img = new Image();
     img.src = coverImage;
-    // 移除之前的 onload 绑定
-    img.onload = null;
     img.onload = () => {
       let imgWidth = img.width;
       let imgHeight = img.height;
@@ -81,6 +80,7 @@ const addCoat = () => {
       const x = (width - imgWidth) / 2;
       const y = (height - imgHeight) / 2;
       ctx.drawImage(img, x, y, imgWidth, imgHeight);
+      isCoated = true;
     }
   }
 };
