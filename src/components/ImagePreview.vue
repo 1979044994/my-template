@@ -8,6 +8,7 @@
 </template>
 
 <script setup>
+
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -25,9 +26,10 @@ const showPreview = ([value]) => {
 
   visible.value = true;
 };
-
+const emit = defineEmits(['close']);
 const closePreview = () => {
   visible.value = false;
+  emit('close');
 };
 const handlePublish = () => {
   wx.miniProgram.navigateTo({

@@ -2,7 +2,7 @@
 
   <LoadingPage :openTrigger="openTrigger" v-if="isLoading" @componentDestroy="handleComponentDestroy" />
 
-  <AudioPlayer ref="audioPlayer" :src="audioSrc" @click="handleAudioStart" />
+  <AudioPlayer ref="audioPlayer" v-show="isHidden" :src="audioSrc" @click="handleAudioStart" />
   <div v-if="firstPage" class="firstpage">
     <SequenceFrameAnimation @video-ended="handleVideoEnded" @component-loaded="handleComponentLoaded">
       <template v-slot:icon>
@@ -432,7 +432,7 @@
             </div>
 
           </div>
-          <ImagePreview ref="imagePreviewRef"></ImagePreview>
+          <ImagePreview @close="handleAudioHidden" ref="imagePreviewRef"></ImagePreview>
         </swiper-slide>
       </template>
     </Swiper>
@@ -688,8 +688,8 @@ const personalityMap = new Map([
 ]);
 const imagePreviewRef = ref<any>(null);
 let isHidden = ref(true)
-const handleAudioHidden = (e: boolean) => {
-  isHidden.value = e
+const handleAudioHidden = () => {
+  isHidden.value = true
   console.log('audio hidden');
 }
 const reportData = ref<ReportData | null>(null);
@@ -816,6 +816,7 @@ const handleSave = () => {
           if (url) {
             console.log('成功获取图片 dataURL，准备展示预览');
             imagePreviewRef.value.showPreview([url]);
+            isHidden.value = false;
             nextTick(() => showToast('已为您生成图片，请长按保存！'));
           } else {
             nextTick(() => showToast('保存失败，请稍后重试！'));
