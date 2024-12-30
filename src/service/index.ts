@@ -77,8 +77,8 @@ function requestInterceptor(config: any) {
   if (!config.headers) {
     config.headers = {};
   }
-  // config.headers['Authenticate'] = `testlogin`;
-  config.headers['Authenticate'] = `${token}`;
+  config.headers['Authenticate'] = `testlogin`;
+  // config.headers['Authenticate'] = `${token}`;
   if (config.method === "GET" && config.params) {
     let url = config.url + "?" + new URLSearchParams(config.params).toString();
     config.params = {};

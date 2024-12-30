@@ -60,9 +60,10 @@
         margin: 18px 0 54px 0;
       }
       .level-icon {
-        width: 255px;
-        height: 245px;
+        width: 242px;
+        height: 230px;
         margin-top: 21px;
+        object-fit: contain;
       }
       .beyong {
         font-family: Source Han Sans SC;
@@ -185,7 +186,7 @@
             font-weight: 400;
             font-size: 26px;
             color: #d8b576;
-
+            line-height: 1px;
             margin-left: 81px;
           }
           .black {
@@ -220,23 +221,23 @@
     }
     .general {
       position: absolute;
-      width: 256px;
-      height: 280px;
+      width: calc(256px * 0.9);
+      height: calc(280px * 0.9);
       // background: url(@/assets/gennel-border.webp) no-repeat;
       background-repeat: no-repeat;
       background-position: center 8px;
       // border-radius: 50%;
-      background-size: 235px 235px;
+      background-size: calc(235px * 0.9) calc(235px * 0.9);
       .general-avatar {
-        width: 256px;
-        height: 280px;
+        width: calc(256px * 0.9);
+        height: calc(280px * 0.9);
         position: relative;
         z-index: 2;
       }
       .avatar-img {
         position: absolute;
-        width: 235px;
-        height: 235px;
+        width: calc(235px * 0.9);
+        height: calc(235px * 0.9);
         left: 10px;
         top: 7px;
         border-radius: 50%;
@@ -248,8 +249,8 @@
         bottom: 38px;
         left: 23px;
         z-index: 1;
-        width: 203px;
-        height: 63px;
+        width: calc(203px * 0.9);
+        height: calc(63px * 0.9);
         font-family: Source Han Sans SC;
         font-weight: 400;
         font-size: 21px;
@@ -275,32 +276,32 @@
         bottom: 38px;
         left: 23px;
         z-index: 5;
-         width: 203px;
-        height: 63px;
+        width: calc(203px * 0.9);
+        height: calc(63px * 0.9);
         font-family: Source Han Sans SC;
         font-weight: 400;
-              font-size: 21px;
-        line-height: 48px;
+        font-size: calc(21px * 0.9);
+        line-height: calc(48px * 0.9);
         color: #fff5d7;
 
         .feng {
           color: #fddd7e;
           margin: 0 5px;
           font-weight: 100;
-          font-size: 29px;
+          font-size: calc(29px * 0.9);
         }
         .rate {
           color: #fddd7e;
-       font-size: 29px;
+             font-size: calc(29px * 0.9);
         }
       }
       .gennger-name {
         position: absolute;
         top: 22px;
         right: 24px;
-        width: 35px;
+        width: calc(35px * 0.9);
         z-index: 3;
-        height: 170px;
+        height: calc(170px * 0.9);
         background: url(@/assets/genner-name.webp) no-repeat;
         background-size: cover;
         display: flex;
@@ -310,7 +311,7 @@
         text-orientation: upright;
         font-family: Source Han Sans CN;
         font-weight: 400;
-        font-size: 24px;
+        font-size: calc(24px * 0.9);
         color: #fdeab1;
       }
     }
@@ -324,25 +325,25 @@
     }
     .general-three {
       position: absolute;
-      width: calc(256px * 1.2);
-      height: calc(280px * 1.2);
+      width: calc(256px * 1.1);
+      height: calc(280px * 1.1);
       left: 113px;
       top: 1054px;
       // background: url(@/assets/gennel-border.webp) no-repeat;
       background-repeat: no-repeat;
       background-position: center 8px;
       // border-radius: 50%;
-      background-size: calc(235px * 1.2) calc(235px * 1.2);
+      background-size: calc(235px * 1.1) calc(235px * 1.1);
       .general-avatar {
-        width: calc(256px * 1.2);
-        height: calc(280px * 1.2);
+        width: calc(256px * 1.1);
+        height: calc(280px * 1.1);
         position: relative;
         z-index: 2;
       }
       .avatar-img {
         position: absolute;
-        width: calc(235px * 1.2);
-        height: calc(235px * 1.2);
+        width: calc(235px * 1.1);
+        height: calc(235px * 1.1);
         left: 10px;
         top: 7px;
         border-radius: 50%;
@@ -354,8 +355,8 @@
         bottom: 48px;
         left: 28px;
         z-index: 1;
-        width: calc(203px * 1.2);
-        height: calc(63px * 1.2);
+        width: calc(203px * 1.1);
+        height: calc(63px * 1.1);
 
         background: url(@/assets/gennger-rate.webp) no-repeat;
         background-size: cover;
@@ -367,31 +368,31 @@
         bottom: 48px;
         left: 28px;
         z-index: 5;
-        width: calc(203px * 1.2);
-        height: calc(63px * 1.2);
+        width: calc(203px * 1.1);
+        height: calc(63px * 1.1);
         font-family: Source Han Sans SC;
         font-weight: 400;
-        font-size: calc(21px * 1.2);
+        font-size: calc(21px * 1.1);
         color: #fff5d7;
-        line-height: calc(48px * 1.2);
+        line-height: calc(48px * 1.1);
         .feng {
           color: #fddd7e;
           margin: 0 5px;
           font-weight: 100;
-          font-size: calc(29px * 1.2);
+          font-size: calc(29px * 1.1);
         }
         .rate {
           color: #fddd7e;
-          font-size: calc(29px * 1.2);
+          font-size: calc(29px * 1.1);
         }
       }
       .gennger-name {
         position: absolute;
         top: 22px;
         right: 24px;
-        width: calc(35px * 1.2);
+        width: calc(35px * 1.1);
         z-index: 3;
-        height: calc(170px * 1.2);
+        height: calc(170px * 1.1);
         background: url(@/assets/genner-name.webp) no-repeat;
         background-size: cover;
         display: flex;
@@ -401,7 +402,7 @@
         text-orientation: upright;
         font-family: Source Han Sans CN;
         font-weight: 400;
-        font-size: calc(24px * 1.2);
+        font-size: calc(24px * 1.1);
         color: #fdeab1;
       }
     }
@@ -951,7 +952,7 @@
         // align-items: center;
         flex-direction: column;
         height: 383px;
-        width: 393px;
+        width: 336px;
         .mbti-item {
           width: 100%;
 
@@ -985,7 +986,7 @@
       font-size: 30px;
       color: #665247;
     }
-    .qrcode{
+    .qrcode {
       position: absolute;
       left: 50%;
       display: none;
@@ -996,10 +997,10 @@
     }
     .scratch {
       position: absolute;
-      width: 210px;
-      height: 396px;
-      right: 60px;
-      top: 839px;
+      width: 290px;
+      height: 386px;
+      right: 52px;
+      top: 838px;
     }
   }
 }

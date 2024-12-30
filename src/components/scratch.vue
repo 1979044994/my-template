@@ -243,9 +243,10 @@ onBeforeUnmount(() => {
   height: 100%;
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: 100% 100%;
+  background-size: 99% 99%;
   position: absolute;
   z-index: 1;
+  border: none;
   // position: relative;
 
   .name {
@@ -257,7 +258,7 @@ onBeforeUnmount(() => {
     position: absolute;
     bottom: 0;
     font-size: 26px;
-    height: 57px;
+    height: 47px;
     z-index: 3;
     width: 100%;
   }
