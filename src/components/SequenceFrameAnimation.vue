@@ -23,10 +23,9 @@ const secondFrameImages = ref<HTMLImageElement[]>([]);
 let isPlayer = ref(true);
 
 const firstTotalFrames = 43;
-
 const secondTotalFrames = 95;
 
-let playAnimationed = false
+let playAnimationed = false;
 
 // 新增变量用于控制动画速度
 const animationSpeed = ref(1);
@@ -149,7 +148,7 @@ const playSecondAnimation = async () => {
   if (playAnimationed) return;
   if (secondFrameImages.value.length > 0 && secondCanvas.value && firstCanvas.value) {
     isPlayer.value = false;
-    playAnimationed = true
+    playAnimationed = true;
     emits('audio-satrt', false);
     secondCanvas.value.style.display = 'block';
     firstCanvas.value.style.display = 'none';
@@ -157,7 +156,6 @@ const playSecondAnimation = async () => {
     await playAnimation(secondCanvas.value, secondFrameImages.value, animationSpeed.value);
     // 动画播放完发送事件给父组件
     emits('video-ended', true);
-
   }
 }
 
@@ -172,7 +170,6 @@ onMounted(() => {
     initAnimation();
   });
 
-
   window.addEventListener('resize', debouncedResizeCanvas);
   // 添加触摸事件监听，滑动后切换到第二个动画
   window.addEventListener('touchstart', (e) => {
@@ -186,11 +183,30 @@ onMounted(() => {
     };
     window.addEventListener('touchmove', handleTouchMove);
   });
+
+  let startY: number;
+  // 添加鼠标按下事件监听
+  window.addEventListener('mousedown', (e) => {
+    startY = e.clientY;
+  });
+  // 添加鼠标移动事件监听
+  window.addEventListener('mousemove', (e) => {
+    if (startY !== undefined) {
+      const currentY = e.clientY;
+      if (currentY < startY) {
+        playSecondAnimation();
+        window.removeEventListener('mousedown', () => { });
+        window.removeEventListener('mousemove', () => { });
+      }
+    }
+  });
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', debouncedResizeCanvas);
   window.removeEventListener('touchstart', () => { });
+  window.removeEventListener('mousedown', () => { });
+  window.removeEventListener('mousemove', () => { });
 });
 
 // 声明 emits
@@ -199,7 +215,6 @@ const emits = defineEmits<{
   (e: 'video-ended', value: boolean): void;
   (e: 'audio-satrt', value: boolean): void;
 }>();
-
 </script>
 
 <style scoped lang="scss">
