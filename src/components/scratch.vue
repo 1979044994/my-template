@@ -203,7 +203,7 @@ const endTouchScratch = (e: TouchEvent) => {
 const onMountedCb = () => {
   checkScratched();
   initContext();
-  addCoat();
+  // addCoat();
   if (canvas.value) {
     canvas.value.addEventListener('mousedown', startMouseScratch);
     canvas.value.addEventListener('touchstart', startTouchScratch);
@@ -240,6 +240,9 @@ const updateCanvasSize = () => {
 
       // 需要重新绘制涂层
       isCoated = false;
+      addCoat();
+    } else {
+      // 画布尺寸未变化，但需要重新绘制涂层
       addCoat();
     }
   }
