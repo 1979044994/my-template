@@ -67,7 +67,7 @@
                 class="content-item animation">
                 <div class="mode">
                   <div class="mode-text red">{{ reportData?.sf_score > 0 ? reportData?.sf_score : 1000 }}</div>
-                  <div class="mode-name black">{{ reportData?.sf_name ? reportData?.sf_name : '身份休闲' }}</div>
+                  <div class="mode-name black">{{ reportData?.sf_name ? reportData?.sf_name : '身份匹配' }}</div>
                 </div>
                 <div class="optimum">本年度最高积分</div>
               </div>
