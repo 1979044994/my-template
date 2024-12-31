@@ -30,8 +30,8 @@
           <div v-if="reportData && reportData.is_new !== 1 && reportData.is_qq !== 1"
             swiper-animate-effect="animate__fadeIn" swiper-animate-duration="1s" class="line animation"></div>
           <div class="other" v-else>
-            <div v-if="reportData && reportData.is_qq == 1" class="red-text">抱歉，您当前的渠道不支持<br />生成年度战报</div>
-            <div v-if="reportData && reportData.is_new == 1" class="red-text">抱歉，未能查询到足够的数据<br />生成年度战报</div>
+            <div v-if="reportData && reportData.is_qq == 1" class="red-text">抱歉，您当前的渠道不支持生成年度战报</div>
+            <div v-if="reportData && reportData.is_new == 1" class="red-text">抱歉，未能查询到足够的数据生成年度战报</div>
             <div class="gift">小杀奉上薄礼一份，<br />
               主公可至游戏内信件中领取~</div>
           </div>
