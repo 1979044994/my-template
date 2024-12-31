@@ -47,9 +47,9 @@
               <span>全年累计击败敌将数</span>
               <span class="red-text">{{ reportData?.beat_general }}</span>
               <div class="num-two">
-                <span>在S{{ reportData?.most_win_season
+                <span v-if="reportData?.most_win">在S{{ reportData?.most_win_season
                   }}赛季<span class="red">{{ reportData?.most_win_mode }}</span>中取得最高连胜数</span>
-                <span class="red-text">{{ reportData?.most_win }}</span>
+                <span v-if="reportData?.most_win" class="red-text">{{ reportData?.most_win }}</span>
               </div>
             </div>
             <div class="content">
@@ -97,7 +97,7 @@
               </div>
               <div class="general-text">
                 <div class="more-rate"><span class="rate">{{
-                    reportData && reportData.g3_rate ?
+                  reportData && reportData.g3_rate ?
                     Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
                     0
                     }}</span> %</div>
@@ -115,7 +115,7 @@
               </div>
               <div class="general-text">
                 <div class="more-rate"><span class="rate">{{
-                    reportData && reportData.g2_rate ?
+                  reportData && reportData.g2_rate ?
                     Math.floor(parseFloat(reportData.g2_rate.replace('%', ''))) :
                     0
                     }}</span> %</div>
@@ -133,7 +133,7 @@
               </div>
               <div class="general-text">
                 <div class="more-rate"><span class="rate"> {{
-                    reportData && reportData.g1_rate ?
+                  reportData && reportData.g1_rate ?
                     Math.floor(parseFloat(reportData.g1_rate.replace('%', ''))) :
                     0
                     }}</span> %</div>
@@ -215,7 +215,7 @@
                   <img v-else src="@/assets/amateur.webp" class="amateur" alt="">
                   <span :class="checkSpeciality(reportData?.qm_dw) ? 'major-color' : 'amateur-color'">{{
                     reportData?.qm_dw
-                    }}</span>
+                  }}</span>
                 </div>
               </div>
 
@@ -278,7 +278,7 @@
                 <div v-if="reportData && reportData?.get_skin_date" class="achievement-item">
                   <span class="time">{{ reportData?.get_skin_date }}</span>
                   <p class="content">
-                    通过<span class="red"> {{ skinAcquisitionMap.get(reportData?.get_skin_method) }}</span>,获得了皮肤<span
+                    通过<span class="red"> {{ skinAcquisitionMap.get(reportData?.get_skin_method) }}</span>,获得了<span
                       class="red"> {{ reportData?.get_skin }}</span>,鸿运当头，幸哉幸哉
                   </p>
                 </div>
