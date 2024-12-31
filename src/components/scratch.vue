@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import coverImage from '@/assets/un.webp';
+// import coverImage from '@/assets/un.webp';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
-
+const coverImage = '/un.webp';
 // 接收父组件传入的图片路径
 const props = defineProps({
   imageUrl: {
