@@ -27,7 +27,7 @@ function fetchRequest(url: RequestInfo, options: RequestInit | undefined, config
   const controller = new AbortController();
   const signal = controller.signal;
 
-  const timeoutPromise = timeout(1000); // 设置超时时间为 10 秒，可以根据需要调整
+  const timeoutPromise = timeout(10000); // 设置超时时间为 10 秒，可以根据需要调整
   const fetchPromise = fetch(newUrl, { ...options, signal });
   return Promise.race([fetchPromise, timeoutPromise]).then((response: any) => {
     if (!response.ok) {
