@@ -97,10 +97,10 @@
               </div>
               <div class="general-text">
                 <div class="more-rate"><span class="rate">{{
-  reportData && reportData.g3_rate ?
-    Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
-    0
-}}</span> %</div>
+                    reportData && reportData.g3_rate ?
+                    Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
+                    0
+                    }}</span> %</div>
                 <div class="feng">/</div>
                 <span class="num">{{ reportData?.g3_num }}场</span>
               </div>
@@ -115,10 +115,10 @@
               </div>
               <div class="general-text">
                 <div class="more-rate"><span class="rate">{{
-                  reportData && reportData.g2_rate ?
+                    reportData && reportData.g2_rate ?
                     Math.floor(parseFloat(reportData.g2_rate.replace('%', ''))) :
                     0
-                }}</span> %</div>
+                    }}</span> %</div>
                 <div class="feng">/</div>
                 <span class="num">{{ reportData?.g2_num }}场</span>
               </div>
@@ -133,10 +133,10 @@
               </div>
               <div class="general-text">
                 <div class="more-rate"><span class="rate"> {{
-                  reportData && reportData.g1_rate ?
+                    reportData && reportData.g1_rate ?
                     Math.floor(parseFloat(reportData.g1_rate.replace('%', ''))) :
                     0
-                }}</span> %</div>
+                    }}</span> %</div>
                 <div class="feng">/</div>
 
                 <span class="num">{{ reportData?.g1_num }}场</span>
@@ -215,7 +215,7 @@
                   <img v-else src="@/assets/amateur.webp" class="amateur" alt="">
                   <span :class="checkSpeciality(reportData?.qm_dw) ? 'major-color' : 'amateur-color'">{{
                     reportData?.qm_dw
-                  }}</span>
+                    }}</span>
                 </div>
               </div>
 
@@ -230,7 +230,7 @@
                 </div>
                 <div class="line"></div>
                 <div class="num">
-                  <span> 第{{ reportData?.qm_rank_season }}届小杀全民赛积分排名</span>
+                  <span> 第{{ reportData?.qm_rank_season.slice(-1) }}届小杀全民赛积分排名</span>
                   <span class="red-text">{{ reportData?.qm_rank ? reportData?.qm_rank : '1000+' }}</span>
                 </div>
                 <div class="line"></div>
@@ -321,7 +321,7 @@
                   <span class="normal"> 累计获票 <span class="red-text">{{ reportData.general_tickets
                       }}</span></span><br />
                   <span v-if="reportData.general_prize" class="normal"> 在 <span class="red-text">{{
-                    reportData.general_title
+                      reportData.general_title
                       }}</span>命题中荣获</span><br />
                   <span v-if="reportData.general_prize" class="normal"> <span class="red-text">{{
                       reportData.general_prize }}</span></span>
@@ -474,7 +474,7 @@ const prizeList = [
     prize: '国战最强玩家',
   },
   {
-    name: '军哥你个捞坤',
+    name: '长河落日',
     prize: '真布公主殿下',
   }
 ]
