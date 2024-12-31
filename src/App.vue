@@ -97,7 +97,7 @@
               </div>
               <div class="general-text">
                 <div class="more-rate"><span class="rate">{{
-                  reportData && reportData.g3_rate ?
+                    reportData && reportData.g3_rate ?
                     Math.floor(parseFloat(reportData.g3_rate.replace('%', ''))) :
                     0
                     }}</span> %</div>
@@ -115,7 +115,7 @@
               </div>
               <div class="general-text">
                 <div class="more-rate"><span class="rate">{{
-                  reportData && reportData.g2_rate ?
+                    reportData && reportData.g2_rate ?
                     Math.floor(parseFloat(reportData.g2_rate.replace('%', ''))) :
                     0
                     }}</span> %</div>
@@ -133,7 +133,7 @@
               </div>
               <div class="general-text">
                 <div class="more-rate"><span class="rate"> {{
-                  reportData && reportData.g1_rate ?
+                    reportData && reportData.g1_rate ?
                     Math.floor(parseFloat(reportData.g1_rate.replace('%', ''))) :
                     0
                     }}</span> %</div>
@@ -215,7 +215,7 @@
                   <img v-else src="@/assets/amateur.webp" class="amateur" alt="">
                   <span :class="checkSpeciality(reportData?.qm_dw) ? 'major-color' : 'amateur-color'">{{
                     reportData?.qm_dw
-                  }}</span>
+                    }}</span>
                 </div>
               </div>
 
@@ -230,7 +230,8 @@
                 </div>
                 <div class="line"></div>
                 <div class="num">
-                  <span> 第{{ reportData?.qm_rank_season.slice(-1) }}届小杀全民赛积分排名</span>
+                  <span v-if="reportData?.qm_rank_season"> 第{{ reportData?.qm_rank_season.slice(-1) }}届小杀全民赛积分排名</span>
+                  <span v-else> 小杀全民赛积分排名</span>
                   <span class="red-text">{{ reportData?.qm_rank ? reportData?.qm_rank : '1000+' }}</span>
                 </div>
                 <div class="line"></div>
