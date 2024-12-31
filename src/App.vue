@@ -231,7 +231,7 @@
                 <div class="line"></div>
                 <div class="num">
                   <span v-if="reportData?.qm_rank_season"> 第{{ reportData?.qm_rank_season.slice(-1) }}届小杀全民赛积分排名</span>
-                  <span v-else> 小杀全民赛积分排名</span>
+                  <span v-else>小杀全民赛最佳积分排名</span>
                   <span class="red-text">{{ reportData?.qm_rank ? reportData?.qm_rank : '1000+' }}</span>
                 </div>
                 <div class="line"></div>
