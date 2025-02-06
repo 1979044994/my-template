@@ -1,14 +1,18 @@
 <template>
 
-  <LoadingPage :openTrigger="openTrigger" v-if="isLoading" @componentDestroy="handleComponentDestroy" />
+  <LoadingPage :openTrigger="openTrigger" v-if="!isLoading" @componentDestroy="handleComponentDestroy" />
 
   <AudioPlayer ref="audioPlayer" v-show="isHidden" :src="audioSrc" @click="handleAudioStart" />
   <div v-if="firstPage" class="firstpage">
-    <SequenceFrameAnimation @video-ended="handleVideoEnded" @component-loaded="handleComponentLoaded">
+    <SequenceFrameAnimationinfo imgUrl="back" :start="false">
       <template v-slot:icon>
         <div class="icon"></div>
       </template>
-    </SequenceFrameAnimation>
+
+    </SequenceFrameAnimationinfo>
+    <!-- <SequenceFrameAnimation @video-ended="handleVideoEnded" @component-loaded="handleComponentLoaded">
+
+    </SequenceFrameAnimation> -->
   </div>
   <div v-else>
     <Swiper @swiper="onSwiper" @init="init" @slide-change-transition-end="slideChangeTransitionEnd"
@@ -456,7 +460,7 @@ import { computed, nextTick, ref } from 'vue';
 import ImagePreview from './components/ImagePreview.vue';
 import LoadingPage from './components/LoadingPage.vue';
 import scratch from './components/scratch.vue';
-import SequenceFrameAnimation from './components/SequenceFrameAnimation.vue';
+import SequenceFrameAnimationinfo from './components/SequenceFrameAnimationinfo.vue';
 
 // import SequenceFrameAnimationVideo from './components/SequenceFrameAnimationVideo.vue';
 import AudioPlayer from './components/AudioPlayer.vue';
