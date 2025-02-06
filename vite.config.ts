@@ -3,7 +3,9 @@ import path from "path";
 // import postcsspxtoviewport from "postcss-px-to-viewport";
 // import postCssPxToRem from "postcss-pxtorem"
 import mobile from 'postcss-mobile-forever';
+import AutoImport from 'unplugin-auto-import/vite';
 import { defineConfig, loadEnv } from 'vite';
+import vueDevTools from 'vite-plugin-vue-devtools';
 // https://vitejs.dev/config/
 
 export default defineConfig(({ command, mode }) => {
@@ -13,7 +15,7 @@ export default defineConfig(({ command, mode }) => {
   const { VITE_NODE_ENV, VITE_APP_BASE_PATH } = env;
   return {
 
-    plugins: [vue()],
+    plugins: [vue(), AutoImport(), vueDevTools()],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
