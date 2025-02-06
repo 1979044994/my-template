@@ -15,7 +15,16 @@ export default defineConfig(({ command, mode }) => {
   const { VITE_NODE_ENV, VITE_APP_BASE_PATH } = env;
   return {
 
-    plugins: [vue(), AutoImport(), vueDevTools()],
+    plugins: [vue(), AutoImport({
+      imports: [
+        'vue',
+        'vue-router',
+        '@vueuse/core',
+        'pinia',
+      ],
+      dts: 'types/auto-imports.d.ts', // 使用typescript，需要指定生成对应的d.ts文件或者设置为true,生成默认导入d.ts文件
+      dirs: ['src/stores', 'src/composables', 'src/hooks'],
+    }), vueDevTools()],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
